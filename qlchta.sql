@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2025 at 10:22 AM
+-- Generation Time: Apr 01, 2025 at 11:32 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,6 +32,22 @@ CREATE TABLE `category` (
   `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`category_id`, `name`) VALUES
+(1, 'Bánh mì'),
+(2, 'Burger'),
+(3, 'Pizza'),
+(4, 'Mì xào'),
+(5, 'Cơm chiên'),
+(6, 'Gà rán'),
+(7, 'Xúc xích'),
+(8, 'Khoai tây chiên'),
+(9, 'Trà sữa'),
+(10, 'Sinh tố');
+
 -- --------------------------------------------------------
 
 --
@@ -44,6 +60,22 @@ CREATE TABLE `customers` (
   `phone` varchar(10) NOT NULL,
   `email` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`cus_id`, `cus_name`, `phone`, `email`) VALUES
+(1, 'Nguyễn Văn Anh', '0901234567', 'nguyenvanAnh@gmail.com'),
+(2, 'Trần Thị Bình', '0901234568', 'tranthiBinh@gmail.com'),
+(3, 'Lê Minh Chánh', '0901234569', 'leminhChanh@gmail.com'),
+(4, 'Phạm Thị Định', '0901234570', 'phamthiDinh@gmail.com'),
+(5, 'Vũ Thị Em', '0901234571', 'vuthiem@gmail.com'),
+(6, 'Hoàng Minh Khai', '0901234572', 'hoangminhkhai@gmail.com'),
+(7, 'Lâm Thanh Giang', '0901234573', 'lamthanggiang@gmail.com'),
+(8, 'Nguyễn Thị Hạnh', '0901234574', 'nguyenthihanh@gmail.com'),
+(9, 'Trương Văn Yến', '0901234575', 'truongvanyen@gmail.com'),
+(10, 'Bùi Minh Như', '0901234576', 'buiminhnhu@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -59,6 +91,22 @@ CREATE TABLE `employee` (
   `address` varchar(100) NOT NULL,
   `gender` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `employee`
+--
+
+INSERT INTO `employee` (`eid`, `position_id`, `name`, `phone`, `address`, `gender`) VALUES
+(1, 1, 'Lê Đức Minh', '0901234580', 'Sài Gòn', 'Nam'),
+(2, 2, 'Trần Thị Ngà', '0901234581', 'Hà Nội', 'Nữ'),
+(3, 1, 'Nguyễn Văn Oanh', '0901234582', 'Đà Nẵng', 'Nam'),
+(4, 2, 'Hoàng Minh Phượng', '0901234583', 'Hải Phòng', 'Nam'),
+(5, 3, 'Phạm Minh Quân', '0901234584', 'Hồ Chí Minh', 'Nam'),
+(6, 4, 'Bùi Thi Yên', '0901234585', 'Cần Thơ', 'Nữ'),
+(7, 2, 'Vũ Đức Sanh', '0901234586', 'Long An', 'Nam'),
+(8, 3, 'Lâm Thanh Tuyền', '0901234587', 'Vũng Tàu', 'Nam'),
+(9, 4, 'Trương Thị Uyên', '0901234588', 'Nha Trang', 'Nữ'),
+(10, 2, 'Đoàn Minh Vy', '0901234589', 'Bình Dương', 'Nam');
 
 -- --------------------------------------------------------
 
@@ -80,10 +128,46 @@ CREATE TABLE `invendetail` (
 
 CREATE TABLE `inventory` (
   `inven_id` int(11) NOT NULL,
-  `name` int(11) NOT NULL,
+  `name` varchar(156) NOT NULL,
   `quantity` int(11) NOT NULL,
   `unit` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `inventory`
+--
+
+INSERT INTO `inventory` (`inven_id`, `name`, `quantity`, `unit`) VALUES
+(96, 'Bánh mì', 1000, 'chiếc'),
+(97, 'Thịt gà', 500, 'kg'),
+(98, 'Khoai tây', 300, 'kg'),
+(99, 'Trà sữa', 200, 'lít'),
+(100, 'Sữa đặc', 150, 'lít'),
+(101, 'Bột mì', 100, 'kg'),
+(102, 'Xúc xích', 200, 'kg'),
+(103, 'Dưa leo', 100, 'kg'),
+(104, 'Cà chua', 50, 'kg'),
+(105, 'Hành tây', 40, 'kg'),
+(106, 'Cà phê', 20, 'kg'),
+(107, 'Đá viên', 500, 'kg'),
+(108, 'Gà rán', 300, 'kg'),
+(109, 'Sốt mayonnaise', 50, 'lít'),
+(110, 'Sốt cà chua', 50, 'lít'),
+(111, 'Hạt tiêu', 10, 'kg'),
+(112, 'Muối', 10, 'kg'),
+(113, 'Dầu ăn', 200, 'lít'),
+(114, 'Bánh pizza', 200, 'chiếc'),
+(115, 'Phô mai', 100, 'kg'),
+(116, 'Nước mắm', 100, 'lít'),
+(117, 'Đường', 50, 'kg'),
+(118, 'Nước ngọt', 150, 'lít'),
+(119, 'Nước ép trái cây', 100, 'lít'),
+(120, 'Kem tươi', 50, 'kg'),
+(121, 'Bánh quy', 50, 'kg'),
+(122, 'Gia vị', 30, 'kg'),
+(123, 'Sữa tươi', 100, 'lít'),
+(124, 'Nước tương', 50, 'lít'),
+(125, 'Bột năng', 30, 'kg');
 
 -- --------------------------------------------------------
 
@@ -123,9 +207,24 @@ CREATE TABLE `orders` (
   `cus_id` int(11) NOT NULL,
   `eid` int(11) NOT NULL,
   `order_date` date NOT NULL,
-  `total_amount` double NOT NULL,
-  `status` int(11) NOT NULL
+  `total_amount` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`order_id`, `cus_id`, `eid`, `order_date`, `total_amount`) VALUES
+(1, 1, 1, '2025-04-01', 150000),
+(2, 2, 2, '2025-04-01', 120000),
+(3, 3, 3, '2025-04-01', 100000),
+(4, 4, 4, '2025-04-01', 180000),
+(5, 5, 5, '2025-04-01', 160000),
+(6, 6, 6, '2025-04-01', 140000),
+(7, 7, 7, '2025-04-01', 170000),
+(8, 8, 8, '2025-04-01', 90000),
+(9, 9, 9, '2025-04-01', 130000),
+(10, 10, 10, '2025-04-01', 110000);
 
 -- --------------------------------------------------------
 
@@ -148,6 +247,16 @@ CREATE TABLE `position` (
   `position_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `position`
+--
+
+INSERT INTO `position` (`position_id`, `name`) VALUES
+(1, 'thu ngân'),
+(2, 'pha chế'),
+(3, 'đầu bếp'),
+(4, 'phục vụ');
 
 -- --------------------------------------------------------
 
@@ -186,7 +295,7 @@ CREATE TABLE `recipe` (
 CREATE TABLE `rolepermission` (
   `role_id` int(11) NOT NULL,
   `permission_id` int(11) NOT NULL,
-  `prop` int(11) NOT NULL
+  `prop` varchar(51) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -347,25 +456,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
 
 --
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `inven_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `inven_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT for table `invoiceinvent`
@@ -377,7 +486,7 @@ ALTER TABLE `invoiceinvent`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `permissions`
@@ -389,7 +498,7 @@ ALTER TABLE `permissions`
 -- AUTO_INCREMENT for table `position`
 --
 ALTER TABLE `position`
-  MODIFY `position_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `position_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `products`
