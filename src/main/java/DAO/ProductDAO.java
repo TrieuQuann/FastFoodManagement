@@ -70,10 +70,25 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product>{
             Connection con = ConnectionDB.getConnection();
             Statement st = con.createStatement();
             String sql = "SELECT * FROM product WHERE product_id='"+t.getProductId()+"'  ";
+            ResultSet rs = st.executeQuery(sql);
             
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+            
+            while (rs.next()){
+                int product_id = rs.getInt("product_id");
+                String productName = rs.getString("productName");
+                Double price = rs.getDouble("price");
+                String image = rs.getString("image");
+                int categoryId = rs.getInt("categoryId");
+                int expectedQuantity = rs.getInt("expectedQuantity");
+                
+                result = new DTO.Product(product_id, productName, price, image, categoryId, expectedQuantity);
+                
+            }
+        } catch (SQLException e) {
+                    e.printStackTrace();
         }
+        
+        return result;
     }
 
     @Override
