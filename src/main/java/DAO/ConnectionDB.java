@@ -19,7 +19,7 @@ public class ConnectionDB {
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             
-            String url = "jdbc:mysql://localhost:3306/fastfood?useSSL=false&serverTimezone=UTC";
+            String url = "jdbc:mysql://localhost:3306/qlchta?useSSL=false&serverTimezone=UTC";
             String user = "root";
             String password = ""; 
             

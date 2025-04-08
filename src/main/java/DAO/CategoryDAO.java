@@ -6,7 +6,7 @@ package DAO;
 
 import DTO.Category;
 import java.sql.Connection;
-import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,91 +14,116 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Lenovo
+ * @author LENOVO
  */
-public class CategoryDAO implements InterfaceDAO<DTO.Category>{
+public class CategoryDAO implements DAO.InterfaceDAO<DTO.Category>{
 
     @Override
     public int insert(Category t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int result = 0;
+        String sql = "INSERT into category (category_id, name) VALUES (?)";
+        
+        try(
+                Connection con = DAO.ConnectionDB.getConnection();
+                PreparedStatement pst = con.prepareStatement(sql);
+                )
+        {
+            pst.setString(1, t.getName());
+            result = pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return result;
     }
 
     @Override
     public int update(Category t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int result = 0;
+        String sql = "UPDATE category SET name = ? WHERE category_id = ?";
+
+        try (
+            Connection con = DAO.ConnectionDB.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql)) 
+        {
+
+            pst.setString(1, t.getName());
+            pst.setInt(2, t.getCategoryId());
+
+            result = pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
     public int delete(Category t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int result = 0;
+        String sql = "DELETE from category WHERE category_id=?";
+        try (
+            Connection con = DAO.ConnectionDB.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql))
+        {
+            pst.setInt(1, t.getCategoryId());
+
+            result = pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
     public ArrayList<Category> selectAll() {
-        ArrayList<DTO.Category> result =new ArrayList<DTO.Category>();
+        ArrayList<DTO.Category> result = new ArrayList<DTO.Category>();
+        String sql = "SELECT * FROM category";
         
-        try{
-            //
+        try(
             Connection con = ConnectionDB.getConnection();
-            
-            //
             Statement st = con.createStatement();
-            
-            //
-            String sql = "SELECT * FROM category";
             ResultSet rs = st.executeQuery(sql);
-            
-            //
-            while(rs.next()){
+            )
+        {
+            while (rs.next()){
                 int category_id = rs.getInt("category_id");
                 String name = rs.getString("name");
                 
-                DTO.Category dm = new DTO.Category(category_id, name);
-                result.add(dm);            
+                DTO.Category sp = new DTO.Category(category_id, name);
+                result.add(sp);
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         
         return result;
     }
-
     @Override
     public Category selectById(Category t) {
-        DTO.Category result = null ;
-        try{
-            
-            //
+        DTO.Category result = null;
+        int category_id = t.getCategoryId();
+        String sql = "SELECT * FROM category WHERE category_id=?";
+        try(
             Connection con = ConnectionDB.getConnection();
-            
-            //
-            Statement st = con.createStatement();
-            
-            //
-            String sql = "SELECT * FROM category WHERE id='"+t.getCategoryId()+"'";
-            ResultSet rs = st.executeQuery(sql);
-            
-            //
+            PreparedStatement pst = con.prepareStatement(sql);
+            )
+        {
+            pst.setInt(1, category_id);
+            ResultSet rs = pst.executeQuery();
             while(rs.next()){
-                int category_id = rs.getInt("category_id");
                 String name = rs.getString("name");
-
                 
-//                NhanVien nv = new NhanVien(id, fullName, ngaySinh, email, sdt, diaChi, phongBan);
                 result = new DTO.Category(category_id, name);
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return result;
-        
     }
 
     @Override
     public ArrayList<Category> selectByCondition(String condition) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    
     
 }

@@ -4,7 +4,9 @@
  */
 package DAO;
 
+import DTO.Recipe;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,49 +14,93 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Lenovo
+ * @author LENOVO
  */
-public class RecipeDAO implements DAO.InterfaceDAO{
+public class RecipeDAO implements DAO.InterfaceDAO<DTO.Recipe>{
 
     @Override
-    public int insert(Object t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public int update(Object t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public int delete(Object t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public ArrayList selectAll() {
-        ArrayList<DTO.Category> result =new ArrayList<DTO.Category>();
-        
-        try{
-            //
-            Connection con = ConnectionDB.getConnection();
+    public int insert(Recipe t) {
+        int result = 0;
+        String sql = "INSERT into recipe (product_id, inven_id, unit, amount) VALUES (?,?,?,?)";
+                       
+        try(
+                Connection con = DAO.ConnectionDB.getConnection();
+                PreparedStatement pst = con.prepareStatement(sql);
+                )
+        {
+            pst.setInt(1, t.getProductId());
+            pst.setInt(2, t.getInventoryId());
+            pst.setString(3, t.getUnit());
+            pst.setFloat(4, t.getAmount());
             
-            //
-            Statement st = con.createStatement();
+            result = pst.executeUpdate();
             
-            //
-            String sql = "SELECT * FROM category";
-            ResultSet rs = st.executeQuery(sql);
-            
-            //
-            while(rs.next()){
-                int category_id = rs.getInt("category_id");
-                String name = rs.getString("name");
-                
-                DTO.Category dm = new DTO.Category(category_id, name);
-                result.add(dm);            
-            }
         }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public int update(Recipe t) {
+        int result = 0;
+        String sql = "UPDATE recipe SET unit = ?, amount = ? WHERE product_id = ?, inven_id = ?";
+
+        try (
+            Connection con = DAO.ConnectionDB.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql)) 
+        {
+            pst.setString(1, t.getUnit());
+            pst.setFloat(2, t.getAmount());
+            pst.setInt(3, t.getProductId());
+            pst.setInt(4, t.getInventoryId());
+
+            result = pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public int delete(Recipe t) {
+        int result = 0;
+        String sql = "DELETE from recipe WHERE product_id=?, inven_id=?";
+        try (
+            Connection con = DAO.ConnectionDB.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql))
+        {
+            pst.setInt(1, t.getProductId());
+            pst.setInt(2, t.getInventoryId());
+
+            result = pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public ArrayList<Recipe> selectAll() {
+        ArrayList<DTO.Recipe> result = new ArrayList<DTO.Recipe>();
+        String sql = "SELECT * FROM recipe";
+        
+        try(
+            Connection con = ConnectionDB.getConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            )
+        {
+            while (rs.next()){
+                int product_id = rs.getInt("product_id");
+                int inven_id = rs.getInt("invent_id");
+                String unit = rs.getString("unit");
+                float amount = rs.getFloat("amount");
+                
+                DTO.Recipe sp = new DTO.Recipe(product_id, inven_id, unit, amount);
+                result.add(sp);
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         
@@ -62,13 +108,33 @@ public class RecipeDAO implements DAO.InterfaceDAO{
     }
 
     @Override
-    public Object selectById(Object t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Recipe selectById(Recipe t) {
+        DTO.Recipe result = null;
+        int product_id = t.getProductId();
+        int inven_id = t.getInventoryId();
+        String sql = "SELECT * FROM recipe WHERE product_id=?, inven_id=?";
+        try(
+            Connection con = ConnectionDB.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
+            )
+        {
+            pst.setInt(1, product_id);
+            pst.setInt(2, inven_id);
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()){
+                String unit = rs.getString("unit");
+                float amount = rs.getFloat("amount");
+                
+                result = new DTO.Recipe(product_id, inven_id, unit, amount);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
-    public ArrayList selectByCondition(String condition) {
+    public ArrayList<Recipe> selectByCondition(String condition) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-}
+    }
