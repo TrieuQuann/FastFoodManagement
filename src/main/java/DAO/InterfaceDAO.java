@@ -19,7 +19,7 @@ public interface InterfaceDAO<T> {
     
     public ArrayList<T> selectAll();
     
-    public T selectById(T t);
+    public T selectById(int t);
     
     public ArrayList<T> selectByCondition(String condition);
     

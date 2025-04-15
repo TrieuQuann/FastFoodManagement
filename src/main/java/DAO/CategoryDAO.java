@@ -36,6 +36,32 @@ public class CategoryDAO implements DAO.InterfaceDAO<DTO.Category>{
         
         return result;
     }
+    
+    public int insert(String name) {
+        int result = 0;
+        String sql = "INSERT into category (category_id, name) VALUES (?)";
+        
+        try(
+                Connection con = DAO.ConnectionDB.getConnection();
+                PreparedStatement pst = con.prepareStatement(sql);
+                )
+        {
+            pst.setString(1, name);
+            result = pst.executeUpdate();
+            if (result!=0){
+                try (ResultSet rs = pst.getGeneratedKeys()){
+                    if (rs.next()){
+                        int generatedId = rs.getInt(1);
+                        result=generatedId;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return result;
+    }
 
     @Override
     public int update(Category t) {
@@ -73,6 +99,22 @@ public class CategoryDAO implements DAO.InterfaceDAO<DTO.Category>{
         }
         return result;
     }
+    
+    public int delete(int id) {
+        int result = 0;
+        String sql = "DELETE from category WHERE category_id=?";
+        try (
+            Connection con = DAO.ConnectionDB.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql))
+        {
+            pst.setInt(1,id);
+
+            result = pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
     @Override
     public ArrayList<Category> selectAll() {
@@ -99,9 +141,9 @@ public class CategoryDAO implements DAO.InterfaceDAO<DTO.Category>{
         return result;
     }
     @Override
-    public Category selectById(Category t) {
+    public Category selectById(int t) {
         DTO.Category result = null;
-        int category_id = t.getCategoryId();
+        int category_id = t;
         String sql = "SELECT * FROM category WHERE category_id=?";
         try(
             Connection con = ConnectionDB.getConnection();
@@ -125,5 +167,7 @@ public class CategoryDAO implements DAO.InterfaceDAO<DTO.Category>{
     public ArrayList<Category> selectByCondition(String condition) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    
     
 }

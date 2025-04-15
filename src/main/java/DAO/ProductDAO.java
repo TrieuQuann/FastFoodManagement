@@ -21,7 +21,7 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product>{
     @Override
     public int insert(Product t) {
         int result = 0;
-        String sql = "INSERT INTO product (productName, price, image, categoryId, expectedQuantity) "+
+        String sql = "INSERT INTO products (name, price, image, category_id, expected_quantity) "+
                 "VALUES (?,?,?,?,?)";
 
         try (
@@ -54,7 +54,7 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product>{
     @Override
     public int update(Product t) {
         int result = 0;
-        String sql = "UPDATE product SET productName = ?, price = ?, image = ?, categoryId = ?, expectedQuantity = ? WHERE product_id = ?";
+        String sql = "UPDATE products SET name = ?, price = ?, image = ?, category_id = ?, expected_quantity = ? WHERE product_id = ?";
 
         try (
             Connection con = DAO.ConnectionDB.getConnection();
@@ -79,7 +79,7 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product>{
     @Override
     public int delete(Product t) {
         int result = 0;
-        String sql = "DELETE from product WHERE product_id=?";
+        String sql = "DELETE from products WHERE product_id=?";
         try (
             Connection con = DAO.ConnectionDB.getConnection();
             PreparedStatement pst = con.prepareStatement(sql))
@@ -92,11 +92,28 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product>{
         }
         return result;
     }
+    
+    
+    public int delete(int id) {
+        int result = 0;
+        String sql = "DELETE from products WHERE product_id=?";
+        try (
+            Connection con = DAO.ConnectionDB.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql))
+        {
+            pst.setInt(1, id );
+
+            result = pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
     @Override
     public ArrayList<Product> selectAll() {
         ArrayList<DTO.Product> result = new ArrayList<DTO.Product>();
-        String sql = "SELECT * FROM product";
+        String sql = "SELECT * FROM products";
         
         try(
             Connection con = ConnectionDB.getConnection();
@@ -106,11 +123,11 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product>{
         {
             while (rs.next()){
                 int product_id = rs.getInt("product_id");
-                String productName = rs.getString("productName");
+                String productName = rs.getString("name");
                 Double price = rs.getDouble("price");
                 String image = rs.getString("image");
-                int categoryId = rs.getInt("categoryId");
-                int expectedQuantity = rs.getInt("expectedQuantity");
+                int categoryId = rs.getInt("category_id");
+                int expectedQuantity = rs.getInt("expected_quantity");
                 
                 DTO.Product sp = new DTO.Product(product_id, productName, price, image, categoryId, expectedQuantity);
                 result.add(sp);
@@ -123,10 +140,10 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product>{
     }
 
     @Override
-    public Product selectById(Product t) {
+    public Product selectById(int t) {
         DTO.Product result = null;
-        int product_id = t.getProductId();
-        String sql = "SELECT * FROM product WHERE product_id=?";
+        int product_id = t;
+        String sql = "SELECT * FROM products WHERE product_id=?";
         try(
             Connection con = ConnectionDB.getConnection();
             PreparedStatement pst = con.prepareStatement(sql);
@@ -135,11 +152,11 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product>{
             pst.setInt(1, product_id);
             ResultSet rs = pst.executeQuery();
             while(rs.next()){
-                String productName = rs.getString("productName");
+                String productName = rs.getString("name");
                 Double price = rs.getDouble("price");
                 String image = rs.getString("image");
-                int categoryId = rs.getInt("categoryId");
-                int expectedQuantity = rs.getInt("expectedQuantity");
+                int categoryId = rs.getInt("category_id");
+                int expectedQuantity = rs.getInt("expected_quantity");
                 
                 result = new DTO.Product(product_id, productName, price, image, categoryId, expectedQuantity);
             }
@@ -153,6 +170,6 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product>{
     public ArrayList<Product> selectByCondition(String condition) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
     
+  
 }

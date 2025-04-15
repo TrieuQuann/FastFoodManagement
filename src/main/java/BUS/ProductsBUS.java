@@ -5,6 +5,7 @@
 package BUS;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -23,6 +24,10 @@ public class ProductsBUS {
         return list;
     }
     
+    public void refreshList() {
+        list = dao.selectAll();
+    }
+    
     public boolean addProduct(DTO.Product t){
         if (t.getProductName() == null || t.getProductName().trim().isEmpty() ){
             return false;
@@ -39,51 +44,81 @@ public class ProductsBUS {
         return false;
     }
     
-    
-    
-    
     public boolean updateProduct(DTO.Product t){
         int result = dao.update(t);
-        return result!=0;
+        if (result != 0) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getProductId() == t.getProductId()) {
+                    list.set(i, t); // thay thế phần tử tại vị trí i của lisst này bằng t
+                    break;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean deleteProduct(int id) {
+        int result = dao.delete(id); 
+        if (result != 0) {
+            list.removeIf(p -> p.getProductId() == id); 
+            return true;
+        }
+        return false;
+    }
+    
+
+    public DTO.Product getProductById(int id) {
+        for (DTO.Product p : list) {
+            if (p.getProductId() == id) {
+                return p;
+            }
+        }
+        return null;
     }
 
+
+    public ArrayList<DTO.Product> searchByName(String search) {
+        ArrayList<DTO.Product> result = new ArrayList<>();
+
+        if (search == null || search.trim().isEmpty()) {
+            result.addAll(list);
+            return result;
+        }
+
+        search = search.toLowerCase();
+
+        for (DTO.Product p : list) {
+            String productName = p.getProductName().toLowerCase();
+            if (productName.contains(search)) {
+                result.add(p);
+            }
+        }
+
+        return result;
+    }
     
     
+    public ArrayList<DTO.Product> searchByCategory(String search) {
+        ArrayList<DTO.Product> result = new ArrayList<>();
+
+        if (search == null || search.trim().isEmpty()) {
+            result.addAll(list);
+            return result;
+        }
+
+        search = search.toLowerCase();
+
+        for (DTO.Product p : list) {
+            String productName = p.getProductName().toLowerCase();
+            if (productName.contains(search)) {
+                result.add(p);
+            }
+        }
+
+        return result;
+    }
+    
+    
+
 }
-
-
-
-//
-//    public boolean updateProduct(Product p) {
-//        boolean kq = dao.update(p);
-//        if (kq) {
-//            for (int i = 0; i < dsProduct.size(); i++) {
-//                if (dsProduct.get(i).getId() == p.getId()) {
-//                    dsProduct.set(i, p);
-//                    break;
-//                }
-//            }
-//        }
-//        return kq;
-//    }
-//
-//    // Xóa sản phẩm
-//    public boolean deleteProduct(int id) {
-//        boolean kq = dao.delete(id);
-//        if (kq) {
-//            dsProduct.removeIf(p -> p.getId() == id);
-//        }
-//        return kq;
-//    }
-//
-//    // Tìm kiếm sản phẩm theo tên
-//    public ArrayList<Product> searchByName(String keyword) {
-//        ArrayList<Product> result = new ArrayList<>();
-//        for (Product p : dsProduct) {
-//            if (p.getName().toLowerCase().contains(keyword.toLowerCase())) {
-//                result.add(p);
-//            }
-//        }
-//        return result;
-//    }
-//}

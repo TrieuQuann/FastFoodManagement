@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Apr 01, 2025 at 11:32 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th4 15, 2025 lúc 08:46 AM
+-- Phiên bản máy phục vụ: 10.4.32-MariaDB
+-- Phiên bản PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,13 +18,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `qlchta`
+-- Cơ sở dữ liệu: `qlchta`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category`
+-- Cấu trúc bảng cho bảng `category`
 --
 
 CREATE TABLE `category` (
@@ -33,25 +33,17 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `category`
+-- Đang đổ dữ liệu cho bảng `category`
 --
 
 INSERT INTO `category` (`category_id`, `name`) VALUES
-(1, 'Bánh mì'),
-(2, 'Burger'),
-(3, 'Pizza'),
-(4, 'Mì xào'),
-(5, 'Cơm chiên'),
-(6, 'Gà rán'),
-(7, 'Xúc xích'),
-(8, 'Khoai tây chiên'),
-(9, 'Trà sữa'),
-(10, 'Sinh tố');
+(11, 'Đồ uống'),
+(12, 'Đồ ăn');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customers`
+-- Cấu trúc bảng cho bảng `customers`
 --
 
 CREATE TABLE `customers` (
@@ -62,7 +54,7 @@ CREATE TABLE `customers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `customers`
+-- Đang đổ dữ liệu cho bảng `customers`
 --
 
 INSERT INTO `customers` (`cus_id`, `cus_name`, `phone`, `email`) VALUES
@@ -80,7 +72,7 @@ INSERT INTO `customers` (`cus_id`, `cus_name`, `phone`, `email`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `employee`
+-- Cấu trúc bảng cho bảng `employee`
 --
 
 CREATE TABLE `employee` (
@@ -93,7 +85,7 @@ CREATE TABLE `employee` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `employee`
+-- Đang đổ dữ liệu cho bảng `employee`
 --
 
 INSERT INTO `employee` (`eid`, `position_id`, `name`, `phone`, `address`, `gender`) VALUES
@@ -111,7 +103,7 @@ INSERT INTO `employee` (`eid`, `position_id`, `name`, `phone`, `address`, `gende
 -- --------------------------------------------------------
 
 --
--- Table structure for table `invendetail`
+-- Cấu trúc bảng cho bảng `invendetail`
 --
 
 CREATE TABLE `invendetail` (
@@ -123,7 +115,7 @@ CREATE TABLE `invendetail` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `inventory`
+-- Cấu trúc bảng cho bảng `inventory`
 --
 
 CREATE TABLE `inventory` (
@@ -134,7 +126,7 @@ CREATE TABLE `inventory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `inventory`
+-- Đang đổ dữ liệu cho bảng `inventory`
 --
 
 INSERT INTO `inventory` (`inven_id`, `name`, `quantity`, `unit`) VALUES
@@ -172,7 +164,7 @@ INSERT INTO `inventory` (`inven_id`, `name`, `quantity`, `unit`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `invoiceinvent`
+-- Cấu trúc bảng cho bảng `invoiceinvent`
 --
 
 CREATE TABLE `invoiceinvent` (
@@ -185,7 +177,7 @@ CREATE TABLE `invoiceinvent` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orderdetails`
+-- Cấu trúc bảng cho bảng `orderdetails`
 --
 
 CREATE TABLE `orderdetails` (
@@ -199,7 +191,7 @@ CREATE TABLE `orderdetails` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `orders`
+-- Cấu trúc bảng cho bảng `orders`
 --
 
 CREATE TABLE `orders` (
@@ -211,7 +203,7 @@ CREATE TABLE `orders` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `orders`
+-- Đang đổ dữ liệu cho bảng `orders`
 --
 
 INSERT INTO `orders` (`order_id`, `cus_id`, `eid`, `order_date`, `total_amount`) VALUES
@@ -229,7 +221,7 @@ INSERT INTO `orders` (`order_id`, `cus_id`, `eid`, `order_date`, `total_amount`)
 -- --------------------------------------------------------
 
 --
--- Table structure for table `permissions`
+-- Cấu trúc bảng cho bảng `permissions`
 --
 
 CREATE TABLE `permissions` (
@@ -240,7 +232,7 @@ CREATE TABLE `permissions` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `position`
+-- Cấu trúc bảng cho bảng `position`
 --
 
 CREATE TABLE `position` (
@@ -249,7 +241,7 @@ CREATE TABLE `position` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `position`
+-- Đang đổ dữ liệu cho bảng `position`
 --
 
 INSERT INTO `position` (`position_id`, `name`) VALUES
@@ -261,7 +253,7 @@ INSERT INTO `position` (`position_id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `products`
+-- Cấu trúc bảng cho bảng `products`
 --
 
 CREATE TABLE `products` (
@@ -273,23 +265,38 @@ CREATE TABLE `products` (
   `expected_quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `products`
+--
+
+INSERT INTO `products` (`product_id`, `category_id`, `name`, `price`, `image`, `expected_quantity`) VALUES
+(1, 11, 'Trà sữa', 21000, '', 60),
+(2, 12, 'Bánh mì', 12000, '', 0),
+(3, 12, 'Xúc xích', 4500, '', 90),
+(4, 12, 'Mì xào', 30000, '', 12),
+(5, 12, 'Burger', 15000, '', 50),
+(6, 12, 'Pizza', 120000, '', 120),
+(7, 12, 'Gà rán', 45000, '', 300),
+(8, 12, 'Khoai tây chiên', 34000, '', 70),
+(9, 11, 'Sinh tố', 34000, '', 65);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `recipe`
+-- Cấu trúc bảng cho bảng `recipe`
 --
 
 CREATE TABLE `recipe` (
   `product_id` int(11) NOT NULL,
   `inven_id` int(11) NOT NULL,
-  `unit` varchar(100) NOT NULL,
-  `amount` int(11) NOT NULL
+  `unit` varchar(100) DEFAULT NULL,
+  `amount` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rolepermission`
+-- Cấu trúc bảng cho bảng `rolepermission`
 --
 
 CREATE TABLE `rolepermission` (
@@ -301,7 +308,7 @@ CREATE TABLE `rolepermission` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Cấu trúc bảng cho bảng `roles`
 --
 
 CREATE TABLE `roles` (
@@ -312,7 +319,7 @@ CREATE TABLE `roles` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `suppliers`
+-- Cấu trúc bảng cho bảng `suppliers`
 --
 
 CREATE TABLE `suppliers` (
@@ -326,7 +333,7 @@ CREATE TABLE `suppliers` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Cấu trúc bảng cho bảng `users`
 --
 
 CREATE TABLE `users` (
@@ -338,57 +345,57 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `category`
+-- Chỉ mục cho bảng `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`category_id`);
 
 --
--- Indexes for table `customers`
+-- Chỉ mục cho bảng `customers`
 --
 ALTER TABLE `customers`
   ADD PRIMARY KEY (`cus_id`);
 
 --
--- Indexes for table `employee`
+-- Chỉ mục cho bảng `employee`
 --
 ALTER TABLE `employee`
   ADD PRIMARY KEY (`eid`),
   ADD KEY `fk_position` (`position_id`);
 
 --
--- Indexes for table `invendetail`
+-- Chỉ mục cho bảng `invendetail`
 --
 ALTER TABLE `invendetail`
   ADD PRIMARY KEY (`inven_id`,`invoice_id`),
   ADD KEY `fk_invoice` (`invoice_id`);
 
 --
--- Indexes for table `inventory`
+-- Chỉ mục cho bảng `inventory`
 --
 ALTER TABLE `inventory`
   ADD PRIMARY KEY (`inven_id`);
 
 --
--- Indexes for table `invoiceinvent`
+-- Chỉ mục cho bảng `invoiceinvent`
 --
 ALTER TABLE `invoiceinvent`
   ADD PRIMARY KEY (`invoice_id`),
   ADD KEY `fk_suppli` (`supplier_id`);
 
 --
--- Indexes for table `orderdetails`
+-- Chỉ mục cho bảng `orderdetails`
 --
 ALTER TABLE `orderdetails`
   ADD PRIMARY KEY (`order_id`,`product_id`),
   ADD KEY `fk_product2` (`product_id`);
 
 --
--- Indexes for table `orders`
+-- Chỉ mục cho bảng `orders`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`order_id`),
@@ -396,52 +403,52 @@ ALTER TABLE `orders`
   ADD KEY `fk_eid2` (`eid`);
 
 --
--- Indexes for table `permissions`
+-- Chỉ mục cho bảng `permissions`
 --
 ALTER TABLE `permissions`
   ADD PRIMARY KEY (`permission_id`);
 
 --
--- Indexes for table `position`
+-- Chỉ mục cho bảng `position`
 --
 ALTER TABLE `position`
   ADD PRIMARY KEY (`position_id`);
 
 --
--- Indexes for table `products`
+-- Chỉ mục cho bảng `products`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`product_id`),
   ADD KEY `fk_cate` (`category_id`);
 
 --
--- Indexes for table `recipe`
+-- Chỉ mục cho bảng `recipe`
 --
 ALTER TABLE `recipe`
   ADD PRIMARY KEY (`product_id`,`inven_id`),
   ADD KEY `fk_inven2` (`inven_id`);
 
 --
--- Indexes for table `rolepermission`
+-- Chỉ mục cho bảng `rolepermission`
 --
 ALTER TABLE `rolepermission`
   ADD PRIMARY KEY (`role_id`,`permission_id`,`prop`),
   ADD KEY `fk_permission` (`permission_id`);
 
 --
--- Indexes for table `roles`
+-- Chỉ mục cho bảng `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`role_id`);
 
 --
--- Indexes for table `suppliers`
+-- Chỉ mục cho bảng `suppliers`
 --
 ALTER TABLE `suppliers`
   ADD PRIMARY KEY (`supplier_id`);
 
 --
--- Indexes for table `users`
+-- Chỉ mục cho bảng `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`),
@@ -449,140 +456,140 @@ ALTER TABLE `users`
   ADD KEY `fk_eid` (`eid`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `category`
+-- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
--- AUTO_INCREMENT for table `customers`
+-- AUTO_INCREMENT cho bảng `customers`
 --
 ALTER TABLE `customers`
   MODIFY `cus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT for table `employee`
+-- AUTO_INCREMENT cho bảng `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=189;
+  MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=190;
 
 --
--- AUTO_INCREMENT for table `inventory`
+-- AUTO_INCREMENT cho bảng `inventory`
 --
 ALTER TABLE `inventory`
   MODIFY `inven_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
--- AUTO_INCREMENT for table `invoiceinvent`
+-- AUTO_INCREMENT cho bảng `invoiceinvent`
 --
 ALTER TABLE `invoiceinvent`
   MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `orders`
+-- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
   MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
--- AUTO_INCREMENT for table `permissions`
+-- AUTO_INCREMENT cho bảng `permissions`
 --
 ALTER TABLE `permissions`
   MODIFY `permission_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `position`
+-- AUTO_INCREMENT cho bảng `position`
 --
 ALTER TABLE `position`
   MODIFY `position_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `products`
+-- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `roles`
+-- AUTO_INCREMENT cho bảng `roles`
 --
 ALTER TABLE `roles`
   MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `suppliers`
+-- AUTO_INCREMENT cho bảng `suppliers`
 --
 ALTER TABLE `suppliers`
   MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `employee`
+-- Các ràng buộc cho bảng `employee`
 --
 ALTER TABLE `employee`
   ADD CONSTRAINT `fk_position` FOREIGN KEY (`position_id`) REFERENCES `position` (`position_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `invendetail`
+-- Các ràng buộc cho bảng `invendetail`
 --
 ALTER TABLE `invendetail`
   ADD CONSTRAINT `fk_inven` FOREIGN KEY (`inven_id`) REFERENCES `inventory` (`inven_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_invoice` FOREIGN KEY (`invoice_id`) REFERENCES `invoiceinvent` (`invoice_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `invoiceinvent`
+-- Các ràng buộc cho bảng `invoiceinvent`
 --
 ALTER TABLE `invoiceinvent`
   ADD CONSTRAINT `fk_suppli` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`supplier_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `orderdetails`
+-- Các ràng buộc cho bảng `orderdetails`
 --
 ALTER TABLE `orderdetails`
   ADD CONSTRAINT `fk_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_product2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `orders`
+-- Các ràng buộc cho bảng `orders`
 --
 ALTER TABLE `orders`
   ADD CONSTRAINT `fk_cusid` FOREIGN KEY (`cus_id`) REFERENCES `customers` (`cus_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_eid2` FOREIGN KEY (`eid`) REFERENCES `employee` (`eid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `products`
+-- Các ràng buộc cho bảng `products`
 --
 ALTER TABLE `products`
   ADD CONSTRAINT `fk_cate` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `recipe`
+-- Các ràng buộc cho bảng `recipe`
 --
 ALTER TABLE `recipe`
   ADD CONSTRAINT `fk_inven2` FOREIGN KEY (`inven_id`) REFERENCES `inventory` (`inven_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `rolepermission`
+-- Các ràng buộc cho bảng `rolepermission`
 --
 ALTER TABLE `rolepermission`
   ADD CONSTRAINT `fk_permission` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`permission_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `users`
+-- Các ràng buộc cho bảng `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `fk_eid` FOREIGN KEY (`eid`) REFERENCES `employee` (`eid`) ON DELETE CASCADE ON UPDATE CASCADE,

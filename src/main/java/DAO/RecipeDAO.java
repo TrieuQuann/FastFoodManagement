@@ -107,11 +107,9 @@ public class RecipeDAO implements DAO.InterfaceDAO<DTO.Recipe>{
         return result;
     }
 
-    @Override
-    public Recipe selectById(Recipe t) {
+    public Recipe selectById(int product_id, int inven_id) {
         DTO.Recipe result = null;
-        int product_id = t.getProductId();
-        int inven_id = t.getInventoryId();
+
         String sql = "SELECT * FROM recipe WHERE product_id=?, inven_id=?";
         try(
             Connection con = ConnectionDB.getConnection();
@@ -135,6 +133,11 @@ public class RecipeDAO implements DAO.InterfaceDAO<DTO.Recipe>{
 
     @Override
     public ArrayList<Recipe> selectByCondition(String condition) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Recipe selectById(int t) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     }
