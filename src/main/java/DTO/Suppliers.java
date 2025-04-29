@@ -54,6 +54,7 @@ public int getsupplier_id() {
     public void set(String address) {
         this.address = address;
     }
+   
     public String getphone() {
         return phone;
     }
