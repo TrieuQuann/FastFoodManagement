@@ -15,7 +15,7 @@ public class Suppliers {
    private String address;
    private String phone;
     
- public Customers(int , String , String , String , String ) {
+ public Suppliers(int , String , String , String , String ) {
         this.supplier_id = supplier_id;
         this.supplier_name = supplier_name;
         this.email = email;
