@@ -9,20 +9,20 @@ package DTO;
  * @author Lenovo
  */
 public class Position {
-    private String position_id;
+    private int position_id;
     private String name;
     // Getters and Setters
 
-    public Position(String position_id, String name) {
+    public Position(int position_id, String name) {
         this.position_id = position_id;
         this.name = name;
     }
 
-    public String getPosition_id() {
+    public int getPosition_id() {
         return position_id;
     }
 
-    public void setPosition_id(String position_id) {
+    public void setPosition_id(int position_id) {
         this.position_id = position_id;
     }
 

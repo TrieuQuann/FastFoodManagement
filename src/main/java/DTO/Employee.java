@@ -10,14 +10,14 @@ package DTO;
  */
 public class Employee {
     private int employee_id;
-    private String position_id;
+    private int position_id;
     private String name;
     private String phone;
     private String address;
     private String gender;
     // Getters and Setters
 
-    public Employee(int employee_id, String position_id, String name, String phone, String address, String gender) {
+    public Employee(int employee_id, int position_id, String name, String phone, String address, String gender) {
         this.employee_id = employee_id;
         this.position_id = position_id;
         this.name = name;
@@ -34,11 +34,11 @@ public class Employee {
         this.employee_id = employee_id;
     }
 
-    public String getPosition_id() {
+    public int getPosition_id() {
         return position_id;
     }
 
-    public void setPosition_id(String position_id) {
+    public void setPosition_id(int position_id) {
         this.position_id = position_id;
     }
 

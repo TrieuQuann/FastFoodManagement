@@ -1,13 +1,29 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package BUS;
 
-/**
- *
- * @author Lenovo
- */
+import DAO.OrdersDAO;
+import DTO.Orders;
+import java.util.List;
+
 public class OrdersBUS {
-    
+    private OrdersDAO ordersDAO = new OrdersDAO();
+
+    public List<Orders> getAllOrders() {
+        return ordersDAO.getAllOrders();
+    }
+
+    public boolean addOrder(Orders order) {
+        return ordersDAO.addOrder(order);
+    }
+
+    public boolean updateOrder(Orders order) {
+        return ordersDAO.updateOrder(order);
+    }
+
+    public boolean deleteOrder(int orderId) {
+        return ordersDAO.deleteOrder(orderId);
+    }
+
+    public List<Orders> searchOrders(String keyword) {
+        return ordersDAO.searchOrders(keyword);
+    }
 }

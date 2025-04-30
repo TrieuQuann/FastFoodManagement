@@ -9,18 +9,18 @@ package DTO;
  * @author Lenovo
  */
 public class Customers {
-    private int cus_id;
+    private int customers_id;
     private String name;
     private String phone;
     private String email;
     // Getters and Setters
 
-    public int getCus_id() {
-        return cus_id;
+    public int getCustomers_id() {
+        return customers_id;
     }
 
-    public void setCus_id(int cus_id) {
-        this.cus_id = cus_id;
+    public void setCustomers_id(int customers_id) {
+        this.customers_id = customers_id;
     }
 
     public String getName() {
@@ -47,8 +47,8 @@ public class Customers {
         this.email = email;
     }
 
-    public Customers(int cus_id, String name, String phone, String email) {
-        this.cus_id = cus_id;
+    public Customers(int customers_id, String name, String phone, String email) {
+        this.customers_id = customers_id;
         this.name = name;
         this.phone = phone;
         this.email = email;

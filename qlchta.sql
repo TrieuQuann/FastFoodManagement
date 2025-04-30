@@ -344,6 +344,26 @@ CREATE TABLE `users` (
   `paswd` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `users`
+--
+CREATE TABLE feature (
+    id int PRIMARY KEY,
+    feature_name VARCHAR(100) NOT NULL,
+    icon_url VARCHAR(255)
+);
+INSERT INTO feature (feature_name, icon_url) VALUES
+('Thống kê', 'image/icon/statistic.png'),
+('Sản phẩm', 'image/icon/product.png'),
+('Khách hàng', 'image/icon/customer.png'),
+('Nhân viên', 'image/icon/staff.png'),
+('Kho', 'image/icon/warehouse.png'),
+('Hóa đơn', 'image/icon/invoice.png'),
+('Công thức', 'image/icon/recipe.png');
+('Nhà cung cấp', 'image/icon/supplier.png'),
+
 --
 -- Chỉ mục cho các bảng đã đổ
 --

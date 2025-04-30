@@ -11,15 +11,15 @@ package DTO;
 public class Orders {
 
     private int order_id;
-    private int cus_id;
+    private int customers_id;
     private int employee_id;
     private String orderDate;
     private double totalAmount;
     // Getters and Setters
 
-    public Orders(int order_id, int cus_id, int employee_id, String orderDate, double totalAmount) {
+    public Orders(int order_id, int customers_id, int employee_id, String orderDate, double totalAmount) {
         this.order_id = order_id;
-        this.cus_id = cus_id;
+        this.customers_id = customers_id;
         this.employee_id = employee_id;
         this.orderDate = orderDate;
         this.totalAmount = totalAmount;
@@ -33,12 +33,12 @@ public class Orders {
         this.order_id = order_id;
     }
 
-    public int getCus_id() {
-        return cus_id;
+    public int getCustomers_id() {
+        return customers_id;
     }
 
-    public void setCus_id(int cus_id) {
-        this.cus_id = cus_id;
+    public void setCustomers_id(int customers_id) {
+        this.customers_id = customers_id;
     }
 
     public int getEmployee_id() {
