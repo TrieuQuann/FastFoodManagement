@@ -1,108 +1,114 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package DAO;
 
+import DTO.Customers;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import DTO.Customers;
 
-/**
- *
- * @author Lenovo
- */
 public class CustomersDAO {
     public List<Customers> getAllCustomers() {
-        List<Customers> customers = new ArrayList<>();
+        List<Customers> list = new ArrayList<>();
         String sql = "SELECT * FROM customers";
         try (Connection conn = ConnectionDB.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                Customers cus = new Customers(
-                    rs.getInt("customers_id"),
-                    rs.getString("name"),
+                Customers c = new Customers(
+                    rs.getInt("cus_id"),
+                    rs.getString("cus_name"),
                     rs.getString("phone"),
                     rs.getString("email")
                 );
-                customers.add(cus);
+                list.add(c);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return customers;
+        return list;
     }
 
-    // Thêm khách hàng
-    public boolean addCustomer(Customers cus) {
-        String sql = "INSERT INTO customers (name, phone, email) VALUES (?, ?, ?)";
+    public boolean addCustomer(Customers customer) {
+        String sql = "INSERT INTO customers (cus_name, phone, email) VALUES (?, ?, ?)";
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, cus.getName());
-            ps.setString(2, cus.getPhone());
-            ps.setString(3, cus.getEmail());
+            ps.setString(1, customer.getName());
+            ps.setString(2, customer.getPhone());
+            ps.setString(3, customer.getEmail());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
-    // Sửa thông tin khách hàng
-    public boolean updateCustomer(Customers cus) {
-        String sql = "UPDATE customers SET name=?, phone=?, email=? WHERE customers_id=?";
+    public boolean updateCustomer(Customers customer) {
+        String sql = "UPDATE customers SET cus_name=?, phone=?, email=? WHERE cus_id=?";
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, cus.getName());
-            ps.setString(2, cus.getPhone());
-            ps.setString(3, cus.getEmail());
-            ps.setInt(4, cus.getCustomers_id());
+            ps.setString(1, customer.getName());
+            ps.setString(2, customer.getPhone());
+            ps.setString(3, customer.getEmail());
+            ps.setInt(4, customer.getCustomerId());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
-    // Xóa khách hàng
-    public boolean deleteCustomer(int customersId) {
-        String sql = "DELETE FROM customers WHERE customers_id=?";
+    public boolean deleteCustomer(int customerId) {
+        String sql = "DELETE FROM customers WHERE cus_id=?";
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, customersId);
+            ps.setInt(1, customerId);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
-    // Tìm kiếm khách hàng theo tên, số điện thoại hoặc email
-    public List<Customers> searchCustomers(String keyword) {
-        List<Customers> customers = new ArrayList<>();
-        String sql = "SELECT * FROM customers WHERE name LIKE ? OR phone LIKE ? OR email LIKE ?";
+    public List<Customers> searchCustomers(String column, String keyword) {
+        List<Customers> list = new ArrayList<>();
+        String sql = "SELECT * FROM customers WHERE " + column + " LIKE ?";
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            String like = "%" + keyword + "%";
-            ps.setString(1, like);
-            ps.setString(2, like);
-            ps.setString(3, like);
+            ps.setString(1, "%" + keyword + "%");
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    Customers cus = new Customers(
-                        rs.getInt("customers_id"),
-                        rs.getString("name"),
+                    Customers c = new Customers(
+                        rs.getInt("cus_id"),
+                        rs.getString("cus_name"),
                         rs.getString("phone"),
                         rs.getString("email")
                     );
-                    customers.add(cus);
+                    list.add(c);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return customers;
+        return list;
+    }
+
+    public Customers getCustomerById(int customerId) {
+        String sql = "SELECT * FROM customers WHERE cus_id=?";
+        try (Connection conn = ConnectionDB.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, customerId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Customers(
+                        rs.getInt("cus_id"),
+                        rs.getString("cus_name"),
+                        rs.getString("phone"),
+                        rs.getString("email")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

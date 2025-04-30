@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package BUS;
 
 import DAO.EmployeeDAO;
 import DTO.Employee;
 import java.util.List;
 
-/**
- *
- * @author Lenovo
- */
 public class EmployeeBUS {
     private EmployeeDAO employeeDAO = new EmployeeDAO();
 
@@ -27,14 +19,15 @@ public class EmployeeBUS {
         return employeeDAO.updateEmployee(emp);
     }
 
-    public boolean deleteEmployee(int employeeId) {
-        return employeeDAO.deleteEmployee(employeeId);
+    public boolean deleteEmployee(int employee_id) {
+        return employeeDAO.deleteEmployee(employee_id);
     }
 
-    public List<Employee> searchEmployees(String keyword) {
-        return employeeDAO.searchEmployees(keyword);
+    public List<Employee> searchEmployees(String column, String keyword) {
+        return employeeDAO.searchEmployees(column, keyword);
     }
-    public List<Employee> getEmployeesById(int employee_id) {
-        return employeeDAO.getEmployeesById(employeeId);
+
+    public Employee getEmployeeById(int employee_id) {
+        return employeeDAO.getEmployeeById(employee_id);
     }
 }

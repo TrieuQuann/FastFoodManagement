@@ -23,43 +23,45 @@ public class Suppliers {
         this.phone = phone;
     }
 
-public int getsupplier_id() {
-        return supplier_id;
-    }
+ public int getSupplier_id() {
+    return supplier_id;
+ }
 
-    public void set(int supplier_id) {
-        this.supplier_id = supplier_id;
-    }
+ public void setSupplier_id(int supplier_id) {
+    this.supplier_id = supplier_id;
+ }
 
-    public String getsupplier_name() {
-        return supplier_name;
-    }
+ public String getSupplier_name() {
+    return supplier_name;
+ }
 
-    public void set(String supplier_name) {
-        this.supplier_name = supplier_name;
-    }
+ public void setSupplier_name(String supplier_name) {
+    this.supplier_name = supplier_name;
+ }
 
-    public String getemail() {
-        return email;
-    }
+ public String getEmail() {
+    return email;
+ }
 
-    public void set(String email) {
-        this.email = email;
-    }
+ public void setEmail(String email) {
+    this.email = email;
+ }
 
-    public String getaddress() {
-        return address;
-    }
+ public String getAddress() {
+    return address;
+ }
 
-    public void set(String address) {
-        this.address = address;
-    }
-   
-    public String getphone() {
-        return phone;
-    }
+ public void setAddress(String address) {
+    this.address = address;
+ }
 
-    public void set(String phone) {
-        this.phone = phone;
-    }
+ public String getPhone() {
+    return phone;
+ }
+
+ public void setPhone(String phone) {
+    this.phone = phone;
+ }
+
+
 }

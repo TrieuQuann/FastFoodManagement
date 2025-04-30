@@ -15,11 +15,11 @@ public class Customers {
     private String email;
     // Getters and Setters
 
-    public int getCustomers_id() {
+    public int getCustomerId() {
         return customers_id;
     }
 
-    public void setCustomers_id(int customers_id) {
+    public void setCustomerId(int customers_id) {
         this.customers_id = customers_id;
     }
 
