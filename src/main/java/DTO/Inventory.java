@@ -13,42 +13,44 @@ public class Inventory {
     private String name;
     private int quantity;
     private String unit;
- public Inventory(int inven_id, String name, int quantity, String unit) {
+
+    public Inventory(int inven_id, String name, int quantity, String unit) {
         this.inven_id = inven_id;
         this.name = name;
         this.quantity = quantity;
         this.unit = unit;
     }
 
-public int getinven_id() {
+    public int getInven_id() {
         return inven_id;
     }
 
-    public void set(int inven_id) {
+    public void setInven_id(int inven_id) {
         this.inven_id = inven_id;
     }
 
-    public String getname() {
+    public String getName() {
         return name;
     }
 
-    public void set(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public int getquantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void set(int quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
-    public String getunit() {
+    public String getUnit() {
         return unit;
     }
 
-    public void set(String unit) {
+    public void setUnit(String unit) {
         this.unit = unit;
     }
+
 }

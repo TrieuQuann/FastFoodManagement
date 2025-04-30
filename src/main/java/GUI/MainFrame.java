@@ -20,7 +20,7 @@ public class MainFrame extends JFrame {
     public MainFrame() {
         // Thiết lập tiêu đề và kích thước cho JFrame
         setTitle("Admin Interface");
-        setSize(1728, 1080); // Kích thước giao diện
+        setSize(1728, 840); // Kích thước giao diện
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Hiển thị ở giữa màn hình
 

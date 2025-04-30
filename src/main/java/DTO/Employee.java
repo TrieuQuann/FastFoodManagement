@@ -11,7 +11,7 @@ package DTO;
 public class Employee {
     private int employee_id;
     private int position_id;
-    private String name;
+    private String employee_name;
     private String phone;
     private String address;
     private String gender;
@@ -20,7 +20,7 @@ public class Employee {
     public Employee(int employee_id, int position_id, String name, String phone, String address, String gender) {
         this.employee_id = employee_id;
         this.position_id = position_id;
-        this.name = name;
+        this.employee_name = name;
         this.phone = phone;
         this.address = address;
         this.gender = gender;
@@ -42,12 +42,12 @@ public class Employee {
         this.position_id = position_id;
     }
 
-    public String getName() {
-        return name;
+    public String getEmployee_name() {
+        return employee_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmployee_name(String employee_name) {
+        this.employee_name = employee_name;
     }
 
     public String getPhone() {
