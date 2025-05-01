@@ -16,9 +16,12 @@ import DTO.Feature; // Import lớp Feature
 public class MainFrame extends JFrame {
 
     private JPanel sidebar, mainPanel;
+    private int currentrole;
 
-    public MainFrame() {
+    public MainFrame(int currentroleid) {
         // Thiết lập tiêu đề và kích thước cho JFrame
+        currentrole=currentroleid;
+        System.out.println(currentrole);
         setTitle("Admin Interface");
         setSize(1728, 840); // Kích thước giao diện
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -131,7 +134,7 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        new MainFrame();
+        //new MainFrame();
     }
 }
 
