@@ -17,7 +17,8 @@ public class Category {
         this.name = name;
     }
     public Category(){
-         
+         this.categoryId = 0;
+        this.name =null;
     }
 
     public int getCategoryId() {

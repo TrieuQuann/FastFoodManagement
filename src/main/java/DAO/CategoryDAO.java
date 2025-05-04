@@ -162,6 +162,15 @@ public class CategoryDAO implements DAO.InterfaceDAO<DTO.Category>{
         }
         return result;
     }
+    public String getNameById(int id) {
+        Category category = selectById(id);
+        if (category == null) {
+            System.err.println("Không tìm thấy category với ID: " + id);
+            return null;
+        }
+        return category.getName();
+    }
+
 
     @Override
     public ArrayList<Category> selectByCondition(String condition) {
