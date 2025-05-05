@@ -1,4 +1,5 @@
 GUI\DashboardManagementPanel.class
+GUI\UserManagementPanel$1.class
 GUI\EmployeeManagementPanel.class
 GUI\PositionManagementPanel.class
 DAO\EmployeeDAO.class

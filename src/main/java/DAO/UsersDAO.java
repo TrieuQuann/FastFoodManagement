@@ -33,26 +33,25 @@ public class UsersDAO {
         return list;
     }
     public void insertUser(Users user){
-        String sql = "INSERT INTO users(user_id,role_id,eid,username,paswd) VALUES(?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users(role_id,eid,username,paswd) VALUES(?, ?, ?, ?)";
         try (PreparedStatement stmt=conn.prepareStatement(sql)){
-            stmt.setInt(1, user.getUser_id());
-            stmt.setInt(2, user.getRole_id());
-            stmt.setInt(3, user.getEmployee_id());
-            stmt.setString(4, user.getUsername());
-            stmt.setString(5, user.getPassword());
+            stmt.setInt(1, user.getRole_id());
+            stmt.setInt(2, user.getEmployee_id());
+            stmt.setString(3, user.getUsername());
+            stmt.setString(4, user.getPassword());
             stmt.executeUpdate();
         } catch (Exception e){
             e.printStackTrace();
         }
     }
     public void updateUser(Users user){
-        String sql = "UPDATE users SET user_id = ?, role_id = ?, eid = ?, username = ?, paswd = ?";
+        String sql = "UPDATE users SET role_id = ?, eid = ?, username = ?, paswd = ? WHERE user_id = ?";
         try(PreparedStatement stmt=conn.prepareStatement(sql)){
-            stmt.setInt(1, user.getUser_id());
-            stmt.setInt(2, user.getRole_id());
-            stmt.setInt(3, user.getEmployee_id());
-            stmt.setString(4, user.getUsername());
-            stmt.setString(5, user.getPassword());
+            stmt.setInt(5, user.getUser_id());
+            stmt.setInt(1, user.getRole_id());
+            stmt.setInt(2, user.getEmployee_id());
+            stmt.setString(3, user.getUsername());
+            stmt.setString(4, user.getPassword());
             stmt.executeUpdate();
         } catch(Exception e){
             e.printStackTrace();

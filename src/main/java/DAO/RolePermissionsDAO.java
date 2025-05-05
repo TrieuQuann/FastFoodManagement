@@ -106,4 +106,20 @@ public class RolePermissionsDAO {
             ex.printStackTrace();
         }
     }
+    public ArrayList<RolePermissions> filterbyID(int id){
+        ArrayList<RolePermissions> list = new ArrayList<>();
+        String sql="SELECT * FROM rolepermission WHERE role_id = ?";
+        try(Connection conn = ConnectionDB.getConnection()){
+            PreparedStatement stmt=conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                RolePermissions rp=new RolePermissions(rs.getInt("role_id"), rs.getInt("permission_id"), rs.getString("prop"));
+                list.add(rp);
+            }
+        } catch (SQLException ex){
+            ex.printStackTrace();
+        }
+        return list;
+    }
 }

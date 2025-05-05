@@ -124,6 +124,12 @@ public class MainFrame extends JFrame {
             case "chức vụ":
                 mainPanel.add(new PositionManagementPanel(), BorderLayout.CENTER);
                 break;
+            case "phân quyền":
+                mainPanel.add(new DecentralizedManagementPanel(), BorderLayout.CENTER);
+                break;
+            case "tài khoản":
+                mainPanel.add(new UserManagementPanel(currentrole),BorderLayout.CENTER);
+                break;
             default:
                 JLabel content = new JLabel("You selected: " + selectedItem, SwingConstants.CENTER);
                 content.setFont(new Font("Arial", Font.BOLD, 24));
@@ -134,7 +140,7 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        //new MainFrame();
+        new MainFrame(1);
     }
 }
 

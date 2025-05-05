@@ -36,9 +36,9 @@ public class DecentralizedManagementPanel extends JPanel{
     private int currentroleID = -1;
     public DecentralizedManagementPanel(){
         lbltitle=new JLabel("Quản lý phân quyền");
-        lbltitle.setBounds(250,0,200,40);
+        lbltitle.setBounds(470,0,400,50);
         lbltitle.setHorizontalAlignment(SwingConstants.CENTER);
-        lbltitle.setFont(new Font("Arial", Font.PLAIN, 20));
+        lbltitle.setFont(new Font("Arial", Font.PLAIN, 30));
         String[] columns={"Chức năng","Thêm","Sửa","Xóa","Xem"};
         tbdcmodel=new DefaultTableModel(columns,0){
             @Override
@@ -50,8 +50,10 @@ public class DecentralizedManagementPanel extends JPanel{
             }
         };
         tbdc=new JTable(tbdcmodel);
+        tbdc.getTableHeader().setFont(new Font("Arial", Font.BOLD, 20));
+        tbdc.setFont(new Font("Arial", Font.PLAIN, 16));
         tbdcscroll=new JScrollPane(tbdc);
-        tbdcscroll.setBounds(10, 100, 670, 400);
+        tbdcscroll.setBounds(200, 200, 1000, 500);
         
         cbrole = new JComboBox<>();
         cbrole.addActionListener(e->{
@@ -61,37 +63,35 @@ public class DecentralizedManagementPanel extends JPanel{
                 loadPermission();
             }
         });
-        cbrole.setBounds(30, 50, 150, 30);
+        cbrole.setBounds(100, 100, 150, 30);
         
         btnsave=new JButton("Lưu phân quyền");
         btnsave.addActionListener(e->savePermission());
-        btnsave.setBounds(300, 30, 100, 30);
+        btnsave.setBounds(800, 50, 150, 30);
         btnsave.setBackground(Color.blue);
         
         btnaddnewper=new JButton("Thêm quyền");
         btnaddnewper.addActionListener(e->addpermission());
-        btnaddnewper.setBounds(400, 30, 100, 30);
+        btnaddnewper.setBounds(1000, 50, 150, 30);
         btnaddnewper.setBackground(Color.CYAN);
         
         btndelper=new JButton("Xóa quyền");
         btndelper.addActionListener(e -> delpermission());
-        btndelper.setBounds(400, 60, 100, 30);
+        btndelper.setBounds(1000, 80, 100, 30);
         btndelper.setBackground(Color.CYAN);
         
         btnaddrole=new JButton("Thêm nhóm quuyền");
         btnaddrole.addActionListener(e->addrole());
-        btnaddrole.setBounds(500, 30, 100, 30);
-        btnaddrole.setBackground(Color.DARK_GRAY);
+        btnaddrole.setBounds(1200, 50, 150, 30);
+        btnaddrole.setBackground(Color.yellow);
         
         btndelrole=new JButton("Xóa nhóm quuyền");
         btndelrole.addActionListener(e->delrole());
-        btndelrole.setBounds(500, 60, 100, 30);
-        btndelrole.setBackground(Color.DARK_GRAY);
+        btndelrole.setBounds(1200, 80, 150, 30);
+        btndelrole.setBackground(Color.yellow);
         
         loadRole();
         
-        //this.setBackground(Color.blue);
-        this.setSize(700, 500);
         this.add(lbltitle);
         this.add(cbrole);
         this.add(tbdcscroll);
@@ -101,15 +101,16 @@ public class DecentralizedManagementPanel extends JPanel{
         this.add(btnaddrole);
         this.add(btndelrole);
         this.setLayout(null);
+        this.setBackground(Color.white);
     }
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         JFrame f=new JFrame();
         DecentralizedManagementPanel d=new DecentralizedManagementPanel();
         f.add(d);
         f.setVisible(true);
         f.setSize(700, 500);
         f.setDefaultCloseOperation(EXIT_ON_CLOSE);
-    }
+    }*/
 
     private void savePermission() {
         if (currentroleID==-1)
@@ -167,7 +168,7 @@ public class DecentralizedManagementPanel extends JPanel{
         JDialog dialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Thêm quyền", true);
         dialog.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        dialog.setLocationRelativeTo(this);
+        dialog.setLocationRelativeTo(null);
         
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
@@ -220,7 +221,7 @@ public class DecentralizedManagementPanel extends JPanel{
         JDialog dialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Thêm nhóm quyền", true);
         dialog.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        dialog.setLocationRelativeTo(this);
+        dialog.setLocationRelativeTo(null);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
         gbc.gridx=0;
@@ -271,7 +272,7 @@ public class DecentralizedManagementPanel extends JPanel{
         JDialog dialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Xóa nhóm quyền", true);
         dialog.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        dialog.setLocationRelativeTo(this);
+        dialog.setLocationRelativeTo(null);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
         gbc.gridx=0;
@@ -328,7 +329,7 @@ public class DecentralizedManagementPanel extends JPanel{
         JDialog dialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(this), "Xóa quyền", true);
         dialog.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        dialog.setLocationRelativeTo(this);
+        dialog.setLocationRelativeTo(null);
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
         gbc.gridx=0;
