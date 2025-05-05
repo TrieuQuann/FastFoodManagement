@@ -20,7 +20,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame(int currentroleid) {
         // Thiết lập tiêu đề và kích thước cho JFrame
-        currentrole=currentroleid;
+        currentrole = currentroleid;
         System.out.println(currentrole);
         setTitle("Admin Interface");
         setSize(1728, 840); // Kích thước giao diện
@@ -38,7 +38,6 @@ public class MainFrame extends JFrame {
 
         // Thêm khoảng cách 10px từ cạnh trên
         sidebar.add(Box.createVerticalStrut(30)); // Khoảng cách từ cạnh trên
-        
 
         // Lấy dữ liệu từ bảng feature trong cơ sở dữ liệu
         List<Feature> sidebarData = fetchSidebarDataFromDatabase();
@@ -81,7 +80,8 @@ public class MainFrame extends JFrame {
         add(mainPanel, BorderLayout.CENTER);
 
         // Thêm nội dung mặc định cho mainPanel khi khởi động
-        // mainPanel.add(new JLabel("Chào mừng bạn đến với hệ thống quản lý!", SwingConstants.CENTER), BorderLayout.CENTER);
+        // mainPanel.add(new JLabel("Chào mừng bạn đến với hệ thống quản lý!",
+        // SwingConstants.CENTER), BorderLayout.CENTER);
 
         // Hiển thị JFrame
         setVisible(true);
@@ -92,8 +92,8 @@ public class MainFrame extends JFrame {
         List<Feature> features = new ArrayList<>();
         String query = "SELECT feature_name, icon_url FROM feature";
         try (Connection conn = ConnectionDB.getConnection();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
                 String iconUrl = rs.getString("icon_url");
@@ -128,7 +128,9 @@ public class MainFrame extends JFrame {
                 mainPanel.add(new DecentralizedManagementPanel(), BorderLayout.CENTER);
                 break;
             case "tài khoản":
-                mainPanel.add(new UserManagementPanel(currentrole),BorderLayout.CENTER);
+                mainPanel.add(new UserManagementPanel(currentrole), BorderLayout.CENTER);
+            case "sản phẩm":
+                mainPanel.add(new InformationProductPanel(), BorderLayout.CENTER);
                 break;
             default:
                 JLabel content = new JLabel("You selected: " + selectedItem, SwingConstants.CENTER);
@@ -143,4 +145,3 @@ public class MainFrame extends JFrame {
         new MainFrame(1);
     }
 }
-

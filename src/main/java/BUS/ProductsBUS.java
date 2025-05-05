@@ -44,12 +44,77 @@ public class ProductsBUS {
         return false;
     }
     
+    public boolean addProduct(String pname, String image, String cname){
+        if (pname == null || pname.trim().isEmpty()) {
+            System.err.println("Tên sản phẩm không được để trống.");
+            return false;
+        }
+        if (cname == null || cname.trim().isEmpty()) {
+            System.err.println("Loại món ăn không được để trống.");
+            return false;
+        }
+        if (image == null || image.trim().isEmpty()) {
+            System.err.println("Đường dẫn hình ảnh không hợp lệ.");
+            return false;
+        }
+        int cid = selectCategoryIdByCategoryName(cname);
+        if (cid == -1) {
+            System.err.println("Không tìm thấy loại món ăn: " + cname);
+            return false;
+        }
+        int result = dao.insert(pname,image,cid);
+        if (result!=0){
+            DTO.Product t = new DAO.ProductDAO().selectById(result);
+            list.add(t);
+            return true;
+        }
+        return false;
+    }
+    
     public boolean updateProduct(DTO.Product t){
         int result = dao.update(t);
         if (result != 0) {
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getProductId() == t.getProductId()) {
                     list.set(i, t); // thay thế phần tử tại vị trí i của lisst này bằng t
+                    break;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean updateProduct(int id, String pname, String image, String cname){
+        if (id <= 0) {
+            System.err.println("ID sản phẩm không hợp lệ.");
+            return false;
+        }
+        if (pname == null || pname.trim().isEmpty()) {
+            System.err.println("Tên sản phẩm không được để trống.");
+            return false;
+        }
+        if (cname == null || cname.trim().isEmpty()) {
+            System.err.println("Loại món ăn không được để trống.");
+            return false;
+        }
+        if (image == null || image.trim().isEmpty()) {
+            System.err.println("Đường dẫn hình ảnh không hợp lệ.");
+            return false;
+        }
+        int cid = selectCategoryIdByCategoryName(cname);
+        if (cid == -1) {
+            System.err.println("Không tìm thấy loại món ăn: " + cname);
+            return false;
+        }
+        
+        int result = dao.update(id,pname,image,cid);
+        if (result != 0) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getProductId() == id) {
+                    list.get(i).setCategoryId(cid);
+                    list.get(i).setImage(image);
+                    list.get(i).setProductName(pname);
                     break;
                 }
             }
@@ -118,7 +183,20 @@ public class ProductsBUS {
 
         return result;
     }
+    public int getNextProductId() {
+        return dao.getNextProductIdByMax();
+    }
     
+    public int selectCategoryIdByCategoryName(String name) {
+        return dao.selectCategoryIdByName(name);
+    }
     
-
+    public boolean isProductExists(String productName) {
+        if (productName == null || productName.trim().isEmpty()) {
+            return false;
+        }
+        String searchName = productName.trim().toLowerCase();
+        return list.stream().anyMatch(p -> p.getProductName().trim().toLowerCase().equals(searchName));
+    }
+    
 }

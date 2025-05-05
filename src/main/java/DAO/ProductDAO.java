@@ -48,6 +48,34 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product> {
         }
         return result;
     }
+    
+    public int insert(String pname, String image, int cid) {
+        int result = 0;
+        String sql = "INSERT INTO products (name, image, category_id) " +
+                "VALUES (?,?,?)";
+
+        try (
+                Connection con = DAO.ConnectionDB.getConnection();
+                PreparedStatement pst = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            pst.setString(1, pname);
+            pst.setString(2, image);
+            pst.setInt(3, cid);
+
+            result = pst.executeUpdate();
+            if (result != 0) {
+                try (ResultSet rs = pst.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        int generatedId = rs.getInt(1);
+                        result = generatedId;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
     @Override
     public int update(Product t) {
@@ -64,6 +92,26 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product> {
             pst.setInt(4, t.getCategoryId());
             pst.setInt(5, t.getExpectedQuantity());
             pst.setInt(6, t.getProductId());
+
+            result = pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    public int update(int id, String name, String image, int category_id) {
+        int result = 0;
+        String sql = "UPDATE products SET name = ?, image = ?, category_id = ? WHERE product_id = ?";
+
+        try (
+                Connection con = DAO.ConnectionDB.getConnection();
+                PreparedStatement pst = con.prepareStatement(sql)) {
+
+            pst.setString(1, name);
+            pst.setString(2, image);
+            pst.setInt(3, category_id);
+            pst.setInt(4, id);
 
             result = pst.executeUpdate();
         } catch (SQLException e) {
@@ -90,7 +138,7 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product> {
 
     public int delete(int id) {
         int result = 0;
-        String sql = "DELETE from products WHERE product_id=?";
+        String sql = "UPDATE products SET status = 0 WHERE product_id = ?";
         try (
                 Connection con = DAO.ConnectionDB.getConnection();
                 PreparedStatement pst = con.prepareStatement(sql)) {
@@ -106,7 +154,7 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product> {
     @Override
     public ArrayList<Product> selectAll() {
         ArrayList<DTO.Product> result = new ArrayList<DTO.Product>();
-        String sql = "SELECT * FROM products";
+        String sql = "SELECT * FROM products WHERE status = 1";
 
         try (
                 Connection con = ConnectionDB.getConnection();
@@ -154,6 +202,46 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product> {
         }
         return result;
     }
+    
+    public int selectCategoryIdByName(String name) {
+        int result =0;
+        String sql = "SELECT category_id FROM category WHERE name=?";
+        try (
+                Connection con = ConnectionDB.getConnection();
+                PreparedStatement pst = con.prepareStatement(sql);) {
+            pst.setString(1, name);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {  
+                result = rs.getInt("category_id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public int getNextProductIdByMax() {
+        int nextId = 1;
+        String sql = "SELECT MAX(product_id) AS max_id FROM products";
+
+        try (
+            Connection con = DAO.ConnectionDB.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql);
+            ResultSet rs = pst.executeQuery()
+        ) {
+            if (rs.next()) {
+                int maxId = rs.getInt("max_id");
+                if (!rs.wasNull()) {
+                    nextId = maxId + 1;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return nextId;
+    }
+
 
     @Override
     public ArrayList<Product> selectByCondition(String condition) {
