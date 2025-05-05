@@ -1,9 +1,0 @@
-GUI\DashboardManagementPanel.class
-GUI\UserManagementPanel$1.class
-GUI\EmployeeManagementPanel.class
-GUI\PositionManagementPanel.class
-DAO\EmployeeDAO.class
-GUI\InventoryManagementPanel.class
-GUI\CustomersManagementPanel.class
-GUI\RecipeManagementPanel.class
-GUI\OrdersManagementPanel.class
