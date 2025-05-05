@@ -35,4 +35,7 @@ public class RolePermissionsBUS {
         }
         dao.deleteRP(rp);
     }
+    public ArrayList<RolePermissions> getbyID(int id){
+        return dao.filterbyID(id);
+    }
 }

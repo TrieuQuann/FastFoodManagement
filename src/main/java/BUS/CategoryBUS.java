@@ -29,6 +29,21 @@ public class CategoryBUS {
     public ArrayList<DTO.Category> getAll(){
         return list;
     }
+
+    public String[] getAllCategoryName(){
+        String[] names = new String[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            names[i] = list.get(i).getName();
+        }
+        return names;
+    }
+    
+    
+    public String getNameById(int id){
+//        System.out.println(id);
+//        System.out.println(dao.getNameById(id));
+        return dao.getNameById(id);
+    }
     
     public boolean addCategory(String name){
         if (name == null )
@@ -65,10 +80,26 @@ public class CategoryBUS {
         }
         return false;
     }
-    
-    
+    public void Showdata(){
+        CategoryBUS categoryBUS = new CategoryBUS();
+
+    for (int id = 13; id <= 19; id++) {
+        String name = categoryBUS.getNameById(id);
+        System.out.println("ID: " + id + " | Name: " + (name != null ? name : "Không tìm thấy"));
+    }
+    }
+public static void main(String[] args) {
+    CategoryBUS categoryBUS = new CategoryBUS();
+
+    for (int id = 13; id <= 19; id++) {
+        String name = categoryBUS.getNameById(id);
+        System.out.println("ID: " + id + " | Name: " + (name != null ? name : "Không tìm thấy"));
+    }
+}
+
+}
+
 
     
     
     
-}
