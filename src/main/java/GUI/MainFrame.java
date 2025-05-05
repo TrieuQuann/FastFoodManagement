@@ -1,6 +1,8 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -120,6 +122,9 @@ public class MainFrame extends JFrame {
                 break;
             case "hóa đơn":
                 mainPanel.add(new OrdersManagementPanel(), BorderLayout.CENTER);
+                break;
+            case "phân quyền":
+                mainPanel.add(new DecentralizedManagementPanel(), BorderLayout.CENTER);
                 break;
             case "chức vụ":
                 mainPanel.add(new PositionManagementPanel(), BorderLayout.CENTER);
