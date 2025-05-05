@@ -4,10 +4,14 @@
  */
 package DAO;
 
+import DTO.InvoiceInventory;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author Lenovo
  */
 public class InvoiceInventoryDAO {
-    
+      
 }
