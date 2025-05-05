@@ -22,7 +22,7 @@ public class InventoryDAO {
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 Inventory emp = new Inventory(
-                    rs.getInt("inven_id "),
+                    rs.getInt("inven_id"),
                     rs.getString("name"),
                     rs.getInt("quantity"),
                     rs.getString("unit")
@@ -78,14 +78,14 @@ public class InventoryDAO {
 
     public List<Inventory> searchInventory(String column, String keyword) {
         List<Inventory> list = new ArrayList<>();
-        String sql = "SELECT * inventory WHERE " + column + " LIKE ?";
+        String sql = "SELECT * FROM inventory WHERE " + column + " LIKE ?";
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, "%" + keyword + "%");
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Inventory emp = new Inventory(
-                        rs.getInt("inven_id "),
+                        rs.getInt("inven_id"),
                         rs.getString("name"),
                         rs.getInt("quantity"),
                         rs.getString("unit")
@@ -107,7 +107,7 @@ public class InventoryDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     return new Inventory(
-                        rs.getInt("inven_id "),
+                        rs.getInt("inven_id"),
                         rs.getString("name"),
                         rs.getInt("quantity"),
                         rs.getString("unit")
