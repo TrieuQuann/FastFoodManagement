@@ -183,6 +183,16 @@ public class ProductsBUS {
 
         return result;
     }
+    public Boolean isCategoryUseInProduct(int cid){
+        for (DTO.Product p : list) {
+            int categoryId = p.getCategoryId();
+            if (categoryId==cid) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public int getNextProductId() {
         return dao.getNextProductIdByMax();
     }

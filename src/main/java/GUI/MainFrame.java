@@ -137,6 +137,12 @@ public class MainFrame extends JFrame {
             case "sản phẩm":
                 mainPanel.add(new InformationProductPanel(), BorderLayout.CENTER);
                 break;
+            case "danh mục":
+                mainPanel.add(new InformationCategoryPanel(), BorderLayout.CENTER);
+                break;
+            case "công thức":
+                mainPanel.add(new RecipeManagementPanel(), BorderLayout.CENTER);
+                break;
             default:
                 JLabel content = new JLabel("You selected: " + selectedItem, SwingConstants.CENTER);
                 content.setFont(new Font("Arial", Font.BOLD, 24));

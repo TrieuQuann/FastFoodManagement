@@ -121,7 +121,7 @@ public class ProductInfo extends JPanel {
     }
     
     private void initUI() {
-        setPreferredSize(new Dimension(1000, 320));
+        setPreferredSize(new Dimension(950, 320));
         setLayout(new FlowLayout(FlowLayout.CENTER,10,10));
         setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
 
@@ -136,7 +136,7 @@ public class ProductInfo extends JPanel {
 
 //=================================Panel chứa thông tin sản phẩm=====================
         JPanel pnInfo = new JPanel();
-        pnInfo.setPreferredSize(new Dimension(800, 220));
+        pnInfo.setPreferredSize(new Dimension(730, 220));
         pnInfo.setLayout(new FlowLayout(FlowLayout.LEFT, 30,10));
         pnInfo.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
 
@@ -153,7 +153,7 @@ public class ProductInfo extends JPanel {
         
 //=======================Thêm Panel chứa nút duyệt ảnh và lưu thay đổi==================
         JPanel pnBonus = new JPanel();
-        pnBonus.setPreferredSize(new Dimension(750, 50));
+        pnBonus.setPreferredSize(new Dimension(590, 50));
         pnBonus.setLayout(new FlowLayout(FlowLayout.CENTER,10,10));
         
         //===== nút DUYỆT ẢNH =========
@@ -274,7 +274,7 @@ public class ProductInfo extends JPanel {
 //============================= Thêm JTextField vào panel=====================
     private void addTextField(JPanel pn, JTextField tf) {
         tf.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
-        tf.setPreferredSize(new Dimension(210, 40));
+        tf.setPreferredSize(new Dimension(200, 40));
         pn.add(tf);
     }
     
