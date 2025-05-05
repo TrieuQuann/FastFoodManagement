@@ -39,10 +39,10 @@ public class SuppliersDAO {
         String sql = "INSERT INTO suppliers (supplier_name ,email ,address ,phone) VALUES (?, ?, ?, ?)";
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, emp.getsupplier_name());
-            ps.setString(2, emp.getemail());
-            ps.setString(3, emp.getaddress());
-            ps.setString(4, emp.getphone());
+            ps.setString(1, emp.getSupplier_name());
+            ps.setString(2, emp.getEmail());
+            ps.setString(3, emp.getAddress());
+            ps.setString(4, emp.getPhone());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,11 +54,11 @@ public class SuppliersDAO {
         String sql = "UPDATE suppliers SET supplier_name=?, email=?, address=?, phone=? WHERE supplier_id=?";
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, emp.getsupplier_name());
-            ps.setString(2, emp.getemail());
-            ps.setString(3, emp.getaddress());
-            ps.setString(4, emp.getphone());
-            ps.setInt(5, emp.getsupplier_id());
+            ps.setString(1, emp.getSupplier_name());
+            ps.setString(2, emp.getEmail());
+            ps.setString(3, emp.getAddress());
+            ps.setString(4, emp.getPhone());
+            ps.setInt(5, emp.getSupplier_id());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
