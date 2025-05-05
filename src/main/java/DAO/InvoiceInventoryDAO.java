@@ -98,7 +98,7 @@ public class InvoiceInventoryDAO {
         return list;
     }
 
-    public Employee getInvoiceInventoryById(int invoice_id) {
+    public InvoiceInventory getInvoiceInventoryById(int invoice_id) {
         String sql = "SELECT * FROM invoiceinvent WHERE invoice_id=?";
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
