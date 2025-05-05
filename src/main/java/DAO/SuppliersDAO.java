@@ -109,7 +109,7 @@ public class SuppliersDAO {
             ps.setInt(1, supplier_id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new Employee(
+                    return new Suppliers(
                         rs.getInt("supplier_id"),
                         rs.getString("supplier_name"),
                         rs.getString("email"),
