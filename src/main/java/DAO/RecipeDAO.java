@@ -16,9 +16,8 @@ import java.util.ArrayList;
  *
  * @author LENOVO
  */
-public class RecipeDAO implements DAO.InterfaceDAO<DTO.Recipe>{
+public class RecipeDAO{
 
-    @Override
     public int insert(Recipe t) {
         int result = 0;
         String sql = "INSERT into recipe (product_id, inven_id, unit, amount) VALUES (?,?,?,?)";
@@ -41,7 +40,6 @@ public class RecipeDAO implements DAO.InterfaceDAO<DTO.Recipe>{
         return result;
     }
 
-    @Override
     public int update(Recipe t) {
         int result = 0;
         String sql = "UPDATE recipe SET unit = ?, amount = ? WHERE product_id = ?, inven_id = ?";
@@ -62,7 +60,6 @@ public class RecipeDAO implements DAO.InterfaceDAO<DTO.Recipe>{
         return result;
     }
 
-    @Override
     public int delete(Recipe t) {
         int result = 0;
         String sql = "DELETE from recipe WHERE product_id=?, inven_id=?";
@@ -80,7 +77,6 @@ public class RecipeDAO implements DAO.InterfaceDAO<DTO.Recipe>{
         return result;
     }
 
-    @Override
     public ArrayList<Recipe> selectAll() {
         ArrayList<DTO.Recipe> result = new ArrayList<DTO.Recipe>();
         String sql = "SELECT * FROM recipe";
@@ -129,15 +125,5 @@ public class RecipeDAO implements DAO.InterfaceDAO<DTO.Recipe>{
             e.printStackTrace();
         }
         return result;
-    }
-
-    @Override
-    public ArrayList<Recipe> selectByCondition(String condition) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Recipe selectById(int t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+        }
     }
