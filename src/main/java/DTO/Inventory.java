@@ -54,7 +54,7 @@ public class Inventory {
     }
     
     // bổ sung thêm price
-        public Double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
