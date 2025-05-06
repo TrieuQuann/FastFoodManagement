@@ -69,7 +69,7 @@ public class UserManagementPanel extends JPanel{
             }
         });
         JScrollPane scrPn=new JScrollPane(tbuser);
-        scrPn.setBounds(50, 200, 900, 400);
+        scrPn.setBounds(50, 200, 1200, 500);
         loadUsers();
         
         cbsearch=new JComboBox<>();
@@ -82,7 +82,8 @@ public class UserManagementPanel extends JPanel{
         txtsearch.setBounds(240, 60, 300, 30);
         
         btnsearch = new JButton("Tìm kiếm");
-        btnsearch.setBounds(540, 60, 50, 30);
+        btnsearch.setBounds(540, 60, 100, 30);
+        btnsearch.addActionListener(e -> searchuser());
         
         btnadd= new JButton("Thêm");
         btnadd.setBounds(1050, 50, 100, 30);

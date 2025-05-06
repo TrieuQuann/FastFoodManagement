@@ -67,28 +67,28 @@ public class DecentralizedManagementPanel extends JPanel{
         
         btnsave=new JButton("Lưu phân quyền");
         btnsave.addActionListener(e->savePermission());
-        btnsave.setBounds(800, 50, 150, 30);
-        btnsave.setBackground(Color.blue);
+        btnsave.setBounds(800, 70, 130, 30);
+        //btnsave.setBackground(Color.blue);
         
         btnaddnewper=new JButton("Thêm quyền");
         btnaddnewper.addActionListener(e->addpermission());
-        btnaddnewper.setBounds(1000, 50, 150, 30);
-        btnaddnewper.setBackground(Color.CYAN);
+        btnaddnewper.setBounds(950, 70, 120, 30);
+        //btnaddnewper.setBackground(Color.CYAN);
         
         btndelper=new JButton("Xóa quyền");
         btndelper.addActionListener(e -> delpermission());
-        btndelper.setBounds(1000, 80, 100, 30);
-        btndelper.setBackground(Color.CYAN);
+        btndelper.setBounds(950, 120, 120, 30);
+        //btndelper.setBackground(Color.CYAN);
         
         btnaddrole=new JButton("Thêm nhóm quuyền");
         btnaddrole.addActionListener(e->addrole());
-        btnaddrole.setBounds(1200, 50, 150, 30);
-        btnaddrole.setBackground(Color.yellow);
+        btnaddrole.setBounds(1100, 70, 170, 30);
+        //btnaddrole.setBackground(Color.yellow);
         
         btndelrole=new JButton("Xóa nhóm quuyền");
         btndelrole.addActionListener(e->delrole());
-        btndelrole.setBounds(1200, 80, 150, 30);
-        btndelrole.setBackground(Color.yellow);
+        btndelrole.setBounds(1100, 120, 170, 30);
+        //btndelrole.setBackground(Color.yellow);
         
         loadRole();
         
