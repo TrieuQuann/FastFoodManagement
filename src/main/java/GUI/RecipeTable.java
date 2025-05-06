@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 
 /**
@@ -27,6 +29,8 @@ public class RecipeTable extends JPanel {
     private JPanel jpnBottomInfo;
     private RecipeTableModel model;
     private JTable jTable;
+    private JTextField jtfTongTien;
+
 
     public JTextField getJtfTongTien() {
         return jtfTongTien;
@@ -35,7 +39,6 @@ public class RecipeTable extends JPanel {
     public void setJtfTongTien(JTextField jtfTongTien) {
         this.jtfTongTien = jtfTongTien;
     }
-    private JTextField jtfTongTien;
 
     public RecipeTableModel getModel() {
         return model;
@@ -53,12 +56,12 @@ public class RecipeTable extends JPanel {
     }
 
     private void initRecipeTable() {
-        setPreferredSize(new Dimension(510, 700));
-        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        setPreferredSize(new Dimension(600, 800));
+        setBorder(BorderFactory.createLineBorder(new Color(0, 51, 153), 2));
         setLayout(new BorderLayout());
 
         JPanel jpnTitle = new JPanel();
-        jpnTitle.setPreferredSize(new Dimension(500, 50));
+        jpnTitle.setPreferredSize(new Dimension(550, 50));
         jpnTitle.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         JLabel jlbTitle = new JLabel("Chi tiết công thức");
@@ -71,11 +74,23 @@ public class RecipeTable extends JPanel {
         jnContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         
         JPanel jpnTable = new JPanel();
-        jpnTable.setPreferredSize(new Dimension(500, 550));
+        jpnTable.setPreferredSize(new Dimension(580, 800));
 //        jpnTable.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
         jpnTable.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         jTable = new JTable(model); 
+        jTable.setRowHeight(25);
+
+        JTableHeader header = jTable.getTableHeader();
+        header.setPreferredSize(new Dimension(header.getWidth(), 25));
+        header.setFont(new Font("Arial", Font.BOLD, 16));
+        header.setBackground(new Color(204, 229, 255)); 
+        header.setForeground(Color.BLACK);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+        for (int i = 0; i < jTable.getColumnCount(); i++) {
+            jTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
         JScrollPane jScrollPane = new JScrollPane(jTable);
         jpnTable.add(jScrollPane, BorderLayout.CENTER);
 
@@ -84,8 +99,9 @@ public class RecipeTable extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 int row = jTable.rowAtPoint(e.getPoint());
                 if (row >= 0) {
-                    int id = new BUS.InventoryBUS().getIdByName((String) jTable.getValueAt(row, 1));
-                    showInfo(id);
+                    int iId = new BUS.InventoryBUS().getIdByName((String) jTable.getValueAt(row, 1));
+                    int pId = new BUS.ProductsBUS().getIdByName((String) jTable.getValueAt(row, 0));
+                    showInfo(pId,iId);
                 }
             }
         });
@@ -121,7 +137,13 @@ public class RecipeTable extends JPanel {
         repaint(); 
     }
 
-    private void showInfo(int id) {
-        System.out.println("Món ăn ID: " + id);
+    private void showInfo(int pId, int iId) {
+        if (jpnBottomInfo instanceof RecipeBottomInfo) {
+            RecipeBottomInfo bottom = (RecipeBottomInfo) jpnBottomInfo;
+            String inventoryName = new BUS.InventoryBUS().getNameById(iId); 
+            bottom.getJcbInven().setSelectedItem(inventoryName);
+            int SoLuong = new BUS.RecipeBUS().getQuantityRecipe(pId, iId);
+            bottom.getJtfQuantity().setText(String.valueOf(SoLuong));
+        }
     }
 }

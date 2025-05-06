@@ -87,7 +87,7 @@ public class CategoryInfo extends JPanel {
         JPanel pnInfo = new JPanel();
         pnInfo.setPreferredSize(new Dimension(450, 135));
         pnInfo.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 10));
-        pnInfo.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
+        pnInfo.setBorder(BorderFactory.createLineBorder(new Color(0, 51, 153), 2));
 
         addLabel(pnInfo, "Mã danh mục:");
         addTextField(pnInfo, jtfId);
@@ -110,7 +110,22 @@ public class CategoryInfo extends JPanel {
         ));
         jpnSearch.add(jtfSearch);
         JButton jbtSearch = new JButton("Tìm kiếm");
+        jbtSearch.setPreferredSize(new Dimension(100, 40));
         jbtSearch.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+        jbtSearch.setBackground(new Color(30, 144, 255)); 
+        jbtSearch.setForeground(Color.WHITE); 
+        jbtSearch.setFocusPainted(false); 
+        jbtSearch.setFont(new Font("Segoe UI", Font.BOLD, 14)); 
+        jbtSearch.setBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 1));
+        jbtSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtSearch.setBackground(new Color(0, 120, 215));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtSearch.setBackground(new Color(30, 144, 255));
+            }
+        });
         jbtSearch.addActionListener(e -> reloadTable(getJtfSearch().getText()));
         jpnSearch.add(jbtSearch);
 
@@ -128,6 +143,20 @@ public class CategoryInfo extends JPanel {
         JButton bt = new JButton(text);
         bt.setPreferredSize(new Dimension(90, 40));
         bt.setActionCommand(text);
+        bt.setBackground(new Color(30, 144, 255)); 
+        bt.setForeground(Color.WHITE); 
+        bt.setFocusPainted(false); 
+        bt.setFont(new Font("Segoe UI", Font.BOLD, 14)); 
+        bt.setBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 1));
+        bt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bt.setBackground(new Color(0, 120, 215));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                bt.setBackground(new Color(30, 144, 255));
+            }
+        });
         bt.addActionListener(e -> handleButtonAction(e.getActionCommand()));
         pn.add(bt);
     }

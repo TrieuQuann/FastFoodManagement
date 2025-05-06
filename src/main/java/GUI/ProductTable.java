@@ -9,6 +9,7 @@ import DTO.Product;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
@@ -16,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 
 public class ProductTable extends JPanel {
     private JPanel jpnInfo;
@@ -41,11 +44,24 @@ public class ProductTable extends JPanel {
 
     private void initProductTable() {
         setPreferredSize(new Dimension(950, 400));
-        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+//        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         setLayout(new BorderLayout());
 
-        jTable = new JTable(this.model); // Khởi tạo bảng
+        jTable = new JTable(this.model);
         jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
+        jTable.setRowHeight(25);
+
+        JTableHeader header = jTable.getTableHeader();
+        header.setPreferredSize(new Dimension(header.getWidth(), 40));
+        header.setFont(new Font("Arial", Font.BOLD, 16));
+        header.setBackground(new Color(204, 229, 255)); 
+        header.setForeground(Color.BLACK);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+        for (int i = 0; i < jTable.getColumnCount(); i++) {
+            jTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
         JScrollPane jScrollPane = new JScrollPane(jTable);
         add(jScrollPane, BorderLayout.CENTER);
 

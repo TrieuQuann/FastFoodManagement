@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
         currentrole = currentroleid;
         System.out.println(currentrole);
         setTitle("Admin Interface");
-        setSize(1728, 840); // Kích thước giao diện
+        setSize(1728, 1040); // Kích thước giao diện
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Hiển thị ở giữa màn hình
 
@@ -134,6 +134,7 @@ public class MainFrame extends JFrame {
                 break;
             case "tài khoản":
                 mainPanel.add(new UserManagementPanel(currentrole), BorderLayout.CENTER);
+                break;
             case "sản phẩm":
                 mainPanel.add(new InformationProductPanel(), BorderLayout.CENTER);
                 break;

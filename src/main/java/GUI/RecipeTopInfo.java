@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import static java.awt.SystemColor.text;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -88,7 +89,7 @@ public class RecipeTopInfo extends JPanel{
     
     private void initRecipeTopInfo(){
         setPreferredSize(new Dimension(450, 210));
-        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        setBorder(BorderFactory.createLineBorder(new Color(0, 51, 153), 2));
         setLayout(new FlowLayout(FlowLayout.LEFT,20,20));
         
         JLabel jlbCategory = new JLabel("Chọn loại món:");
@@ -110,12 +111,57 @@ public class RecipeTopInfo extends JPanel{
         
         JButton jbtChoose1 = new JButton("Chọn");
         jbtChoose1.setPreferredSize(new Dimension(70, 35));
+//        jbtChoose1.setActionCommand(text);
+        jbtChoose1.setBackground(new Color(30, 144, 255)); 
+        jbtChoose1.setForeground(Color.WHITE); 
+        jbtChoose1.setFocusPainted(false); 
+        jbtChoose1.setFont(new Font("Segoe UI", Font.BOLD, 14)); 
+        jbtChoose1.setBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 1));
+        jbtChoose1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtChoose1.setBackground(new Color(0, 120, 215));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtChoose1.setBackground(new Color(30, 144, 255));
+            }
+        });
         jbtChoose1.addActionListener(e -> handleChoose1());
         JButton jbtChoose2 = new JButton("Chọn");
         jbtChoose2.setPreferredSize(new Dimension(70, 35));
+//        jbtChoose2.setActionCommand(text);
+        jbtChoose2.setBackground(new Color(30, 144, 255)); 
+        jbtChoose2.setForeground(Color.WHITE); 
+        jbtChoose2.setFocusPainted(false); 
+        jbtChoose2.setFont(new Font("Segoe UI", Font.BOLD, 14)); 
+        jbtChoose2.setBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 1));
+        jbtChoose2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtChoose2.setBackground(new Color(0, 120, 215));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtChoose2.setBackground(new Color(30, 144, 255));
+            }
+        });
         jbtChoose2.addActionListener(e -> handleChoose2());
         JButton jbtChoose3 = new JButton("Xác nhận");
         jbtChoose3.setPreferredSize(new Dimension(90, 35));
+//        jbtChoose3.setActionCommand(text);
+        jbtChoose3.setBackground(new Color(30, 144, 255)); 
+        jbtChoose3.setForeground(Color.WHITE); 
+        jbtChoose3.setFocusPainted(false); 
+        jbtChoose3.setFont(new Font("Segoe UI", Font.BOLD, 14)); 
+        jbtChoose3.setBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 1));
+        jbtChoose3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtChoose3.setBackground(new Color(0, 120, 215));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtChoose3.setBackground(new Color(30, 144, 255));
+            }
+        });
         jbtChoose3.addActionListener(e -> handleChoose3());
         
         add(jlbCategory);
@@ -136,7 +182,6 @@ public class RecipeTopInfo extends JPanel{
             JOptionPane.showMessageDialog(this, "Vui lòng chọn loại món ăn!");
             return;
         }
-
         String[] foods = new BUS.ProductsBUS().searchByCategoryName(searchCategory);
         if (foods.length == 0) {
             JOptionPane.showMessageDialog(this, "Không tìm thấy món ăn phù hợp.");
@@ -147,8 +192,13 @@ public class RecipeTopInfo extends JPanel{
     }
 
 
-    private void handleChoose2() {
-        String searchFood = getJcbFood().getSelectedItem().toString();
+    void handleChoose2() {
+        Object selected = getJcbFood().getSelectedItem();
+        if (selected == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn loại món ăn!");
+            return;
+        }
+        String searchFood = selected.toString().trim();
         if (searchFood.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn món ăn!");
             return;
@@ -168,8 +218,54 @@ public class RecipeTopInfo extends JPanel{
     }
 
     private void handleChoose3() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Object selected = getJcbFood().getSelectedItem();
+        if (selected == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn món ăn!");
+            return;
+        }
+        String foodName = selected.toString().trim();
+        if (foodName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn món ăn!");
+            return;
+        }
+
+
+        int pId = new BUS.ProductsBUS().getIdByName(foodName);
+
+        String priceText = jtfPrice.getText().trim();
+        if (priceText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Giá bán không được để trống!");
+            return;
+        }
+
+    
+        double newPrice;
+        try {
+            TongTien = new BUS.RecipeBUS().getTotalById(pId);
+            newPrice = Double.parseDouble(priceText);
+            if (newPrice <= 0) {
+                JOptionPane.showMessageDialog(this, "Giá bán phải lớn hơn 0!");
+                return;
+            }
+            if (newPrice <= TongTien) {
+                JOptionPane.showMessageDialog(this, "Giá bán phải lớn hơn tổng chi phí!");
+                return;
+            }
+        
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Giá bán phải là số hợp lệ!");
+            return;
+        }
+
+        boolean updated = new BUS.ProductsBUS().updatePriceById(pId, newPrice);
+        if (updated) {
+            JOptionPane.showMessageDialog(this, "Cập nhật giá bán thành công.");
+            this.setGiaBan(newPrice);
+        } else {
+            JOptionPane.showMessageDialog(this, "Cập nhật giá bán thất bại!");
+        }
     }
+
     
     private String formatCurrency(Double amount) {
         if (amount == null) {
