@@ -144,6 +144,9 @@ public class MainFrame extends JFrame {
             case "công thức":
                 mainPanel.add(new RecipeManagementPanel(), BorderLayout.CENTER);
                 break;
+            case "nhà cung cấp":
+                mainPanel.add(new SupplierManagementPanel(),BorderLayout.CENTER);
+                break;
             default:
                 JLabel content = new JLabel("You selected: " + selectedItem, SwingConstants.CENTER);
                 content.setFont(new Font("Arial", Font.BOLD, 24));
