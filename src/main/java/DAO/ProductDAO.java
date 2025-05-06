@@ -237,6 +237,20 @@ public class ProductDAO  {
         return nextId;
     }
     
-    
+    public boolean updatePriceById(int productId, double newPrice) {
+        String sql = "UPDATE products SET price = ? WHERE product_id = ?";
+        try (
+            Connection conn = ConnectionDB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+            stmt.setDouble(1, newPrice);
+            stmt.setInt(2, productId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
 }

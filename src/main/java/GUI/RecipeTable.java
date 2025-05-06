@@ -27,6 +27,8 @@ public class RecipeTable extends JPanel {
     private JPanel jpnBottomInfo;
     private RecipeTableModel model;
     private JTable jTable;
+    private JTextField jtfTongTien;
+
 
     public JTextField getJtfTongTien() {
         return jtfTongTien;
@@ -35,7 +37,6 @@ public class RecipeTable extends JPanel {
     public void setJtfTongTien(JTextField jtfTongTien) {
         this.jtfTongTien = jtfTongTien;
     }
-    private JTextField jtfTongTien;
 
     public RecipeTableModel getModel() {
         return model;
@@ -84,8 +85,9 @@ public class RecipeTable extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 int row = jTable.rowAtPoint(e.getPoint());
                 if (row >= 0) {
-                    int id = new BUS.InventoryBUS().getIdByName((String) jTable.getValueAt(row, 1));
-                    showInfo(id);
+                    int iId = new BUS.InventoryBUS().getIdByName((String) jTable.getValueAt(row, 1));
+                    int pId = new BUS.ProductsBUS().getIdByName((String) jTable.getValueAt(row, 0));
+                    showInfo(pId,iId);
                 }
             }
         });
@@ -121,7 +123,13 @@ public class RecipeTable extends JPanel {
         repaint(); 
     }
 
-    private void showInfo(int id) {
-        System.out.println("Món ăn ID: " + id);
+    private void showInfo(int pId, int iId) {
+        if (jpnBottomInfo instanceof RecipeBottomInfo) {
+            RecipeBottomInfo bottom = (RecipeBottomInfo) jpnBottomInfo;
+            String inventoryName = new BUS.InventoryBUS().getNameById(iId); 
+            bottom.getJcbInven().setSelectedItem(inventoryName);
+            int SoLuong = new BUS.RecipeBUS().getQuantityRecipe(pId, iId);
+            bottom.getJtfQuantity().setText(String.valueOf(SoLuong));
+        }
     }
 }

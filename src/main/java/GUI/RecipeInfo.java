@@ -36,7 +36,7 @@ public class RecipeInfo extends JPanel{
     public RecipeInfo(RecipeTable pnTable) {
         this.pnTable = pnTable;
         this.pnTopInfo = new RecipeTopInfo(pnTable);
-        this.pnBottomInfo = new RecipeBottomInfo();
+        this.pnBottomInfo = new RecipeBottomInfo(pnTopInfo);
         initRecipeInfo();
     }
 
@@ -64,7 +64,7 @@ public class RecipeInfo extends JPanel{
         pnTopInfo = new RecipeTopInfo(pnTable);
         add(pnTopInfo);
         
-        pnBottomInfo = new RecipeBottomInfo();
+        pnBottomInfo = new RecipeBottomInfo(pnTopInfo);
         add(pnBottomInfo);
         
     }

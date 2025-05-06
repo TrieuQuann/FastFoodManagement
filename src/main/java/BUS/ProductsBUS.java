@@ -4,6 +4,7 @@
  */
 package BUS;
 
+import DTO.Recipe;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -226,6 +227,11 @@ public String[] searchByCategoryName(String search) {
         return -1;
     }
     
+    public boolean updatePriceById(int productId, double newPrice) {
+        return dao.updatePriceById(productId, newPrice);
+    }
+
+
     
     
 }

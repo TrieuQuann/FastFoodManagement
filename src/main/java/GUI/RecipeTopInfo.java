@@ -136,7 +136,6 @@ public class RecipeTopInfo extends JPanel{
             JOptionPane.showMessageDialog(this, "Vui lòng chọn loại món ăn!");
             return;
         }
-
         String[] foods = new BUS.ProductsBUS().searchByCategoryName(searchCategory);
         if (foods.length == 0) {
             JOptionPane.showMessageDialog(this, "Không tìm thấy món ăn phù hợp.");
@@ -147,8 +146,13 @@ public class RecipeTopInfo extends JPanel{
     }
 
 
-    private void handleChoose2() {
-        String searchFood = getJcbFood().getSelectedItem().toString();
+    void handleChoose2() {
+        Object selected = getJcbFood().getSelectedItem();
+        if (selected == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn loại món ăn!");
+            return;
+        }
+        String searchFood = selected.toString().trim();
         if (searchFood.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn món ăn!");
             return;
@@ -168,8 +172,54 @@ public class RecipeTopInfo extends JPanel{
     }
 
     private void handleChoose3() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Object selected = getJcbFood().getSelectedItem();
+        if (selected == null) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn món ăn!");
+            return;
+        }
+        String foodName = selected.toString().trim();
+        if (foodName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn món ăn!");
+            return;
+        }
+
+
+        int pId = new BUS.ProductsBUS().getIdByName(foodName);
+
+        String priceText = jtfPrice.getText().trim();
+        if (priceText.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Giá bán không được để trống!");
+            return;
+        }
+
+    
+        double newPrice;
+        try {
+            TongTien = new BUS.RecipeBUS().getTotalById(pId);
+            newPrice = Double.parseDouble(priceText);
+            if (newPrice <= 0) {
+                JOptionPane.showMessageDialog(this, "Giá bán phải lớn hơn 0!");
+                return;
+            }
+            if (newPrice <= TongTien) {
+                JOptionPane.showMessageDialog(this, "Giá bán phải lớn hơn tổng chi phí!");
+                return;
+            }
+        
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Giá bán phải là số hợp lệ!");
+            return;
+        }
+
+        boolean updated = new BUS.ProductsBUS().updatePriceById(pId, newPrice);
+        if (updated) {
+            JOptionPane.showMessageDialog(this, "Cập nhật giá bán thành công.");
+            this.setGiaBan(newPrice);
+        } else {
+            JOptionPane.showMessageDialog(this, "Cập nhật giá bán thất bại!");
+        }
     }
+
     
     private String formatCurrency(Double amount) {
         if (amount == null) {

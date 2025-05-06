@@ -54,7 +54,7 @@ public class RecipeManagementPanel extends JPanel{
         add(jpnTitle, BorderLayout.NORTH);
 
         pnRecipeInfo = new RecipeInfo(null);
-        pnRecipeTable = new RecipeTable(pnRecipeInfo);
+        pnRecipeTable = new RecipeTable(pnRecipeInfo.getPnBottomInfo());
         pnRecipeInfo.setPnTable(pnRecipeTable);
 
         add(pnRecipeInfo, BorderLayout.EAST);

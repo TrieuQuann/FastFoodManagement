@@ -12,7 +12,7 @@ public class Recipe {
     private int productId;
     private int inventoryId;
     private Double total_price;
-    private float amount;
+    private Float amount;
     
     public Recipe(){
         
@@ -26,7 +26,7 @@ public class Recipe {
         this.total_price = total_price;
     }
 
-    public Recipe(int productId, int inventoryId, Double total_price, float amount) {
+    public Recipe(int productId, int inventoryId, Double total_price, Float amount) {
         this.productId = productId;
         this.inventoryId = inventoryId;
         this.total_price = total_price;
@@ -53,7 +53,7 @@ public class Recipe {
         return amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(Float amount) {
         this.amount = amount;
     }
     

@@ -37,5 +37,26 @@ public class InventoryBUS {
         }
         return -1;
     }
+    public String[] getAllInventoryNames() {
+        if (list == null || list.isEmpty()) {
+            return new String[0];
+        }
+        String[] names = new String[list.size()];
+        for (int i = 0; i < list.size(); i++) {
+            names[i] = list.get(i).getName();
+        }
+        return names;
+    }
+    
+    public Double getPriceById(int id) {
+        for (Inventory inv : list) {
+            if (inv.getInven_id() == id) {
+                return inv.getPrice();
+            }
+        }
+        return null; 
+    }
+
+
 
 }

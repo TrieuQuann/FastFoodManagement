@@ -5,6 +5,7 @@
 package GUI;
 
 import DTO.Category;
+import DTO.Recipe;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -23,6 +24,7 @@ import javax.swing.JTextField;
 public class RecipeBottomInfo extends JPanel{
     private JComboBox<String> jcbInven;
     private JTextField jtfQuantity;
+    private JPanel pnTop;
 
     public JComboBox<String> getJcbInven() {
         return jcbInven;
@@ -40,7 +42,8 @@ public class RecipeBottomInfo extends JPanel{
         this.jtfQuantity = jtfQuantity;
     }
     
-    RecipeBottomInfo(){
+    RecipeBottomInfo(JPanel pnTop){
+        this.pnTop = pnTop;
         initRecipeBottomInfo();
     }
     
@@ -57,6 +60,7 @@ public class RecipeBottomInfo extends JPanel{
         jlbQuantity.setOpaque(false);
         
         jcbInven = new JComboBox<String> ();
+        jcbInven = new JComboBox<>(new BUS.InventoryBUS().getAllInventoryNames());
         jcbInven.setPreferredSize(new Dimension(200, 40));
         
         jtfQuantity =new JTextField();
@@ -85,77 +89,178 @@ public class RecipeBottomInfo extends JPanel{
     private void handleButtonAction(String action) {
         switch (action) {
             case "Thêm":
-                handleAddCategory();
+                handleAddRecipe();
                 break;
             case "Sửa":
-                handleUpdateCategory();
+                handleUpdateRecipe();
                 break;
             case "Xóa":
-                handleDeleteCategory();
+                handleDeleteRecipe();
                 break;
         }
     }
     
-    private void handleAddCategory() {
-//        String categoryName = getJtfCategoryName().getText();
-//        if (categoryName.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Vui lòng nhập tên danh mục.");
-//            return;
-//        }
-//        if (!checkCategoryName())        return;
-//        boolean isAdded = categoryBUS.addCategory(categoryName);
-//        if (isAdded) {
-//            JOptionPane.showMessageDialog(this, "Thêm danh mục thành công.");
-//            reloadTable(getJtfSearch().getText());
-//            setEmptyAllField();
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Thêm danh mục thất bại.");
-//        }
+    
+    //=======================THÊM=================
+    private void handleAddRecipe() {
+        if (pnTop instanceof RecipeTopInfo) {
+            RecipeTopInfo topInfo = (RecipeTopInfo) pnTop;
+
+            String pName = topInfo.getJcbFood().getSelectedItem().toString();
+            if (pName.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Phải chọn món ăn để thêm!");
+                return;
+            }
+            int pId = new BUS.ProductsBUS().getIdByName(pName);
+
+            String iName = getJcbInven().getSelectedItem().toString();
+            if (iName.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Phải chọn nguyên liệu để thêm!");
+                return;
+            }
+            int iId = new BUS.InventoryBUS().getIdByName(iName);
+
+            if (new BUS.RecipeBUS().hasInven(pId, iId)) {
+                JOptionPane.showMessageDialog(this, "Nguyên liệu này đã tồn tại trong công thức!");
+                return;
+            }
+
+            String quantityStr = jtfQuantity.getText().trim();
+            if (quantityStr.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Số lượng không được để trống!");
+                return;
+            }
+
+            float quantity;
+            try {
+                quantity = Float.parseFloat(quantityStr);
+                if (quantity <= 0) {
+                    JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0.");
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Số lượng phải là một số hợp lệ.");
+                return;
+            }
+
+            Double unitPrice = new BUS.InventoryBUS().getPriceById(iId);
+            double totalPrice = unitPrice * quantity;
+
+            Recipe recipe = new Recipe(pId, iId, totalPrice, quantity);
+            if (new BUS.RecipeBUS().addRecipe(recipe)) {
+                JOptionPane.showMessageDialog(this, "Thêm nguyên liệu thành công.");
+                topInfo.getPnTable().reloadData(pId);
+                jcbInven.setSelectedIndex(0);
+                jtfQuantity.setText("");
+                topInfo.handleChoose2();
+            } else {
+                JOptionPane.showMessageDialog(this, "Thêm nguyên liệu thất bại!");
+        }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Lỗi: Không thể xác định panel trên.");
+        }
     }
 
-    // Xử lý sửa danh mục
-    private void handleUpdateCategory() {
-//        String categoryIdText = getJtfId().getText();
-//        String categoryName = getJtfCategoryName().getText();
-//        if (categoryIdText.isEmpty() || categoryName.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin.");
-//            return;
-//        }
-//        if (!checkCategoryName())        return;
-//        int categoryId = Integer.parseInt(categoryIdText);
-//        Category categoryToUpdate = new Category(categoryId, categoryName);
-//        boolean isUpdated = categoryBUS.updateCategory(categoryToUpdate);
-//        if (isUpdated) {
-//            JOptionPane.showMessageDialog(this, "Cập nhật danh mục thành công.");
-//            reloadTable(getJtfSearch().getText());
-//        } else {
-//            JOptionPane.showMessageDialog(this, "Cập nhật danh mục thất bại.");
-//        }
+
+    
+    
+    // ============================Xử lý SỬA danh mục======================
+    private void handleUpdateRecipe() {
+        if (pnTop instanceof RecipeTopInfo) {
+            RecipeTopInfo topInfo = (RecipeTopInfo) pnTop;
+            String pName = topInfo.getJcbFood().getSelectedItem().toString();
+            if (pName.trim().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Phải chọn món ăn để sửa!");
+                return;
+            }
+            int pId = new BUS.ProductsBUS().getIdByName(pName);
+            String iName = getJcbInven().getSelectedItem().toString();
+            if (iName.trim().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Phải chọn nguyên liệu để sửa!");
+                return;
+            }
+            int iId = new BUS.InventoryBUS().getIdByName(iName);
+            
+            if (!(new BUS.RecipeBUS().hasInven(pId, iId))){
+                JOptionPane.showMessageDialog(this, "Nguyên liệu này chưa có trong công thức!");
+                return;
+            }
+            else{
+                if (jtfQuantity.getText().trim().isEmpty()){
+                    JOptionPane.showMessageDialog(this, "Số lượng không được để trống!");
+                    return;
+                }
+                try {
+                    float quantity = Float.parseFloat(jtfQuantity.getText());
+                    if (quantity <= 0) {
+                        JOptionPane.showMessageDialog(this, "Số lượng phải lớn hơn 0.");
+                        return;
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(this, "Số lượng phải là một số hợp lệ.");
+                    return;
+                }
+                
+                Float soluong = Float.parseFloat(jtfQuantity.getText());
+                Double totalPrice = new BUS.InventoryBUS().getPriceById(iId);
+                DTO.Recipe r = new Recipe(pId, iId, totalPrice, soluong);
+                if (new BUS.RecipeBUS().updateRecipe(r)){
+                    JOptionPane.showMessageDialog(this, "Sửa nguyên liệu thành công.");
+                    topInfo.getPnTable().reloadData(pId);
+                    jcbInven = new JComboBox<>(new BUS.InventoryBUS().getAllInventoryNames());
+                    jcbInven.setSelectedIndex(0);
+                    getJtfQuantity().setText("");
+                    topInfo.handleChoose2();
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Sửa nguyên liệu thất bại!");
+                }
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Lỗi!");
+            return;
+        }
     }
 
-    // Xử lý xóa danh mục
-    private void handleDeleteCategory() {
-//        String categoryIdText = getJtfId().getText();
-//        if (categoryIdText.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Vui lòng chọn danh mục cần xóa.");
-//            return;
-//        }
-//        int categoryId = Integer.parseInt(categoryIdText);
-//        if (new BUS.ProductsBUS().isCategoryUseInProduct(categoryId) ){
-//            JOptionPane.showMessageDialog(this, "Không thể xóa vì vẫn còn sản phẩm thuộc loại này!");
-//            return;
-//        }
-//        int confirm = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa danh mục này?", "Xác nhận", JOptionPane.YES_NO_OPTION);
-//        if (confirm == JOptionPane.YES_OPTION) {
-//            boolean isDeleted = categoryBUS.deleteCategory(categoryId);
-//            if (isDeleted) {
-//                JOptionPane.showMessageDialog(this, "Xóa danh mục thành công.");
-//                reloadTable(getJtfSearch().getText());
-//                setEmptyAllField();
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Xóa danh mục thất bại.");
-//            }
-//        }
+    private void handleDeleteRecipe() {
+        if (pnTop instanceof RecipeTopInfo) {
+            RecipeTopInfo topInfo = (RecipeTopInfo) pnTop;
+            String pName = topInfo.getJcbFood().getSelectedItem().toString();
+            if (pName.trim().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Phải chọn món ăn để xóa!");
+                return;
+            }
+            int pId = new BUS.ProductsBUS().getIdByName(pName);
+            String iName = getJcbInven().getSelectedItem().toString();
+            if (iName.trim().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Phải chọn nguyên liệu để xóa!");
+                return;
+            }
+            int iId = new BUS.InventoryBUS().getIdByName(iName);
+            
+            if (!(new BUS.RecipeBUS().hasInven(pId, iId))){
+                JOptionPane.showMessageDialog(this, "Nguyên liệu này chưa có trong công thức!");
+                return;
+            }
+            else{
+                if (new BUS.RecipeBUS().deleteRecipe(pId, iId)){
+                    JOptionPane.showMessageDialog(this, "Xóa nguyên liệu thành công.");
+                    topInfo.getPnTable().reloadData(pId);
+                    jcbInven = new JComboBox<>(new BUS.InventoryBUS().getAllInventoryNames());
+                    jcbInven.setSelectedIndex(0);
+                    getJtfQuantity().setText("");
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Xóa nguyên liệu thất bại!");
+                }
+            }
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Lỗi!");
+            return;
+        }
     }
 
     

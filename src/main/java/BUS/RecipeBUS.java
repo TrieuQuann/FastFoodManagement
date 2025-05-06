@@ -28,4 +28,45 @@ public class RecipeBUS {
     public Double getTotalById(int product_id) {
         return dao.getTotalById(product_id);
     }
+    
+    public int getQuantityRecipe(int pId, int iId) {
+        return dao.getQuantityRecipe(pId,iId);
+    }
+    
+    public Boolean hasInven(int pId, int iId) {
+        for (Recipe r : list) {
+            if (r.getProductId() == pId && r.getInventoryId() == iId) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteRecipe(int pId, int iId) {
+        boolean deleted = dao.deleteRecipe(pId, iId);
+        if (deleted) {
+            this.list = dao.selectAll();
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean updateRecipe(Recipe updated) {
+    boolean result = dao.update(updated);
+    if (result) {
+        for (int i = 0; i < list.size(); i++) {
+            Recipe r = list.get(i);
+            if (r.getProductId() == updated.getProductId() && r.getInventoryId() == updated.getInventoryId()) {
+                list.set(i, updated);
+                break;
+            }
+        }
+    }
+    return result;
+    }
+
+    public boolean addRecipe(Recipe recipe) {
+        return dao.insert(recipe);
+    }
+
 }
