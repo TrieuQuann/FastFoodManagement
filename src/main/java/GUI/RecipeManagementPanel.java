@@ -14,24 +14,26 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 public class RecipeManagementPanel extends JPanel{
-    private JPanel pnRecipeInfo;
-    private JPanel pnRecipeTable;
+    private RecipeInfo pnRecipeInfo;
+    private RecipeTable pnRecipeTable;
 
-    public JPanel getPnRecipeInfo() {
+    public RecipeInfo getPnRecipeInfo() {
         return pnRecipeInfo;
     }
 
-    public void setPnRecipeInfo(JPanel pnRecipeInfo) {
+    public void setPnRecipeInfo(RecipeInfo pnRecipeInfo) {
         this.pnRecipeInfo = pnRecipeInfo;
     }
 
-    public JPanel getPnRecipeTable() {
+    public RecipeTable getPnRecipeTable() {
         return pnRecipeTable;
     }
 
-    public void setPnRecipeTable(JPanel pnRecipeTable) {
+    public void setPnRecipeTable(RecipeTable pnRecipeTable) {
         this.pnRecipeTable = pnRecipeTable;
     }
+
+
 
     public RecipeManagementPanel() {
         setPreferredSize(new Dimension(1000, 800));
@@ -51,9 +53,9 @@ public class RecipeManagementPanel extends JPanel{
         jpnTitle.add(jlbTitle);
         add(jpnTitle, BorderLayout.NORTH);
 
-        pnRecipeInfo = new RecipeInfo();
-        pnRecipeTable = new RecipeTable();
-//        pnRecipeInfo.setPnTable(pnRecipeTable); 
+        pnRecipeInfo = new RecipeInfo(null);
+        pnRecipeTable = new RecipeTable(pnRecipeInfo);
+        pnRecipeInfo.setPnTable(pnRecipeTable);
 
         add(pnRecipeInfo, BorderLayout.EAST);
         add(pnRecipeTable, BorderLayout.CENTER);

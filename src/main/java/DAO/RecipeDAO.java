@@ -29,7 +29,7 @@ public class RecipeDAO{
         {
             pst.setInt(1, t.getProductId());
             pst.setInt(2, t.getInventoryId());
-            pst.setString(3, t.getUnit());
+//            pst.setString(3, t.getUnit());
             pst.setFloat(4, t.getAmount());
             
             result = pst.executeUpdate();
@@ -48,7 +48,7 @@ public class RecipeDAO{
             Connection con = DAO.ConnectionDB.getConnection();
             PreparedStatement pst = con.prepareStatement(sql)) 
         {
-            pst.setString(1, t.getUnit());
+//            pst.setString(1, t.getUnit());
             pst.setFloat(2, t.getAmount());
             pst.setInt(3, t.getProductId());
             pst.setInt(4, t.getInventoryId());
@@ -89,11 +89,11 @@ public class RecipeDAO{
         {
             while (rs.next()){
                 int product_id = rs.getInt("product_id");
-                int inven_id = rs.getInt("invent_id");
-                String unit = rs.getString("unit");
+                int inven_id = rs.getInt("inven_id");
+                Double total_price = rs.getDouble("total_price");
                 float amount = rs.getFloat("amount");
-                
-                DTO.Recipe sp = new DTO.Recipe(product_id, inven_id, unit, amount);
+//                System.out.println(product_id);
+                DTO.Recipe sp = new DTO.Recipe(product_id, inven_id, total_price, amount);
                 result.add(sp);
             }
         } catch (SQLException e) {
@@ -103,27 +103,50 @@ public class RecipeDAO{
         return result;
     }
 
-    public Recipe selectById(int product_id, int inven_id) {
-        DTO.Recipe result = null;
+    public ArrayList<Recipe> selectByProductId(int product_id) {
+    ArrayList<Recipe> result = new ArrayList<>();
 
-        String sql = "SELECT * FROM recipe WHERE product_id=?, inven_id=?";
-        try(
-            Connection con = ConnectionDB.getConnection();
-            PreparedStatement pst = con.prepareStatement(sql);
-            )
-        {
-            pst.setInt(1, product_id);
-            pst.setInt(2, inven_id);
-            ResultSet rs = pst.executeQuery();
-            while(rs.next()){
-                String unit = rs.getString("unit");
-                float amount = rs.getFloat("amount");
-                
-                result = new DTO.Recipe(product_id, inven_id, unit, amount);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+    String sql = "SELECT * FROM recipe WHERE product_id=?";
+    try (
+        Connection con = ConnectionDB.getConnection();
+        PreparedStatement pst = con.prepareStatement(sql)
+    ) {
+        pst.setInt(1, product_id);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            int inven_id = rs.getInt("inven_id");
+            double total_price = rs.getDouble("total_price");
+            float amount = rs.getFloat("amount");
+
+            Recipe r = new Recipe(product_id, inven_id, total_price, amount);
+            result.add(r);
         }
-        return result;
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return result;
+}
+    
+    public Double getTotalById(int product_id) {
+    Double result = 0.0;
+
+    String sql = "SELECT total_price FROM recipe WHERE product_id=?";
+    try (
+        Connection con = ConnectionDB.getConnection();
+        PreparedStatement pst = con.prepareStatement(sql)
+    ) {
+        pst.setInt(1, product_id);
+        ResultSet rs = pst.executeQuery();
+        while (rs.next()) {
+            double total_price = rs.getDouble("total_price");
+            result+=total_price;
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+
+    return result;
+}
+
     }

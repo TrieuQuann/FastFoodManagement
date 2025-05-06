@@ -20,9 +20,22 @@ import javax.swing.JPanel;
 public class RecipeInfo extends JPanel{
     private JPanel pnTopInfo;
     private JPanel pnBottomInfo;
+    private RecipeTable pnTable;
 
-    public RecipeInfo() {
-        this.pnTopInfo = new RecipeTopInfo();
+    public JPanel getPnTable() {
+        return pnTable;
+    }
+
+    public void setPnTable(RecipeTable pnTable) {
+        this.pnTable = pnTable;
+        if (this.pnTopInfo instanceof RecipeTopInfo) {
+            ((RecipeTopInfo) this.pnTopInfo).setPnTable(pnTable); // Cập nhật pnTable cho RecipeTopInfo đã có
+        }
+    }
+
+    public RecipeInfo(RecipeTable pnTable) {
+        this.pnTable = pnTable;
+        this.pnTopInfo = new RecipeTopInfo(pnTable);
         this.pnBottomInfo = new RecipeBottomInfo();
         initRecipeInfo();
     }
@@ -44,13 +57,12 @@ public class RecipeInfo extends JPanel{
     }
     
     private void initRecipeInfo(){
-        setPreferredSize(new Dimension(600, 700));
-        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
-        setLayout(new FlowLayout(FlowLayout.CENTER,20,20));
+        setPreferredSize(new Dimension(470, 700));
+//        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        setLayout(new FlowLayout(FlowLayout.CENTER,50,50));
         
-        pnTopInfo = new RecipeTopInfo();
+        pnTopInfo = new RecipeTopInfo(pnTable);
         add(pnTopInfo);
-        
         
         pnBottomInfo = new RecipeBottomInfo();
         add(pnBottomInfo);

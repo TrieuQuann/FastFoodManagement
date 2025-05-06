@@ -11,17 +11,25 @@ package DTO;
 public class Recipe {
     private int productId;
     private int inventoryId;
-    private String unit;
+    private Double total_price;
     private float amount;
     
     public Recipe(){
         
     }
 
-    public Recipe(int productId, int inventoryId, String unit, float amount) {
+    public Double getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(Double total_price) {
+        this.total_price = total_price;
+    }
+
+    public Recipe(int productId, int inventoryId, Double total_price, float amount) {
         this.productId = productId;
         this.inventoryId = inventoryId;
-        this.unit = unit;
+        this.total_price = total_price;
         this.amount = amount;
     }
 
@@ -39,14 +47,6 @@ public class Recipe {
 
     public void setInventoryId(int inventoryId) {
         this.inventoryId = inventoryId;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
     }
 
     public float getAmount() {
