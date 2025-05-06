@@ -8,6 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-public class InventoryManagementPanel {
+public class InventoryManagementPanel extends JPanel{
     
 }
