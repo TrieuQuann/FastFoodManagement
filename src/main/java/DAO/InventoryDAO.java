@@ -119,4 +119,64 @@ public class InventoryDAO {
         }
         return null;
     }
+    
+    //========================= đừng xóa ==============
+
+    public ArrayList<Inventory> selectAll() {
+        ArrayList<Inventory> result = new ArrayList<>();
+        String sql = "SELECT * FROM inventory"; // WHERE status = 1";
+        try (
+            Connection con = ConnectionDB.getConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery(sql)
+        ) {
+            while (rs.next()) {
+                int iId = rs.getInt("inven_id");
+                String name = rs.getString("name");
+                int quantity = rs.getInt("quantity");
+                String unit = rs.getString("unit");
+                Double price = rs.getDouble("price");
+                Inventory inv = new Inventory(iId,name,quantity,unit,price);
+                result.add(inv);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+//========================= đừng xóa ==============
+    public Inventory selectById(int id) {
+        Inventory result = null;
+        String sql = "SELECT * FROM inventory WHERE inven_id = ?"; // AND status = 1";
+        try (
+            Connection con = ConnectionDB.getConnection();
+            PreparedStatement pst = con.prepareStatement(sql)
+        ) {
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+//                int iId = rs.getInt("inven_id");
+                String name = rs.getString("name");
+                int quantity = rs.getInt("quantity");
+                String unit = rs.getString("unit");
+                Double price = rs.getDouble("price");
+                result = new Inventory(id,name,quantity,unit,price);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+//=========================== đừng xóa======
+    public String getNameById(int id) {
+        Inventory inv = selectById(id);
+        if (inv == null) {
+            System.err.println("Không tìm thấy inventory với ID: " + id);
+            return null;
+        }
+        return inv.getName();
+    }
+    
+  
+    
 }

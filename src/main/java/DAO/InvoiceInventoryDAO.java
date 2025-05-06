@@ -40,7 +40,7 @@ public class InvoiceInventoryDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, emp.getSupplier_id());
             ps.setInt(2, emp.getQuantityadded());
-            ps.setDate(3, emp.getDate());
+//            ps.setDate(3, emp.getDate());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -54,7 +54,7 @@ public class InvoiceInventoryDAO {
              PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, emp.getSupplier_id());
             ps.setInt(2, emp.getQuantityadded());
-            ps.setDate(3, emp.getDate());
+//            ps.setDate(3, emp.getDate());
             ps.setInt(4, emp.getInvoice_id());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -105,12 +105,12 @@ public class InvoiceInventoryDAO {
             ps.setInt(1, invoice_id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    return new Employee(
-                        rs.getInt("invoice_id"),
-                        rs.getInt("supplier_id"),
-                        rs.getInt("quantityadded"),
-                        rs.getDate("date")
-                    );
+//                    return new Employee(
+//                        rs.getInt("invoice_id"),
+//                        rs.getInt("supplier_id"),
+//                        rs.getInt("quantityadded"),
+//                        rs.getDate("date")
+//                    );
                 }
             }
         } catch (SQLException e) {
