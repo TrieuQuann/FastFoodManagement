@@ -4,6 +4,7 @@
  */
 package BUS;
 
+import DTO.Recipe;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -164,27 +165,45 @@ public class ProductsBUS {
     }
     
     
-    public ArrayList<DTO.Product> searchByCategory(String search) {
-        ArrayList<DTO.Product> result = new ArrayList<>();
+public String[] searchByCategoryName(String search) {
+    if (search == null || search.trim().isEmpty()) {
+        System.out.println("Lỗi! Tên danh mục trống!");
+        return new String[0];
+    }
 
-        if (search == null || search.trim().isEmpty()) {
-            result.addAll(list);
-            return result;
+    int cid = new BUS.CategoryBUS().getIdByName(search);
+    if (cid == -1) {
+        System.out.println("Lỗi! Không tìm thấy tên danh mục!");
+        return new String[0];
+    }
+
+    ArrayList<String> resultList = new ArrayList<>();
+    for (DTO.Product p : list) {
+        if (p.getCategoryId() == cid) {
+            resultList.add(p.getProductName());
         }
+    }
 
-        search = search.toLowerCase();
+    return resultList.toArray(new String[0]);
+}
 
+
+    public Boolean isCategoryUseInProduct(int cid){
         for (DTO.Product p : list) {
-            String productName = p.getProductName().toLowerCase();
-            if (productName.contains(search)) {
-                result.add(p);
+            int categoryId = p.getCategoryId();
+            if (categoryId==cid) {
+                return true;
             }
         }
-
-        return result;
+        return false;
     }
+    
     public int getNextProductId() {
         return dao.getNextProductIdByMax();
+    }
+    
+    public Double getPriceById(int pid) {
+        return getProductById(pid).getPrice();
     }
     
     public int selectCategoryIdByCategoryName(String name) {
@@ -198,5 +217,21 @@ public class ProductsBUS {
         String searchName = productName.trim().toLowerCase();
         return list.stream().anyMatch(p -> p.getProductName().trim().toLowerCase().equals(searchName));
     }
+    
+    public int getIdByName(String pname){
+        for (int i = 0; i < list.size(); i++) {
+            if (pname.equals(list.get(i).getProductName())){
+                return list.get(i).getProductId();
+            }
+        }
+        return -1;
+    }
+    
+    public boolean updatePriceById(int productId, double newPrice) {
+        return dao.updatePriceById(productId, newPrice);
+    }
+
+
+    
     
 }

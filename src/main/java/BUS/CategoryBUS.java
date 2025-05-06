@@ -40,15 +40,23 @@ public class CategoryBUS {
     
     
     public String getNameById(int id){
-//        System.out.println(id);
-//        System.out.println(dao.getNameById(id));
         return dao.getNameById(id);
+    }
+    
+    public int getIdByName(String cname){
+        for (int i = 0; i < list.size(); i++) {
+            if (cname.equals(list.get(i).getName())){
+                return list.get(i).getCategoryId();
+            }
+        }
+        return -1;
     }
     
     public boolean addCategory(String name){
         if (name == null )
             return false;
         int result = dao.insert(name);
+        System.out.println(result);
         if (result != 0 ){
             DTO.Category t = new Category(result, name);
             list.add(t);
@@ -62,7 +70,7 @@ public class CategoryBUS {
         if (result != 0) {
             for (int i = 0; i < list.size(); i++) {
                 if (list.get(i).getCategoryId() == t.getCategoryId()) {
-                    list.set(i, t); // thay thế phần tử tại vị trí i của lisst này bằng t
+                    list.set(i, t); 
                     break;
                 }
             }
@@ -83,18 +91,29 @@ public class CategoryBUS {
     public void Showdata(){
         CategoryBUS categoryBUS = new CategoryBUS();
 
-    for (int id = 13; id <= 19; id++) {
-        String name = categoryBUS.getNameById(id);
-        System.out.println("ID: " + id + " | Name: " + (name != null ? name : "Không tìm thấy"));
+        for (int id = 13; id <= 19; id++) {
+            String name = categoryBUS.getNameById(id);
+            System.out.println("ID: " + id + " | Name: " + (name != null ? name : "Không tìm thấy"));
+        }
     }
+    
+    public ArrayList<Category> searchByName(String search) {
+        return new CategoryDAO().searchByName(search); 
     }
-public static void main(String[] args) {
-    CategoryBUS categoryBUS = new CategoryBUS();
-
-    for (int id = 13; id <= 19; id++) {
-        String name = categoryBUS.getNameById(id);
-        System.out.println("ID: " + id + " | Name: " + (name != null ? name : "Không tìm thấy"));
+    
+    public boolean isProductExists(String name) {
+        String searchName = name.trim().toLowerCase();
+        return list.stream().anyMatch(p -> p.getName().trim().toLowerCase().equals(searchName));
     }
+    
+    
+    public static void main(String[] args) {
+//    CategoryBUS categoryBUS = new CategoryBUS();
+//
+//    for (int id = 13; id <= 19; id++) {
+//        String name = categoryBUS.getNameById(id);
+//        System.out.println("ID: " + id + " | Name: " + (name != null ? name : "Không tìm thấy"));
+//    }
 }
 
 }

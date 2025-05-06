@@ -16,9 +16,8 @@ import java.util.ArrayList;
  *
  * @author LENOVO
  */
-public class ProductDAO implements DAO.InterfaceDAO<DTO.Product> {
+public class ProductDAO  {
 
-    @Override
     public int insert(Product t) {
         int result = 0;
         String sql = "INSERT INTO products (name, price, image, category_id, expected_quantity) " +
@@ -77,7 +76,6 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product> {
         return result;
     }
 
-    @Override
     public int update(Product t) {
         int result = 0;
         String sql = "UPDATE products SET name = ?, price = ?, image = ?, category_id = ?, expected_quantity = ? WHERE product_id = ?";
@@ -120,7 +118,6 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product> {
         return result;
     }
 
-    @Override
     public int delete(Product t) {
         int result = 0;
         String sql = "DELETE from products WHERE product_id=?";
@@ -151,7 +148,6 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product> {
         return result;
     }
 
-    @Override
     public ArrayList<Product> selectAll() {
         ArrayList<DTO.Product> result = new ArrayList<DTO.Product>();
         String sql = "SELECT * FROM products WHERE status = 1";
@@ -178,7 +174,6 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product> {
         return result;
     }
 
-    @Override
     public Product selectById(int t) {
         DTO.Product result = null;
         int product_id = t;
@@ -241,12 +236,21 @@ public class ProductDAO implements DAO.InterfaceDAO<DTO.Product> {
 
         return nextId;
     }
-
-
-    @Override
-    public ArrayList<Product> selectByCondition(String condition) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from
-                                                                       // nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+    public boolean updatePriceById(int productId, double newPrice) {
+        String sql = "UPDATE products SET price = ? WHERE product_id = ?";
+        try (
+            Connection conn = ConnectionDB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+            stmt.setDouble(1, newPrice);
+            stmt.setInt(2, productId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
+
 
 }

@@ -4,8 +4,8 @@
  */
 package GUI;
 
-import BUS.ProductsBUS;
-import DTO.Product;
+
+import DTO.Category;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -17,37 +17,39 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
 
-public class ProductTable extends JPanel {
+public class CategoryTable extends JPanel {
     private JPanel jpnInfo;
-    private ProductTableModel model;
-    private JTable jTable; 
+    private CategoryTableModel model;
+    private JTable jTable;
 
-    public ProductTableModel getModel() {
+    public CategoryTableModel getModel() {
         return model;
     }
 
-    public ProductTable(JPanel jpnInfo) {
+    public CategoryTable(JPanel jpnInfo) {
         this.jpnInfo = jpnInfo;
-        this.model = new ProductTableModel(); 
-        initProductTable();
+        this.model = new CategoryTableModel();
+        initCategoryTable();
     }
 
     public void reloadData(String search) {
-        this.model = new ProductTableModel(search); 
-        jTable.setModel(this.model);           
+        this.model = new CategoryTableModel(search);
+        jTable.setModel((TableModel) this.model);
         revalidate();
         repaint();
     }
 
-    private void initProductTable() {
-        setPreferredSize(new Dimension(950, 400));
-//        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+    private void initCategoryTable() {
+        setPreferredSize(new Dimension(450, 500));
+        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         setLayout(new BorderLayout());
-
-        jTable = new JTable(this.model);
+        setBorder(new EmptyBorder(20,20,20,20));
+        jTable = new JTable((TableModel) this.model);
         jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
         jTable.setRowHeight(25);
@@ -62,10 +64,10 @@ public class ProductTable extends JPanel {
         for (int i = 0; i < jTable.getColumnCount(); i++) {
             jTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
+        
         JScrollPane jScrollPane = new JScrollPane(jTable);
         add(jScrollPane, BorderLayout.CENTER);
 
-        // Xử lý sự kiện click vào hàng trong bảng
         jTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -79,28 +81,12 @@ public class ProductTable extends JPanel {
     }
 
     private void showInfo(int id) {
-        if (jpnInfo instanceof ProductInfo) {
-            ProductInfo infoPanel = (ProductInfo) jpnInfo;
-            Product data = getModel().getProductById(id);
-
-            infoPanel.getJtfId().setText(data.getProductId()+"");
-            infoPanel.getJtfName().setText(data.getProductName());
-            String cName = new BUS.CategoryBUS().getNameById(data.getCategoryId());
-            infoPanel.getJcbCategory().setSelectedItem(cName);
-            infoPanel.getJtfPrice().setText(formatCurrency(data.getPrice()));
-            infoPanel.getJtfQuantity().setText(String.valueOf(data.getExpectedQuantity()));
-            infoPanel.setImagePath(data.getImage());
-            infoPanel.getBtAddFood().setVisible(false);
-            infoPanel.getBtUpdateFood().setVisible(false);
-            infoPanel.getBtChooseImage().setVisible(false);
+        if (jpnInfo instanceof CategoryInfo) {
+            CategoryInfo infoPanel = (CategoryInfo) jpnInfo;
+            Category category = (Category) getModel().getCategoryById(id);
+            infoPanel.getJtfId().setText(String.valueOf(category.getCategoryId()));
+            infoPanel.getJtfCategoryName().setText(category.getName());
             infoPanel.setEditableAllField();
         }
-    }
-    
-    private String formatCurrency(Double amount) {
-        if (amount == null) {
-            return "0 VNĐ";
-        }
-        return String.format("%,.0f VNĐ", amount);
     }
 }

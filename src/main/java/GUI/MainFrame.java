@@ -1,6 +1,8 @@
 package GUI;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -121,11 +123,11 @@ public class MainFrame extends JFrame {
             case "hóa đơn":
                 mainPanel.add(new OrdersManagementPanel(), BorderLayout.CENTER);
                 break;
-            case "chức vụ":
-                mainPanel.add(new PositionManagementPanel(), BorderLayout.CENTER);
-                break;
             case "phân quyền":
                 mainPanel.add(new DecentralizedManagementPanel(), BorderLayout.CENTER);
+                break;
+            case "chức vụ":
+                mainPanel.add(new PositionManagementPanel(), BorderLayout.CENTER);
                 break;
             case "tài khoản":
                 mainPanel.add(new UserManagementPanel(currentrole), BorderLayout.CENTER);
@@ -135,6 +137,12 @@ public class MainFrame extends JFrame {
                 break;
             case "thống kê":
                 mainPanel.add(new StatisticsPanel(), BorderLayout.CENTER);
+                break;
+            case "danh mục":
+                mainPanel.add(new InformationCategoryPanel(), BorderLayout.CENTER);
+                break;
+            case "công thức":
+                mainPanel.add(new RecipeManagementPanel(), BorderLayout.CENTER);
                 break;
             default:
                 JLabel content = new JLabel("You selected: " + selectedItem, SwingConstants.CENTER);
