@@ -1,17 +1,22 @@
 package GUI;
 
 import BUS.InventoryBUS;
+tquan
 import BUS.InvoiceInventBUS;
 import BUS.InvenDetailBUS;
 import DTO.Inventory;
 import DTO.InvoiceInvent;
 import DTO.InvenDetail;
 
+
+import DTO.Inventory;
+main
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
+tquan
 import com.toedter.calendar.JDateChooser;
 
 public class InventoryManagementPanel extends JPanel {
@@ -281,4 +286,9 @@ public class InventoryManagementPanel extends JPanel {
             });
         }
     }
+=======
+
+public class InventoryManagementPanel extends JPanel{
+    
+main
 }
