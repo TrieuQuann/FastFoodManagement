@@ -36,13 +36,13 @@ public class RecipeManagementPanel extends JPanel{
 
 
     public RecipeManagementPanel() {
-        setPreferredSize(new Dimension(1000, 800));
-        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
+        setPreferredSize(new Dimension(1300, 800));
+//        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
         setLayout(new BorderLayout(10, 10));
 
         JPanel jpnTitle = new JPanel();
         jpnTitle.setPreferredSize(new Dimension(900, 70));
-        jpnTitle.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
+//        jpnTitle.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
         jpnTitle.setLayout(new FlowLayout(FlowLayout.CENTER));
         
         JLabel jlbTitle = new JLabel("Thông tin Công thức");

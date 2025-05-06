@@ -9,6 +9,7 @@ import DTO.Recipe;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -49,7 +50,7 @@ public class RecipeBottomInfo extends JPanel{
     
     private void initRecipeBottomInfo(){
         setPreferredSize(new Dimension(450, 245));
-        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        setBorder(BorderFactory.createLineBorder(new Color(0, 51, 153), 2));
         setLayout(new FlowLayout(FlowLayout.LEFT,30,30));
         
         JLabel jlbInven = new JLabel("Chọn nguyên liệu:");
@@ -82,6 +83,20 @@ public class RecipeBottomInfo extends JPanel{
         JButton bt = new JButton(text);
         bt.setPreferredSize(new Dimension(90, 40));
         bt.setActionCommand(text);
+        bt.setBackground(new Color(30, 144, 255)); 
+        bt.setForeground(Color.WHITE); 
+        bt.setFocusPainted(false); 
+        bt.setFont(new Font("Segoe UI", Font.BOLD, 14)); 
+        bt.setBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 1));
+        bt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bt.setBackground(new Color(0, 120, 215));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                bt.setBackground(new Color(30, 144, 255));
+            }
+        });
         bt.addActionListener(e -> handleButtonAction(e.getActionCommand()));
         pn.add(bt);
     }

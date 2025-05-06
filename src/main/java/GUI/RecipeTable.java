@@ -17,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 
 /**
@@ -54,12 +56,12 @@ public class RecipeTable extends JPanel {
     }
 
     private void initRecipeTable() {
-        setPreferredSize(new Dimension(510, 700));
-        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        setPreferredSize(new Dimension(600, 800));
+        setBorder(BorderFactory.createLineBorder(new Color(0, 51, 153), 2));
         setLayout(new BorderLayout());
 
         JPanel jpnTitle = new JPanel();
-        jpnTitle.setPreferredSize(new Dimension(500, 50));
+        jpnTitle.setPreferredSize(new Dimension(550, 50));
         jpnTitle.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         JLabel jlbTitle = new JLabel("Chi tiết công thức");
@@ -72,11 +74,23 @@ public class RecipeTable extends JPanel {
         jnContainer.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
         
         JPanel jpnTable = new JPanel();
-        jpnTable.setPreferredSize(new Dimension(500, 550));
+        jpnTable.setPreferredSize(new Dimension(580, 800));
 //        jpnTable.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
         jpnTable.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
 
         jTable = new JTable(model); 
+        jTable.setRowHeight(25);
+
+        JTableHeader header = jTable.getTableHeader();
+        header.setPreferredSize(new Dimension(header.getWidth(), 25));
+        header.setFont(new Font("Arial", Font.BOLD, 16));
+        header.setBackground(new Color(204, 229, 255)); 
+        header.setForeground(Color.BLACK);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+        for (int i = 0; i < jTable.getColumnCount(); i++) {
+            jTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
         JScrollPane jScrollPane = new JScrollPane(jTable);
         jpnTable.add(jScrollPane, BorderLayout.CENTER);
 

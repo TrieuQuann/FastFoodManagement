@@ -35,7 +35,7 @@ public class InformationProductPanel extends JPanel {
 
     public InformationProductPanel() {
         setPreferredSize(new Dimension(1000, 800));
-        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
+//        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
         setLayout(new BorderLayout(10, 10));
 
         JLabel jlbTitle = new JLabel("Thông tin sản phẩm");

@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import static java.awt.SystemColor.text;
 import java.util.Arrays;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -88,7 +89,7 @@ public class RecipeTopInfo extends JPanel{
     
     private void initRecipeTopInfo(){
         setPreferredSize(new Dimension(450, 210));
-        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
+        setBorder(BorderFactory.createLineBorder(new Color(0, 51, 153), 2));
         setLayout(new FlowLayout(FlowLayout.LEFT,20,20));
         
         JLabel jlbCategory = new JLabel("Chọn loại món:");
@@ -110,12 +111,57 @@ public class RecipeTopInfo extends JPanel{
         
         JButton jbtChoose1 = new JButton("Chọn");
         jbtChoose1.setPreferredSize(new Dimension(70, 35));
+//        jbtChoose1.setActionCommand(text);
+        jbtChoose1.setBackground(new Color(30, 144, 255)); 
+        jbtChoose1.setForeground(Color.WHITE); 
+        jbtChoose1.setFocusPainted(false); 
+        jbtChoose1.setFont(new Font("Segoe UI", Font.BOLD, 14)); 
+        jbtChoose1.setBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 1));
+        jbtChoose1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtChoose1.setBackground(new Color(0, 120, 215));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtChoose1.setBackground(new Color(30, 144, 255));
+            }
+        });
         jbtChoose1.addActionListener(e -> handleChoose1());
         JButton jbtChoose2 = new JButton("Chọn");
         jbtChoose2.setPreferredSize(new Dimension(70, 35));
+//        jbtChoose2.setActionCommand(text);
+        jbtChoose2.setBackground(new Color(30, 144, 255)); 
+        jbtChoose2.setForeground(Color.WHITE); 
+        jbtChoose2.setFocusPainted(false); 
+        jbtChoose2.setFont(new Font("Segoe UI", Font.BOLD, 14)); 
+        jbtChoose2.setBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 1));
+        jbtChoose2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtChoose2.setBackground(new Color(0, 120, 215));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtChoose2.setBackground(new Color(30, 144, 255));
+            }
+        });
         jbtChoose2.addActionListener(e -> handleChoose2());
         JButton jbtChoose3 = new JButton("Xác nhận");
         jbtChoose3.setPreferredSize(new Dimension(90, 35));
+//        jbtChoose3.setActionCommand(text);
+        jbtChoose3.setBackground(new Color(30, 144, 255)); 
+        jbtChoose3.setForeground(Color.WHITE); 
+        jbtChoose3.setFocusPainted(false); 
+        jbtChoose3.setFont(new Font("Segoe UI", Font.BOLD, 14)); 
+        jbtChoose3.setBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 1));
+        jbtChoose3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtChoose3.setBackground(new Color(0, 120, 215));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtChoose3.setBackground(new Color(30, 144, 255));
+            }
+        });
         jbtChoose3.addActionListener(e -> handleChoose3());
         
         add(jlbCategory);

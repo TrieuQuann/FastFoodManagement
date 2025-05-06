@@ -29,7 +29,7 @@ public class RecipeInfo extends JPanel{
     public void setPnTable(RecipeTable pnTable) {
         this.pnTable = pnTable;
         if (this.pnTopInfo instanceof RecipeTopInfo) {
-            ((RecipeTopInfo) this.pnTopInfo).setPnTable(pnTable); // Cập nhật pnTable cho RecipeTopInfo đã có
+            ((RecipeTopInfo) this.pnTopInfo).setPnTable(pnTable);
         }
     }
 
@@ -57,7 +57,7 @@ public class RecipeInfo extends JPanel{
     }
     
     private void initRecipeInfo(){
-        setPreferredSize(new Dimension(470, 700));
+        setPreferredSize(new Dimension(600, 700));
 //        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         setLayout(new FlowLayout(FlowLayout.CENTER,50,50));
         

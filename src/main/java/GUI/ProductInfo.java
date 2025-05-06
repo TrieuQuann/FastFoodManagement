@@ -122,14 +122,14 @@ public class ProductInfo extends JPanel {
     
     private void initUI() {
         setPreferredSize(new Dimension(950, 320));
-        setLayout(new FlowLayout(FlowLayout.CENTER,10,10));
-        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
+//        setLayout(new FlowLayout(FlowLayout.CENTER,10,10));
+//        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
 
 //===================================Panel chứa hình ảnh==========================
         JPanel pnImg = new JPanel();
         pnImg.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
         pnImg.setPreferredSize(new Dimension(220, 220));
-        pnImg.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
+        pnImg.setBorder(BorderFactory.createLineBorder(new Color(0, 51, 153), 2));
         imageLabel = new JLabel();
         pnImg.add(imageLabel);
         add(pnImg);
@@ -138,7 +138,8 @@ public class ProductInfo extends JPanel {
         JPanel pnInfo = new JPanel();
         pnInfo.setPreferredSize(new Dimension(730, 220));
         pnInfo.setLayout(new FlowLayout(FlowLayout.LEFT, 30,10));
-        pnInfo.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
+        pnInfo.setBorder(BorderFactory.createLineBorder(new Color(0, 51, 153), 2));
+//        pnInfo.setBackground(new Color(255, 204, 204));
 
         addLabel(pnInfo, "Mã món:");
         addTextField(pnInfo, jtfId);
@@ -159,6 +160,21 @@ public class ProductInfo extends JPanel {
         //===== nút DUYỆT ẢNH =========
         btChooseImage = new JButton("Chọn ảnh");
         btChooseImage.setVisible(false);
+        btChooseImage.setPreferredSize(new Dimension(90, 30));
+        btChooseImage.setBackground(new Color(30, 144, 255)); 
+        btChooseImage.setForeground(Color.WHITE); 
+        btChooseImage.setFocusPainted(false); 
+        btChooseImage.setFont(new Font("Segoe UI", Font.BOLD, 14)); 
+        btChooseImage.setBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 1));
+        btChooseImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btChooseImage.setBackground(new Color(0, 120, 215));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btChooseImage.setBackground(new Color(30, 144, 255));
+            }
+        });
         btChooseImage.addActionListener(e -> {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setDialogTitle("Chọn ảnh");
@@ -192,9 +208,41 @@ public class ProductInfo extends JPanel {
         });
         
         btUpdateFood = new JButton("Lưu thay đổi");
+        btUpdateFood.setBackground(new Color(30, 144, 255)); 
+        btUpdateFood.setPreferredSize(new Dimension(110, 30));
+        btUpdateFood.setForeground(Color.WHITE); 
+        btUpdateFood.setFocusPainted(false); 
+        btUpdateFood.setFont(new Font("Segoe UI", Font.BOLD, 14)); 
+        btUpdateFood.setBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 1));
+        btUpdateFood.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btUpdateFood.setBackground(new Color(0, 120, 215));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btUpdateFood.setBackground(new Color(30, 144, 255));
+            }
+        });
         btUpdateFood.addActionListener(e -> handleLuuThayDoi());
         btUpdateFood.setVisible(false);
+        
+        
         btAddFood = new JButton("Thêm món ăn");
+        btAddFood.setPreferredSize(new Dimension(110, 30));
+        btAddFood.setBackground(new Color(30, 144, 255)); 
+        btAddFood.setForeground(Color.WHITE); 
+        btAddFood.setFocusPainted(false); 
+        btAddFood.setFont(new Font("Segoe UI", Font.BOLD, 14)); 
+        btAddFood.setBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 1));
+        btAddFood.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btAddFood.setBackground(new Color(0, 120, 215));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btAddFood.setBackground(new Color(30, 144, 255));
+            }
+        });
         btAddFood.addActionListener(e -> handleThemMonAn());
         btAddFood.setVisible(false);
         
@@ -223,33 +271,32 @@ public class ProductInfo extends JPanel {
         jtfSearch.setOpaque(false);
         jpnSearch.add(jtfSearch);
         JButton jbtSearch = new JButton("Tìm kiếm");
-        jbtSearch.setFont(new Font("Segoe UI", Font.PLAIN, 18));
         jbtSearch.setBorder(new EmptyBorder(7, 7, 7, 7));
-        jbtSearch.setOpaque(false);
+        jbtSearch.setPreferredSize(new Dimension(100, 40));
+//        jbtSearch.setOpaque(false);
+        jbtSearch.setBackground(new Color(30, 144, 255)); 
+        jbtSearch.setForeground(Color.WHITE); 
+        jbtSearch.setFocusPainted(false); 
+        jbtSearch.setFont(new Font("Segoe UI", Font.BOLD, 14)); 
+        jbtSearch.setBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 1));
         jbtSearch.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                jbtSearch.setBackground(Color.decode("#FF0000"));
-                jbtSearch.setOpaque(true);
             }
             @Override
             public void mousePressed(MouseEvent e) {
-                jbtSearch.setBackground(Color.decode("#FF4500"));
-                jbtSearch.setOpaque(true);
             }
             @Override
             public void mouseReleased(MouseEvent e) {
-                jbtSearch.setOpaque(false);
                 String search = getJtfSearch().getText();
                 reloadTable(search);
             }
             @Override
             public void mouseEntered(MouseEvent e) {
-                jbtSearch.setBackground(Color.decode("#FF7F50"));
-                jbtSearch.setOpaque(true);
+                jbtSearch.setBackground(new Color(0, 120, 215));
             }
             @Override
             public void mouseExited(MouseEvent e) {
-                jbtSearch.setOpaque(false);
+                jbtSearch.setBackground(new Color(30, 144, 255));
             }
         });
      
@@ -267,6 +314,20 @@ public class ProductInfo extends JPanel {
         JButton bt = new JButton(text);
         bt.setPreferredSize(new Dimension(90, 40));
         bt.setActionCommand(text);
+        bt.setBackground(new Color(30, 144, 255)); 
+        bt.setForeground(Color.WHITE); 
+        bt.setFocusPainted(false); 
+        bt.setFont(new Font("Segoe UI", Font.BOLD, 14)); 
+        bt.setBorder(BorderFactory.createLineBorder(new Color(0, 102, 204), 1));
+        bt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                bt.setBackground(new Color(0, 120, 215));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                bt.setBackground(new Color(30, 144, 255));
+            }
+        });
         bt.addActionListener(e -> handleButtonAction(e.getActionCommand()));
         pn.add(bt);
     }
