@@ -23,7 +23,7 @@ public class CategoryTableModel extends AbstractTableModel {
 
     public CategoryTableModel(String search) {
         this.categoryBUS = new CategoryBUS();
-        this.data = categoryBUS.searchByName(search); // Gọi phương thức tìm kiếm theo tên
+        this.data = categoryBUS.searchByName(search); 
     }
 
     @Override

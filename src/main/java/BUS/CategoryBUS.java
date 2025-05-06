@@ -40,9 +40,16 @@ public class CategoryBUS {
     
     
     public String getNameById(int id){
-//        System.out.println(id);
-//        System.out.println(dao.getNameById(id));
         return dao.getNameById(id);
+    }
+    
+    public int getIdByName(String cname){
+        for (int i = 0; i < list.size(); i++) {
+            if (cname.equals(list.get(i).getName())){
+                return list.get(i).getCategoryId();
+            }
+        }
+        return -1;
     }
     
     public boolean addCategory(String name){
