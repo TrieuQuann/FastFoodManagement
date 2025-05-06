@@ -131,7 +131,7 @@ public class MainFrame extends JFrame {
                 break;
             case "nhà cung cấp":
                 mainPanel.add(new SupplierManagementPanel(), BorderLayout.CENTER);
-                break;
+                break; //hihi
             case "tài khoản":
                 mainPanel.add(new UserManagementPanel(currentrole), BorderLayout.CENTER);
                 break;
@@ -144,9 +144,9 @@ public class MainFrame extends JFrame {
             case "công thức":
                 mainPanel.add(new RecipeManagementPanel(), BorderLayout.CENTER);
                 break;
-            // case "thống kê":
-            //     mainPanel.add(new DashBoardManagementPanel(), BorderLayout.CENTER);
-            //     break;
+            case "thống kê":
+                mainPanel.add(new StatisticsPanel(), BorderLayout.CENTER);
+                break;
             case "kho":
                 mainPanel.add(new InvoiceInventManagementPanel(), BorderLayout.CENTER);
                 break;
