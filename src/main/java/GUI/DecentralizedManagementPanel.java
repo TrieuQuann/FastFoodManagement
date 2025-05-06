@@ -63,7 +63,7 @@ public class DecentralizedManagementPanel extends JPanel{
                 loadPermission();
             }
         });
-        cbrole.setBounds(100, 100, 150, 30);
+        cbrole.setBounds(100, 50,150, 30);
         
         btnsave=new JButton("Lưu phân quyền");
         btnsave.addActionListener(e->savePermission());
@@ -77,15 +77,15 @@ public class DecentralizedManagementPanel extends JPanel{
         
         btndelper=new JButton("Xóa quyền");
         btndelper.addActionListener(e -> delpermission());
-        btndelper.setBounds(1000, 80, 100, 30);
+        btndelper.setBounds(1000, 80, 150, 30);
         btndelper.setBackground(Color.CYAN);
         
-        btnaddrole=new JButton("Thêm nhóm quuyền");
+        btnaddrole=new JButton("Thêm nhóm quyền");
         btnaddrole.addActionListener(e->addrole());
         btnaddrole.setBounds(1200, 50, 150, 30);
         btnaddrole.setBackground(Color.yellow);
         
-        btndelrole=new JButton("Xóa nhóm quuyền");
+        btndelrole=new JButton("Xóa nhóm quyền");
         btndelrole.addActionListener(e->delrole());
         btndelrole.setBounds(1200, 80, 150, 30);
         btndelrole.setBackground(Color.yellow);
