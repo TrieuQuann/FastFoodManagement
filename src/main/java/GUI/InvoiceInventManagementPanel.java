@@ -1,25 +1,24 @@
 package GUI;
 
 import BUS.InventoryBUS;
-tquan
 import BUS.InvoiceInventBUS;
 import BUS.InvenDetailBUS;
 import DTO.Inventory;
 import DTO.InvoiceInvent;
 import DTO.InvenDetail;
 
-
-import DTO.Inventory;
-main
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.List;
-tquan
+
 import com.toedter.calendar.JDateChooser;
 
-public class InventoryManagementPanel extends JPanel {
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+public class InvoiceInventManagementPanel extends JPanel {
     private InventoryBUS inventoryBUS = new InventoryBUS();
     private InvoiceInventBUS invoiceInventBUS = new InvoiceInventBUS();
     private InvenDetailBUS invendetailBUS = new InvenDetailBUS();
@@ -29,7 +28,7 @@ public class InventoryManagementPanel extends JPanel {
     private JTextField txtSearch;
     private JComboBox<String> cboSearchType;
 
-    public InventoryManagementPanel() {
+    public InvoiceInventManagementPanel() {
         setLayout(new BorderLayout());
         initUI();
         loadData();
@@ -41,7 +40,7 @@ public class InventoryManagementPanel extends JPanel {
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
 
         // Title
-        JLabel title = new JLabel("QUẢN LÝ KHO HÀNG", SwingConstants.CENTER);
+        JLabel title = new JLabel("QUẢN LÝ HÓA ĐƠN NHẬP KHO", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 24));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         headerPanel.add(title);
@@ -49,26 +48,21 @@ public class InventoryManagementPanel extends JPanel {
         // ========== CONTROL PANEL ==========
         JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
 
-        // Add Invoice Button
-        JButton btnAddInvoice = new JButton("Thêm hóa đơn nhập kho");
-        btnAddInvoice.addActionListener(this::handleAddInvoiceInvent);
-        controlPanel.add(btnAddInvoice);
-
-        // Edit Inventory Button
-        JButton btnEdit = new JButton("Sửa hàng hóa");
-        btnEdit.addActionListener(this::handleEditInventory);
-        controlPanel.add(btnEdit);
+        // Add Button
+        JButton btnAdd = new JButton("Thêm hóa đơn");
+        btnAdd.addActionListener(this::handleAddInvoiceInvent);
+        controlPanel.add(btnAdd);
 
         headerPanel.add(controlPanel);
 
         // ========== SEARCH PANEL ==========
         JPanel searchPanel = new JPanel();
-        cboSearchType = new JComboBox<>(new String[]{"Mã hàng", "Tên hàng", "Đơn vị"});
+        cboSearchType = new JComboBox<>(new String[] { "Mã hóa đơn", "Mã nhà cung cấp", "Ngày nhập"});
         txtSearch = new JTextField(20);
         JButton btnSearch = new JButton("Tìm kiếm");
         btnSearch.addActionListener(e -> searchInventory());
 
-        searchPanel.add(new JLabel("Tìm theo:"));
+        searchPanel.add(new JLabel("Tìm kiếm:"));
         searchPanel.add(cboSearchType);
         searchPanel.add(txtSearch);
         searchPanel.add(btnSearch);
@@ -79,7 +73,7 @@ public class InventoryManagementPanel extends JPanel {
 
         // ========== TABLE ==========
         model = new DefaultTableModel(
-            new String[]{"Mã hàng", "Tên hàng", "Số lượng", "Đơn vị"},
+            new String[]{"Mã hóa đơn", "Mã NCC", "Số lượng nhập", "Ngày nhập"},
             0
         );
         table = new JTable(model);
@@ -95,7 +89,7 @@ public class InventoryManagementPanel extends JPanel {
         dialog.setTitle("Thêm hóa đơn nhập kho");
         dialog.setLayout(new BorderLayout());
 
-        // Input Form
+        // ========== INPUT FORM ==========
         JPanel inputPanel = new JPanel(new GridLayout(4, 2, 10, 10));
         inputPanel.setPreferredSize(new Dimension(400, 200));
 
@@ -119,7 +113,7 @@ public class InventoryManagementPanel extends JPanel {
         inputPanel.add(new JLabel("Chọn hàng hóa (*):"));
         inputPanel.add(cboInventory);
 
-        // Save Button
+        // ========== SAVE BUTTON ==========
         JButton btnSave = new JButton("Lưu hóa đơn");
         btnSave.addActionListener(evt -> {
             try {
@@ -181,114 +175,52 @@ public class InventoryManagementPanel extends JPanel {
         dialog.setVisible(true);
     }
 
-    private void handleEditInventory(ActionEvent e) {
-        int selectedRow = table.getSelectedRow();
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn hàng hóa để sửa!");
+    private void loadData() {
+        model.setRowCount(0);
+        List<InvoiceInvent> invoices = invoiceInventBUS.getAllInvoice();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+        for (InvoiceInvent invoice : invoices) {
+            model.addRow(new Object[]{
+                invoice.getInvoiceId(),
+                invoice.getSupplierId(),
+                invoice.getQuantityAdded(),
+                sdf.format(invoice.getDate())
+            });
+        }
+    }
+    private void searchInventory(){
+        String searchType = (String) cboSearchType.getSelectedItem();
+        String keyword = txtSearch.getText().trim();
+
+        if (keyword.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập từ khóa tìm kiếm!");
             return;
         }
 
-        int inventoryId = (int) model.getValueAt(selectedRow, 0);
-        String currentName = (String) model.getValueAt(selectedRow, 1);
-        int currentQuantity = (int) model.getValueAt(selectedRow, 2);
-        String currentUnit = (String) model.getValueAt(selectedRow, 3);
+        List<InvoiceInvent> invoices = null;
+        switch (searchType) {
+            case "Mã hóa đơn":
+                invoices = invoiceInventBUS.searchInvoices("invoice_id", keyword);
+                break;
+            case "Mã nhà cung cấp":
+                invoices = invoiceInventBUS.searchInvoices("supplier_id", keyword);
+                break;
+            case "Ngày nhập":
+                invoices = invoiceInventBUS.searchInvoices("date", keyword);
+                break;
+        }
 
-        JDialog dialog = new JDialog();
-        dialog.setTitle("Sửa hàng hóa");
-        dialog.setLayout(new BorderLayout());
-
-        JPanel inputPanel = new JPanel(new GridLayout(4, 2, 10, 10));
-        inputPanel.setPreferredSize(new Dimension(400, 200));
-
-        JTextField txtName = new JTextField(currentName);
-        JTextField txtQuantity = new JTextField(String.valueOf(currentQuantity));
-        JTextField txtUnit = new JTextField(currentUnit);
-
-        inputPanel.add(new JLabel("Tên hàng (*):"));
-        inputPanel.add(txtName);
-        inputPanel.add(new JLabel("Số lượng (*):"));
-        inputPanel.add(txtQuantity);
-        inputPanel.add(new JLabel("Đơn vị (*):"));
-        inputPanel.add(txtUnit);
-
-        JButton btnSave = new JButton("Lưu thay đổi");
-        btnSave.addActionListener(evt -> {
-            try {
-                if (txtName.getText().isEmpty() || txtQuantity.getText().isEmpty()
-                        || txtUnit.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(dialog, "Vui lòng điền đầy đủ thông tin!");
-                    return;
-                }
-
-                Inventory updatedInventory = new Inventory(
-                    inventoryId,
-                    txtName.getText(),
-                    Integer.parseInt(txtQuantity.getText()),
-                    txtUnit.getText()
-                );
-
-                if (inventoryBUS.updateInventory(updatedInventory)) {
-                    JOptionPane.showMessageDialog(dialog, "Cập nhật thành công!");
-                    loadData();
-                    dialog.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(dialog, "Cập nhật thất bại!");
-                }
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(dialog, "Dữ liệu số không hợp lệ!");
-            } catch (Exception ex) {
-                JOptionPane.showMessageDialog(dialog, "Lỗi hệ thống!");
-                ex.printStackTrace();
-            }
-        });
-
-        dialog.add(inputPanel, BorderLayout.CENTER);
-        dialog.add(btnSave, BorderLayout.SOUTH);
-        dialog.pack();
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
-    }
-
-    private void loadData() {
         model.setRowCount(0);
-        List<Inventory> inventoryList = inventoryBUS.getAllInventory();
-
-        for (Inventory inventory : inventoryList) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        for (InvoiceInvent invoice : invoices) {
             model.addRow(new Object[]{
-                inventory.getInvenId(),
-                inventory.getName(),
-                inventory.getQuantity(),
-                inventory.getUnit()
+                invoice.getInvoiceId(),
+                invoice.getSupplierId(),
+                invoice.getQuantityAdded(),
+                sdf.format(invoice.getDate())
             });
         }
     }
-
-    private void searchInventory() {
-        String searchType = cboSearchType.getSelectedItem().toString();
-        String keyword = txtSearch.getText().trim();
-
-        String column = switch (searchType) {
-            case "Mã hàng" -> "inven_id";
-            case "Tên hàng" -> "name";
-            case "Đơn vị" -> "unit";
-            default -> "";
-        };
-
-        model.setRowCount(0);
-        List<Inventory> result = inventoryBUS.searchInventory(column, keyword);
-
-        for (Inventory inventory : result) {
-            model.addRow(new Object[]{
-                inventory.getInvenId(),
-                inventory.getName(),
-                inventory.getQuantity(),
-                inventory.getUnit()
-            });
-        }
-    }
-=======
-
-public class InventoryManagementPanel extends JPanel{
     
-main
 }

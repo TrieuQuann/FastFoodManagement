@@ -129,20 +129,26 @@ public class MainFrame extends JFrame {
             case "chức vụ":
                 mainPanel.add(new PositionManagementPanel(), BorderLayout.CENTER);
                 break;
+            case "nhà cung cấp":
+                mainPanel.add(new SupplierManagementPanel(), BorderLayout.CENTER);
+                break; //hihi
             case "tài khoản":
                 mainPanel.add(new UserManagementPanel(currentrole), BorderLayout.CENTER);
                 break;
             case "sản phẩm":
                 mainPanel.add(new InformationProductPanel(), BorderLayout.CENTER);
                 break;
-            case "thống kê":
-                mainPanel.add(new StatisticsPanel(), BorderLayout.CENTER);
-                break;
             case "danh mục":
                 mainPanel.add(new InformationCategoryPanel(), BorderLayout.CENTER);
                 break;
             case "công thức":
                 mainPanel.add(new RecipeManagementPanel(), BorderLayout.CENTER);
+                break;
+            case "thống kê":
+                mainPanel.add(new StatisticsPanel(), BorderLayout.CENTER);
+                break;
+            case "kho":
+                mainPanel.add(new InvoiceInventManagementPanel(), BorderLayout.CENTER);
                 break;
             default:
                 JLabel content = new JLabel("You selected: " + selectedItem, SwingConstants.CENTER);

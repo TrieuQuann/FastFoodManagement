@@ -9,24 +9,25 @@ package DTO;
  * @author Lenovo
  */
 public class Inventory {
-    private int inven_id;
+    private int invenId;
     private String name;
     private int quantity;
     private String unit;
 
-    public Inventory(int inven_id, String name, int quantity, String unit) {
-        this.inven_id = inven_id;
+    public Inventory(int invenId, String name, int quantity, String unit) {
+        this.invenId = invenId;
         this.name = name;
         this.quantity = quantity;
         this.unit = unit;
     }
 
-    public int getInven_id() {
-        return inven_id;
+    // Getters and Setters
+    public int getInvenId() {
+        return invenId;
     }
 
-    public void setInven_id(int inven_id) {
-        this.inven_id = inven_id;
+    public void setInvenId(int invenId) {
+        this.invenId = invenId;
     }
 
     public String getName() {
@@ -52,23 +53,4 @@ public class Inventory {
     public void setUnit(String unit) {
         this.unit = unit;
     }
-    
-    // bổ sung thêm price
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-    private Double price;
-
-    public Inventory(int inven_id, String name, int quantity, String unit, Double price) {
-        this.inven_id = inven_id;
-        this.name = name;
-        this.quantity = quantity;
-        this.unit = unit;
-        this.price = price;
-    }
-
 }
