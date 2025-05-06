@@ -31,7 +31,7 @@ public class CustomersDAO {
         String sql = "INSERT INTO customers (cus_name, phone, email) VALUES (?, ?, ?)";
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, customer.getName());
+            ps.setString(1, customer.getCustomer_name());
             ps.setString(2, customer.getPhone());
             ps.setString(3, customer.getEmail());
             return ps.executeUpdate() > 0;
@@ -45,10 +45,10 @@ public class CustomersDAO {
         String sql = "UPDATE customers SET cus_name=?, phone=?, email=? WHERE cus_id=?";
         try (Connection conn = ConnectionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, customer.getName());
+            ps.setString(1, customer.getCustomer_name());
             ps.setString(2, customer.getPhone());
             ps.setString(3, customer.getEmail());
-            ps.setInt(4, customer.getCustomerId());
+            ps.setInt(4, customer.getCustomer_id());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

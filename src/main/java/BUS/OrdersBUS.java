@@ -18,18 +18,10 @@ public class OrdersBUS {
         return ordersDAO.addOrder(order);
     }
 
-    // Cập nhật đơn hàng
-    public boolean updateOrder(Orders order) {
-        // Kiểm tra tồn tại đơn hàng trước khi cập nhật
-        if (ordersDAO.getOrderById(order.getOrder_id()) != null) {
-            return ordersDAO.updateOrder(order);
-        }
-        return false;
-    }
-
     // Xóa đơn hàng
-    public boolean deleteOrder(int orderId) {
-        return ordersDAO.deleteOrder(orderId);
+    public boolean softDeleteOrder(int orderId) {
+        // Thực hiện xóa mềm bằng cách cập nhật trường deleted
+        return ordersDAO.softDeleteOrder(orderId);
     }
 
     // Tìm kiếm đơn hàng theo cột và từ khóa
