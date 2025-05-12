@@ -251,6 +251,21 @@ public class ProductDAO  {
             return false;
         }
     }
+    
+    public boolean updateQuantityById(int productId, int newQuantity) {
+        String sql = "UPDATE products SET expected_quantity = ? WHERE product_id = ?";
+        try (
+            Connection conn = ConnectionDB.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)
+        ) {
+            stmt.setDouble(1, newQuantity);
+            stmt.setInt(2, productId);
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 
 }

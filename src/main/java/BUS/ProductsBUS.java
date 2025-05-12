@@ -206,6 +206,10 @@ public String[] searchByCategoryName(String search) {
         return getProductById(pid).getPrice();
     }
     
+    public int getQuantityById(int pid) {
+        return getProductById(pid).getExpectedQuantity();
+    }
+    
     public int selectCategoryIdByCategoryName(String name) {
         return dao.selectCategoryIdByName(name);
     }
@@ -231,7 +235,9 @@ public String[] searchByCategoryName(String search) {
         return dao.updatePriceById(productId, newPrice);
     }
 
-
+    public boolean updateQuantityById(int productId, int newQuantity) {
+        return dao.updateQuantityById(productId, newQuantity);
+    }
     
     
 }

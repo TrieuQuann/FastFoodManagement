@@ -113,6 +113,12 @@ public class OrderDetailBottomInfo extends JPanel{
             }
             
             int pId = ((DTO.Product) jcbProduct.getSelectedItem()).getProductId();
+            
+            int pQuantity = new BUS.ProductsBUS().getQuantityById(pId);
+            if (pQuantity < quantity){
+                    JOptionPane.showMessageDialog(null, "Số lượng sản phẩm không đủ!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+            }
             double price = new BUS.ProductsBUS().getPriceById(pId);
             double total_price = price * quantity;
             oTable.addProductRow(selectedPro.toString(), quantity, price, total_price);

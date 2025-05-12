@@ -300,6 +300,16 @@ public class OrderDetailTable extends JPanel {
                 double tongGia = Double.parseDouble(tableModel.getValueAt(i, 3).toString());
 
                 new BUS.OrderDetailsBUS().addOrderDetail(oId, pId, soLuong, gia, tongGia);
+                
+                int pQuantity = new BUS.ProductsBUS().getQuantityById(pId);
+                if (pQuantity < soLuong){
+                    JOptionPane.showMessageDialog(null, "Hóa đơn lưu không thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+                else{
+                    int newSoLuong = pQuantity - soLuong;
+                    new BUS.ProductsBUS().updateQuantityById(pId, newSoLuong);
+                }
             }
             JOptionPane.showMessageDialog(null, "Hóa đơn đã được lưu thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             resetAllFields();

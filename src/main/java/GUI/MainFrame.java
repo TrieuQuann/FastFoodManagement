@@ -179,8 +179,8 @@ public class MainFrame extends JFrame {
                 content.setFont(new Font("Arial", Font.BOLD, 24));
                 mainPanel.add(content, BorderLayout.CENTER);
         }
-        mainPanel.revalidate(); // Làm mới mainPanel
-        mainPanel.repaint(); // Vẽ lại mainPanel
+        mainPanel.revalidate();
+        mainPanel.repaint(); 
     }
 
     public static void main(String[] args) {
