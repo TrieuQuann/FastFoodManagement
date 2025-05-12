@@ -22,14 +22,14 @@ public class CreateOrderPanel extends JPanel{
     private JPanel jpnTable;
 
     public CreateOrderPanel() {
-        setPreferredSize(new Dimension(1200, 800));
+        setPreferredSize(new Dimension(1400, 900));
         setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
-        setLayout(new FlowLayout(FlowLayout.CENTER,20,20));
+        setLayout(new FlowLayout(FlowLayout.CENTER,50,50));
 
         JPanel pnTitle = new JPanel();
-        pnTitle.setPreferredSize(new Dimension(1150, 40));
+        pnTitle.setPreferredSize(new Dimension(1150, 90));
         JLabel jlbTitle = new JLabel("Tạo hóa đơn");
-        jlbTitle.setFont(new Font("Segoe UI", Font.PLAIN, 27));
+        jlbTitle.setFont(new Font("Segoe UI", Font.PLAIN, 40));
         jlbTitle.setOpaque(false);
         pnTitle.add(jlbTitle);
         add(pnTitle);

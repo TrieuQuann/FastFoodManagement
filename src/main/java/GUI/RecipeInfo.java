@@ -57,7 +57,7 @@ public class RecipeInfo extends JPanel{
     }
     
     private void initRecipeInfo(){
-        setPreferredSize(new Dimension(600, 700));
+        setPreferredSize(new Dimension(700, 700));
 //        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         setLayout(new FlowLayout(FlowLayout.CENTER,50,50));
         

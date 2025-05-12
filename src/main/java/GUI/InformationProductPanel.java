@@ -7,6 +7,7 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -34,21 +35,26 @@ public class InformationProductPanel extends JPanel {
     }
 
     public InformationProductPanel() {
-        setPreferredSize(new Dimension(1000, 800));
+        setPreferredSize(new Dimension(1500, 900));
 //        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
-        setLayout(new BorderLayout(10, 10));
+        setLayout(new FlowLayout(FlowLayout.CENTER));
 
         JLabel jlbTitle = new JLabel("Thông tin sản phẩm");
-        jlbTitle.setFont(new Font("Segoe UI", Font.PLAIN, 22));
+        jlbTitle.setFont(new Font("Segoe UI", Font.PLAIN, 40));
         jlbTitle.setBorder(new EmptyBorder(10, 20, 0, 10));
         jlbTitle.setOpaque(false);
-        add(jlbTitle, BorderLayout.NORTH);
+        add(jlbTitle);
 
+        JPanel pncon1 = new JPanel();
+        pncon1.setLayout(new BorderLayout(10, 10));
+        pncon1.setPreferredSize(new Dimension(1390, 850));
         jpnInfo = new ProductInfo(null); 
         jpnTable = new ProductTable(jpnInfo);
         jpnInfo.setPnTable(jpnTable); 
 
-        add(jpnInfo, BorderLayout.CENTER);
-        add(jpnTable, BorderLayout.SOUTH);
+        pncon1.add(jpnInfo, BorderLayout.CENTER);
+        pncon1.add(jpnTable, BorderLayout.SOUTH);
+        
+        add(pncon1);
     }
 }

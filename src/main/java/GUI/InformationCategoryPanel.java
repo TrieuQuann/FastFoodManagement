@@ -38,14 +38,14 @@ public class InformationCategoryPanel extends JPanel {
     }
 
     public InformationCategoryPanel() {
-        setPreferredSize(new Dimension(1000, 800));
+        setPreferredSize(new Dimension(1200, 800));
         setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
         setLayout(new FlowLayout(FlowLayout.CENTER,30,30));
 
         JPanel pnTitle = new JPanel();
-        pnTitle.setPreferredSize(new Dimension(950, 60));
+        pnTitle.setPreferredSize(new Dimension(1150, 60));
         JLabel jlbTitle = new JLabel("Thông tin danh mục");
-        jlbTitle.setFont(new Font("Segoe UI", Font.PLAIN, 25));
+        jlbTitle.setFont(new Font("Segoe UI", Font.PLAIN, 40));
 //        jlbTitle.setBorder(new EmptyBorder(10, 20, 0, 10));
         jlbTitle.setOpaque(false);
         pnTitle.add(jlbTitle);

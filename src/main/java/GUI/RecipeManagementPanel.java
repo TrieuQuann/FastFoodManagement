@@ -36,29 +36,36 @@ public class RecipeManagementPanel extends JPanel{
 
 
     public RecipeManagementPanel() {
-        setPreferredSize(new Dimension(1300, 800));
+        setPreferredSize(new Dimension(1300, 900));
 //        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
-        setLayout(new BorderLayout(10, 10));
+        setLayout(new FlowLayout(FlowLayout.CENTER));
+        
 
         JPanel jpnTitle = new JPanel();
-        jpnTitle.setPreferredSize(new Dimension(900, 70));
+        jpnTitle.setPreferredSize(new Dimension(1100, 100));
 //        jpnTitle.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
         jpnTitle.setLayout(new FlowLayout(FlowLayout.CENTER));
         
         JLabel jlbTitle = new JLabel("Thông tin Công thức");
-        jlbTitle.setFont(new Font("Segoe UI", Font.PLAIN, 25));
+        jlbTitle.setFont(new Font("Segoe UI", Font.PLAIN, 40));
         jlbTitle.setBorder(new EmptyBorder(10, 20, 0, 10));
         jlbTitle.setOpaque(false);
         
         jpnTitle.add(jlbTitle);
-        add(jpnTitle, BorderLayout.NORTH);
+        add(jpnTitle);
 
         pnRecipeInfo = new RecipeInfo(null);
         pnRecipeTable = new RecipeTable(pnRecipeInfo.getPnBottomInfo());
         pnRecipeInfo.setPnTable(pnRecipeTable);
 
-        add(pnRecipeInfo, BorderLayout.EAST);
-        add(pnRecipeTable, BorderLayout.CENTER);
+        JPanel pncon1 = new JPanel();
+        pncon1.setLayout(new BorderLayout(10, 10));
+        pncon1.setPreferredSize(new Dimension(1250, 600));
+        
+        pncon1.add(pnRecipeInfo, BorderLayout.EAST);
+        pncon1.add(pnRecipeTable, BorderLayout.CENTER);
+        
+        add(pncon1);
     }
     
     

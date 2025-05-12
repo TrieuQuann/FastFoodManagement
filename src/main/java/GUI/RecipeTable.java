@@ -56,7 +56,7 @@ public class RecipeTable extends JPanel {
     }
 
     private void initRecipeTable() {
-        setPreferredSize(new Dimension(600, 800));
+        setPreferredSize(new Dimension(600, 700));
         setBorder(BorderFactory.createLineBorder(new Color(0, 51, 153), 2));
         setLayout(new BorderLayout());
 
@@ -113,7 +113,7 @@ public class RecipeTable extends JPanel {
         jpnTotalPrice.setPreferredSize(new Dimension(450, 60));
         jpnTotalPrice.setLayout(new FlowLayout(FlowLayout.CENTER, 2, 2));
         JLabel jlbTotalPrice = new JLabel("Tổng chi phí: ");
-        jlbTotalPrice.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+        jlbTotalPrice.setFont(new Font("Segoe UI", Font.PLAIN, 25));
         jlbTotalPrice.setOpaque(false);
         jpnTotalPrice.add(jlbTotalPrice);
         jtfTongTien = new JTextField();
