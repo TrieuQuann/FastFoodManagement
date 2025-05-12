@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 15, 2025 lúc 08:46 AM
+-- Thời gian đã tạo: Th5 13, 2025 lúc 01:36 AM
 -- Phiên bản máy phục vụ: 10.4.32-MariaDB
 -- Phiên bản PHP: 8.0.30
 
@@ -29,16 +29,22 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `category` (
   `category_id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL
+  `name` varchar(100) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `category`
 --
 
-INSERT INTO `category` (`category_id`, `name`) VALUES
-(11, 'Đồ uống'),
-(12, 'Đồ ăn');
+INSERT INTO `category` (`category_id`, `name`, `status`) VALUES
+(1, 'Burger', 1),
+(2, 'Gà rán', 1),
+(3, 'Pizza', 1),
+(4, 'Mì', 1),
+(5, 'Đồ ăn nhẹ', 1),
+(6, 'Đồ chay', 1),
+(7, 'Thức uống', 1);
 
 -- --------------------------------------------------------
 
@@ -78,7 +84,7 @@ INSERT INTO `customers` (`cus_id`, `cus_name`, `phone`, `email`) VALUES
 CREATE TABLE `employee` (
   `eid` int(11) NOT NULL,
   `position_id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
+  `employee_name` varchar(100) NOT NULL,
   `phone` varchar(100) NOT NULL,
   `address` varchar(100) NOT NULL,
   `gender` varchar(100) NOT NULL
@@ -88,7 +94,7 @@ CREATE TABLE `employee` (
 -- Đang đổ dữ liệu cho bảng `employee`
 --
 
-INSERT INTO `employee` (`eid`, `position_id`, `name`, `phone`, `address`, `gender`) VALUES
+INSERT INTO `employee` (`eid`, `position_id`, `employee_name`, `phone`, `address`, `gender`) VALUES
 (1, 1, 'Lê Đức Minh', '0901234580', 'Sài Gòn', 'Nam'),
 (2, 2, 'Trần Thị Ngà', '0901234581', 'Hà Nội', 'Nữ'),
 (3, 1, 'Nguyễn Văn Oanh', '0901234582', 'Đà Nẵng', 'Nam'),
@@ -99,6 +105,36 @@ INSERT INTO `employee` (`eid`, `position_id`, `name`, `phone`, `address`, `gende
 (8, 3, 'Lâm Thanh Tuyền', '0901234587', 'Vũng Tàu', 'Nam'),
 (9, 4, 'Trương Thị Uyên', '0901234588', 'Nha Trang', 'Nữ'),
 (10, 2, 'Đoàn Minh Vy', '0901234589', 'Bình Dương', 'Nam');
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `feature`
+--
+
+CREATE TABLE `feature` (
+  `id` int(11) NOT NULL,
+  `feature_name` varchar(100) NOT NULL,
+  `icon_url` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `feature`
+--
+
+INSERT INTO `feature` (`id`, `feature_name`, `icon_url`) VALUES
+(1, 'Thống kê', 'image/icon/dashboard.png'),
+(2, 'Sản phẩm', 'image/icon/products.png'),
+(5, 'Thêm hóa đơn', 'image/icon/createOrder.png'),
+(6, 'Hóa đơn', 'image/icon/bill.png'),
+(7, 'Công thức', 'image/icon/recipe.png'),
+(8, 'Nhà cung cấp', 'image/icon/supplier.png'),
+(9, 'Phân quyền', 'image/icon/pquyen.png'),
+(10, 'Danh mục', 'image/icon/list.png'),
+(11, 'Tài khoản', 'image/icon/taikhoan.png'),
+(13, 'Khách hàng', 'image/icon/customers.png'),
+(14, 'Nhân viên', 'image/icon/staff.png'),
+(15, 'Kho', 'image/icon/inventory.png');
 
 -- --------------------------------------------------------
 
@@ -122,44 +158,35 @@ CREATE TABLE `inventory` (
   `inven_id` int(11) NOT NULL,
   `name` varchar(156) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `unit` varchar(100) NOT NULL
+  `unit` varchar(100) NOT NULL,
+  `price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `inventory`
 --
 
-INSERT INTO `inventory` (`inven_id`, `name`, `quantity`, `unit`) VALUES
-(96, 'Bánh mì', 1000, 'chiếc'),
-(97, 'Thịt gà', 500, 'kg'),
-(98, 'Khoai tây', 300, 'kg'),
-(99, 'Trà sữa', 200, 'lít'),
-(100, 'Sữa đặc', 150, 'lít'),
-(101, 'Bột mì', 100, 'kg'),
-(102, 'Xúc xích', 200, 'kg'),
-(103, 'Dưa leo', 100, 'kg'),
-(104, 'Cà chua', 50, 'kg'),
-(105, 'Hành tây', 40, 'kg'),
-(106, 'Cà phê', 20, 'kg'),
-(107, 'Đá viên', 500, 'kg'),
-(108, 'Gà rán', 300, 'kg'),
-(109, 'Sốt mayonnaise', 50, 'lít'),
-(110, 'Sốt cà chua', 50, 'lít'),
-(111, 'Hạt tiêu', 10, 'kg'),
-(112, 'Muối', 10, 'kg'),
-(113, 'Dầu ăn', 200, 'lít'),
-(114, 'Bánh pizza', 200, 'chiếc'),
-(115, 'Phô mai', 100, 'kg'),
-(116, 'Nước mắm', 100, 'lít'),
-(117, 'Đường', 50, 'kg'),
-(118, 'Nước ngọt', 150, 'lít'),
-(119, 'Nước ép trái cây', 100, 'lít'),
-(120, 'Kem tươi', 50, 'kg'),
-(121, 'Bánh quy', 50, 'kg'),
-(122, 'Gia vị', 30, 'kg'),
-(123, 'Sữa tươi', 100, 'lít'),
-(124, 'Nước tương', 50, 'lít'),
-(125, 'Bột năng', 30, 'kg');
+INSERT INTO `inventory` (`inven_id`, `name`, `quantity`, `unit`, `price`) VALUES
+(96, 'Bánh mì', 10, 'chiếc', 3000),
+(97, 'Thịt gà', 50, 'kg', 90000),
+(98, 'Khoai tây', 30, 'kg', 12000),
+(99, 'sữa tươi\r\n', 20, 'lít', 30000),
+(100, 'Sữa đặc', 15, 'lít', 50000),
+(101, 'Bột mì', 10, 'kg', 30000),
+(102, 'Xúc xích', 200, 'cái', 2000),
+(103, 'Dưa leo', 10, 'kg', 15000),
+(104, 'Cà chua', 5, 'kg', 30000),
+(105, 'Hành tây', 40, 'củ', 2000),
+(106, 'Cà phê', 5000, 'g', 200),
+(107, 'Đá viên', 50, 'kg', 2000),
+(109, 'Sốt mayonnaise', 5, 'lít', 150000),
+(110, 'Sốt cà chua', 5, 'lít', 50000),
+(111, 'Bột tiêu', 10000, 'g', 2000),
+(112, 'Muối', 10000, 'g', 15),
+(113, 'Dầu ăn', 20000, 'mililit', 30),
+(115, 'Phô mai', 10, 'kg', 30000),
+(116, 'Nước mắm', 30000, 'mililit', 20),
+(117, 'Đường', 20000, 'gam', 40);
 
 -- --------------------------------------------------------
 
@@ -185,8 +212,40 @@ CREATE TABLE `orderdetails` (
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `price` double NOT NULL,
-  `total_price` double NOT NULL
+  `total_price` double NOT NULL,
+  `status` int(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `orderdetails`
+--
+
+INSERT INTO `orderdetails` (`order_id`, `product_id`, `quantity`, `price`, `total_price`, `status`) VALUES
+(1, 11, 2, 45000, 90000, 1),
+(1, 19, 1, 25000, 25000, 1),
+(1, 23, 1, 32000, 32000, 1),
+(2, 12, 2, 42000, 84000, 1),
+(2, 19, 1, 25000, 25000, 1),
+(3, 13, 2, 39000, 78000, 1),
+(3, 23, 1, 32000, 32000, 1),
+(4, 14, 3, 40000, 120000, 1),
+(4, 19, 1, 25000, 25000, 1),
+(5, 15, 2, 68000, 136000, 1),
+(5, 20, 1, 30000, 30000, 1),
+(6, 16, 1, 75000, 75000, 1),
+(6, 21, 2, 35000, 70000, 1),
+(7, 17, 2, 52000, 104000, 1),
+(7, 22, 1, 38000, 38000, 1),
+(8, 18, 2, 50000, 100000, 1),
+(9, 13, 1, 39000, 39000, 1),
+(9, 14, 2, 40000, 80000, 1),
+(10, 11, 2, 45000, 90000, 1),
+(10, 12, 12, 42000, 504000, 1),
+(10, 23, 1, 32000, 32000, 1),
+(11, 12, 12, 42000, 504000, 1),
+(12, 12, 12, 42000, 504000, 1),
+(13, 13, 12, 39000, 468000, 1),
+(14, 12, 10, 42000, 420000, 1);
 
 -- --------------------------------------------------------
 
@@ -199,24 +258,28 @@ CREATE TABLE `orders` (
   `cus_id` int(11) NOT NULL,
   `eid` int(11) NOT NULL,
   `order_date` date NOT NULL,
-  `total_amount` double NOT NULL
+  `total_amount` double NOT NULL,
+  `deleted` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `orders`
 --
 
-INSERT INTO `orders` (`order_id`, `cus_id`, `eid`, `order_date`, `total_amount`) VALUES
-(1, 1, 1, '2025-04-01', 150000),
-(2, 2, 2, '2025-04-01', 120000),
-(3, 3, 3, '2025-04-01', 100000),
-(4, 4, 4, '2025-04-01', 180000),
-(5, 5, 5, '2025-04-01', 160000),
-(6, 6, 6, '2025-04-01', 140000),
-(7, 7, 7, '2025-04-01', 170000),
-(8, 8, 8, '2025-04-01', 90000),
-(9, 9, 9, '2025-04-01', 130000),
-(10, 10, 10, '2025-04-01', 110000);
+INSERT INTO `orders` (`order_id`, `cus_id`, `eid`, `order_date`, `total_amount`, `deleted`) VALUES
+(1, 1, 1, '2025-04-01', 150000, 0),
+(2, 2, 2, '2025-04-01', 120000, 0),
+(3, 3, 3, '2025-04-01', 100000, 0),
+(4, 4, 4, '2025-04-01', 180000, 0),
+(5, 5, 5, '2025-04-01', 160000, 0),
+(6, 6, 6, '2025-04-01', 140000, 0),
+(7, 7, 7, '2025-04-01', 170000, 0),
+(8, 8, 8, '2025-04-01', 90000, 0),
+(9, 9, 9, '2025-04-01', 130000, 0),
+(10, 10, 10, '2025-04-01', 110000, 0),
+(12, 1, 1, '2025-05-13', 504000, 0),
+(13, 1, 1, '2025-05-13', 468000, 0),
+(14, 1, 1, '2025-05-13', 420000, 0);
 
 -- --------------------------------------------------------
 
@@ -228,6 +291,19 @@ CREATE TABLE `permissions` (
   `permission_id` int(11) NOT NULL,
   `permission_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `permissions`
+--
+
+INSERT INTO `permissions` (`permission_id`, `permission_name`) VALUES
+(1, 'Quản lý sản phẩm'),
+(2, 'Quản lý tài khoản'),
+(3, 'Quản lý nhân viên'),
+(4, 'Quản lý hóa đơn'),
+(5, 'Quản lý công thức'),
+(6, 'Quản lý danh mục'),
+(7, 'Quản lý khách hàng');
 
 -- --------------------------------------------------------
 
@@ -260,25 +336,31 @@ CREATE TABLE `products` (
   `product_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `price` double NOT NULL,
+  `price` double DEFAULT NULL,
   `image` varchar(100) NOT NULL,
-  `expected_quantity` int(11) NOT NULL
+  `expected_quantity` int(11) DEFAULT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `products`
 --
 
-INSERT INTO `products` (`product_id`, `category_id`, `name`, `price`, `image`, `expected_quantity`) VALUES
-(1, 11, 'Trà sữa', 21000, '', 60),
-(2, 12, 'Bánh mì', 12000, '', 0),
-(3, 12, 'Xúc xích', 4500, '', 90),
-(4, 12, 'Mì xào', 30000, '', 12),
-(5, 12, 'Burger', 15000, '', 50),
-(6, 12, 'Pizza', 120000, '', 120),
-(7, 12, 'Gà rán', 45000, '', 300),
-(8, 12, 'Khoai tây chiên', 34000, '', 70),
-(9, 11, 'Sinh tố', 34000, '', 65);
+INSERT INTO `products` (`product_id`, `category_id`, `name`, `price`, `image`, `expected_quantity`, `status`) VALUES
+(11, 1, 'Burger Bò Phô Mai', 45000, '/image/products/burgerBoPhoMai.jpg', 50, 0),
+(12, 1, 'Burger Gà Giòn', 42000, '/image/products/burgerGaGion.jpg', 30, 1),
+(13, 2, 'Gà Rán Truyền Thống', 39000, '/image/products/gaRanTruyenThong.jpg', 60, 1),
+(14, 2, 'Gà Rán Cay', 40000, '/image/products/gaRanCay.jpg', 55, 1),
+(15, 3, 'Pizza Phô Mai', 68000, '/image/products/pizzaPhoMai.jpg', 30, 1),
+(16, 3, 'Pizza Hải Sản', 75000, '/image/products/pizzaHaiSan.jpg', 25, 1),
+(17, 4, 'Mì Spaghetti Bò Bằm', 52000, '/image/products/miBoBam.jpg', 35, 1),
+(18, 4, 'Mì Ý Sốt Kem', 50000, '/image/products/miYSotKem.jpg', 30, 1),
+(19, 5, 'Khoai Tây Chiên Lớn', 25000, '/image/products/khoaiTayChienLon.jpg', 70, 1),
+(20, 5, 'Phô Mai Que', 30000, '/image/products/phoMaiQue.jpg', 40, 1),
+(21, 6, 'Burger Chay', 35000, '/image/products/burgerChay.jpg', 20, 1),
+(22, 6, 'Mì Chay Sốt Nấm', 38000, '/image/products/miChaySotNam.jpg', 15, 1),
+(23, 7, 'Trà Sữa Trân Châu', 32000, '/image/products/traSua.jpg', 45, 1),
+(24, 7, 'Pepsi Lon', 15000, '/image/products/pepsi.png', 50, 0);
 
 -- --------------------------------------------------------
 
@@ -289,9 +371,34 @@ INSERT INTO `products` (`product_id`, `category_id`, `name`, `price`, `image`, `
 CREATE TABLE `recipe` (
   `product_id` int(11) NOT NULL,
   `inven_id` int(11) NOT NULL,
-  `unit` varchar(100) DEFAULT NULL,
-  `amount` int(11) DEFAULT NULL
+  `amount` int(11) DEFAULT NULL,
+  `total_price` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `recipe`
+--
+
+INSERT INTO `recipe` (`product_id`, `inven_id`, `amount`, `total_price`) VALUES
+(12, 96, 3, 9000),
+(12, 97, 1, 45000),
+(12, 98, 1, 6000),
+(12, 99, 3, 90000),
+(12, 100, 1, 50000),
+(12, 101, 1, 30000),
+(12, 102, 3, 6000),
+(12, 103, 1, 10500),
+(12, 104, 1, 15000),
+(12, 105, 3, 6000),
+(12, 110, 2, 50000),
+(12, 111, 2, 4000),
+(12, 115, 3, 90000),
+(15, 100, 10, 5000),
+(15, 110, 10, 5000),
+(15, 112, 10, 150),
+(15, 115, 20, 3000),
+(16, 112, 10, 150),
+(20, 96, 1, 3000);
 
 -- --------------------------------------------------------
 
@@ -305,6 +412,21 @@ CREATE TABLE `rolepermission` (
   `prop` varchar(51) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `rolepermission`
+--
+
+INSERT INTO `rolepermission` (`role_id`, `permission_id`, `prop`) VALUES
+(1, 2, 'create'),
+(1, 2, 'delete'),
+(1, 2, 'read'),
+(1, 2, 'update'),
+(4, 1, 'create'),
+(4, 1, 'delete'),
+(4, 1, 'read'),
+(4, 1, 'update'),
+(4, 5, 'read');
+
 -- --------------------------------------------------------
 
 --
@@ -315,6 +437,15 @@ CREATE TABLE `roles` (
   `role_id` int(11) NOT NULL,
   `role_name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `roles`
+--
+
+INSERT INTO `roles` (`role_id`, `role_name`) VALUES
+(1, 'Quản lý'),
+(2, 'Thu ngân'),
+(4, 'Quản kho');
 
 -- --------------------------------------------------------
 
@@ -330,6 +461,23 @@ CREATE TABLE `suppliers` (
   `phone` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `suppliers`
+--
+
+INSERT INTO `suppliers` (`supplier_id`, `supplier_name`, `email`, `address`, `phone`) VALUES
+(1, 'Công ty TNHH Thực Phẩm Việt', 'contact@thucphamviet.vn', '12 Nguyễn Văn Cừ, Hà Nội', '0901122334'),
+(2, 'Nhà Cung Cấp Bánh Mì ABC', 'info@banhmiabc.vn', '23 Lê Lợi, TP.HCM', '0912233445'),
+(3, 'FreshMeat Co.', 'sales@freshmeat.vn', '89 Tôn Đức Thắng, TP.HCM', '0933344556'),
+(4, 'GreenVeggie Việt Nam', 'support@greenveggie.vn', '56 Trần Phú, Đà Nẵng', '0944455667'),
+(5, 'Khoai Tây Sạch Co.', 'khoaitay@nguyenlieu.vn', '77 Nguyễn Huệ, Huế', '0955566778'),
+(6, 'CheeseLand Supplier', 'cheese@cheeseland.vn', '101 Lý Thường Kiệt, Hà Nội', '0966677889'),
+(7, 'FastFood Ingredients Ltd.', 'fast@fastfood.vn', '99 Trường Chinh, Cần Thơ', '0977788990'),
+(8, 'Gia Vị Tự Nhiên 123', 'gia.vi@123.vn', '32 Phan Đình Phùng, Hà Nội', '0988899001'),
+(9, 'Trứng Gà Organic Co.', 'trungga@organic.vn', '65 Điện Biên Phủ, TP.HCM', '0999900012'),
+(10, 'Thực Phẩm Đông Lạnh Nhanh', 'frozen@nhanh.vn', '48 Hoàng Hoa Thám, Hải Phòng', '0900001122'),
+(11, 'Trứng gà Binh Phước', 'trungga93@gmail.com', '1 DT741, Bình Phước', '0900001134');
+
 -- --------------------------------------------------------
 
 --
@@ -344,25 +492,15 @@ CREATE TABLE `users` (
   `paswd` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- --------------------------------------------------------
+--
+-- Đang đổ dữ liệu cho bảng `users`
+--
 
---
--- Cấu trúc bảng cho bảng `users`
---
-CREATE TABLE feature (
-    id int PRIMARY KEY,
-    feature_name VARCHAR(100) NOT NULL,
-    icon_url VARCHAR(255)
-);
-INSERT INTO feature (feature_name, icon_url) VALUES
-('Thống kê', 'image/icon/statistic.png'),
-('Sản phẩm', 'image/icon/product.png'),
-('Khách hàng', 'image/icon/customer.png'),
-('Nhân viên', 'image/icon/staff.png'),
-('Kho', 'image/icon/warehouse.png'),
-('Hóa đơn', 'image/icon/invoice.png'),
-('Công thức', 'image/icon/recipe.png');
-('Nhà cung cấp', 'image/icon/supplier.png'),
+INSERT INTO `users` (`user_id`, `role_id`, `eid`, `username`, `paswd`) VALUES
+(1, 1, 1, 'admin1', '123'),
+(2, 2, 3, 'cashier1', 'abc123'),
+(3, 4, 12, 'quan123', '123'),
+(4, 2, 11, 'giang234', '1234567890');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -386,6 +524,12 @@ ALTER TABLE `customers`
 ALTER TABLE `employee`
   ADD PRIMARY KEY (`eid`),
   ADD KEY `fk_position` (`position_id`);
+
+--
+-- Chỉ mục cho bảng `feature`
+--
+ALTER TABLE `feature`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Chỉ mục cho bảng `invendetail`
@@ -483,7 +627,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT cho bảng `customers`
@@ -498,122 +642,34 @@ ALTER TABLE `employee`
   MODIFY `eid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=190;
 
 --
--- AUTO_INCREMENT cho bảng `inventory`
---
-ALTER TABLE `inventory`
-  MODIFY `inven_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
-
---
--- AUTO_INCREMENT cho bảng `invoiceinvent`
---
-ALTER TABLE `invoiceinvent`
-  MODIFY `invoice_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT cho bảng `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT cho bảng `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `permission_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT cho bảng `position`
---
-ALTER TABLE `position`
-  MODIFY `position_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `permission_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `products`
 --
 ALTER TABLE `products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT cho bảng `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT cho bảng `suppliers`
---
-ALTER TABLE `suppliers`
-  MODIFY `supplier_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `role_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Các ràng buộc cho các bảng đã đổ
---
-
---
--- Các ràng buộc cho bảng `employee`
---
-ALTER TABLE `employee`
-  ADD CONSTRAINT `fk_position` FOREIGN KEY (`position_id`) REFERENCES `position` (`position_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Các ràng buộc cho bảng `invendetail`
---
-ALTER TABLE `invendetail`
-  ADD CONSTRAINT `fk_inven` FOREIGN KEY (`inven_id`) REFERENCES `inventory` (`inven_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_invoice` FOREIGN KEY (`invoice_id`) REFERENCES `invoiceinvent` (`invoice_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Các ràng buộc cho bảng `invoiceinvent`
---
-ALTER TABLE `invoiceinvent`
-  ADD CONSTRAINT `fk_suppli` FOREIGN KEY (`supplier_id`) REFERENCES `suppliers` (`supplier_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Các ràng buộc cho bảng `orderdetails`
---
-ALTER TABLE `orderdetails`
-  ADD CONSTRAINT `fk_order` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_product2` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Các ràng buộc cho bảng `orders`
---
-ALTER TABLE `orders`
-  ADD CONSTRAINT `fk_cusid` FOREIGN KEY (`cus_id`) REFERENCES `customers` (`cus_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_eid2` FOREIGN KEY (`eid`) REFERENCES `employee` (`eid`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Các ràng buộc cho bảng `products`
---
-ALTER TABLE `products`
-  ADD CONSTRAINT `fk_cate` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Các ràng buộc cho bảng `recipe`
---
-ALTER TABLE `recipe`
-  ADD CONSTRAINT `fk_inven2` FOREIGN KEY (`inven_id`) REFERENCES `inventory` (`inven_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`product_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Các ràng buộc cho bảng `rolepermission`
---
-ALTER TABLE `rolepermission`
-  ADD CONSTRAINT `fk_permission` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`permission_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_role` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Các ràng buộc cho bảng `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `fk_eid` FOREIGN KEY (`eid`) REFERENCES `employee` (`eid`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `fk_roleid` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
