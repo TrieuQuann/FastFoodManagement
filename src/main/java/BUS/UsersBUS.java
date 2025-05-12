@@ -19,6 +19,7 @@ public class UsersBUS {
         if(user.getUsername().isEmpty()||user.getPassword().isEmpty()){
             throw new IllegalArgumentException("Tên đăng nhập và mật khẩu không được để trống");
         }
+        user.setPassword(Hasher.hashPassword(user.getPassword()));
         dao.insertUser(user);
     }
     public void updateUser(Users user){

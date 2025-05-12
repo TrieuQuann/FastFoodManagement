@@ -36,9 +36,10 @@ public class DecentralizedManagementPanel extends JPanel{
     private int currentroleID = -1;
     public DecentralizedManagementPanel(){
         lbltitle=new JLabel("Quản lý phân quyền");
-        lbltitle.setBounds(470,0,400,50);
+        lbltitle.setBounds(500,30,400,50);
         lbltitle.setHorizontalAlignment(SwingConstants.CENTER);
-        lbltitle.setFont(new Font("Arial", Font.PLAIN, 30));
+        lbltitle.setFont(new Font("Arial", Font.BOLD, 40));
+        lbltitle.setForeground(new Color(61,205,128));
         String[] columns={"Chức năng","Thêm","Sửa","Xóa","Xem"};
         tbdcmodel=new DefaultTableModel(columns,0){
             @Override
@@ -50,10 +51,11 @@ public class DecentralizedManagementPanel extends JPanel{
             }
         };
         tbdc=new JTable(tbdcmodel);
-        tbdc.getTableHeader().setFont(new Font("Arial", Font.BOLD, 20));
-        tbdc.setFont(new Font("Arial", Font.PLAIN, 16));
+        tbdc.getTableHeader().setFont(new Font("Arial", Font.BOLD, 24));
+        tbdc.setFont(new Font("Arial", Font.PLAIN, 20));
+        tbdc.setRowHeight(30);
         tbdcscroll=new JScrollPane(tbdc);
-        tbdcscroll.setBounds(200, 200, 1000, 500);
+        tbdcscroll.setBounds(50, 230, 1400, 600);
         
         cbrole = new JComboBox<>();
         cbrole.addActionListener(e->{
@@ -63,32 +65,38 @@ public class DecentralizedManagementPanel extends JPanel{
                 loadPermission();
             }
         });
-        cbrole.setBounds(100, 100, 150, 30);
+        cbrole.setBounds(100, 120, 200, 50);
+        cbrole.setFont(new Font("Arial", Font.BOLD,18));
         
         btnsave=new JButton("Lưu phân quyền");
         btnsave.addActionListener(e->savePermission());
-        btnsave.setBounds(800, 70, 130, 30);
-        //btnsave.setBackground(Color.blue);
+        btnsave.setBounds(1200, 900, 170, 50);
+        btnsave.setBackground(new Color(61,205,128));
+        btnsave.setFont(new Font("Arial", Font.BOLD,16));
         
         btnaddnewper=new JButton("Thêm quyền");
         btnaddnewper.addActionListener(e->addpermission());
-        btnaddnewper.setBounds(950, 70, 120, 30);
-        //btnaddnewper.setBackground(Color.CYAN);
+        btnaddnewper.setBounds(50, 900, 170, 50);
+        btnaddnewper.setBackground(new Color(61,205,128));
+        btnaddnewper.setFont(new Font("Arial", Font.BOLD,16));
         
         btndelper=new JButton("Xóa quyền");
         btndelper.addActionListener(e -> delpermission());
-        btndelper.setBounds(950, 120, 120, 30);
-        //btndelper.setBackground(Color.CYAN);
+        btndelper.setBounds(300, 900, 170, 50);
+        btndelper.setBackground(new Color(61,205,128));
+        btndelper.setFont(new Font("Arial", Font.BOLD,16));
         
-        btnaddrole=new JButton("Thêm nhóm quuyền");
+        btnaddrole=new JButton("Thêm nhóm quyền");
         btnaddrole.addActionListener(e->addrole());
-        btnaddrole.setBounds(1100, 70, 170, 30);
-        //btnaddrole.setBackground(Color.yellow);
+        btnaddrole.setBounds(1000, 120, 190, 50);
+        btnaddrole.setBackground(new Color(61,205,128));
+        btnaddrole.setFont(new Font("Arial", Font.BOLD,16));
         
-        btndelrole=new JButton("Xóa nhóm quuyền");
+        btndelrole=new JButton("Xóa nhóm quyền");
         btndelrole.addActionListener(e->delrole());
-        btndelrole.setBounds(1100, 120, 170, 30);
-        //btndelrole.setBackground(Color.yellow);
+        btndelrole.setBounds(1250, 120, 190, 50);
+        btndelrole.setBackground(new Color(61,205,128));
+        btndelrole.setFont(new Font("Arial", Font.BOLD,16));
         
         loadRole();
         
@@ -175,22 +183,26 @@ public class DecentralizedManagementPanel extends JPanel{
         gbc.gridx=0;
         gbc.gridy=0;
         gbc.gridwidth=2;
-        gbc.insets = new Insets(10, 10, 5, 10);
+        gbc.insets = new Insets(15, 20, 15, 20);
         JLabel label=new JLabel("Enter new permission name:");
+        label.setFont(new Font("Arial", Font.PLAIN, 20));
         dialog.add(label,gbc);
         
         gbc.gridx=0;
         gbc.gridy=1;
         gbc.gridwidth=2;
-        gbc.insets = new Insets(5, 10, 5, 10);
+        gbc.insets = new Insets(15, 20, 15, 20);
         JTextField txtfi=new JTextField(20);
+        txtfi.setFont(new Font("Arial", Font.PLAIN, 20));
         dialog.add(txtfi,gbc);
         
         gbc.gridx=0;
         gbc.gridy=2;
         gbc.gridwidth=1;
-        gbc.insets = new Insets(5, 15, 10, 15);
+        gbc.insets = new Insets(15, 20, 15, 20);
         JButton confirm=new JButton("Confirm");
+        confirm.setFont(new Font("Arial", Font.PLAIN, 20));
+        confirm.setBackground(new Color(61,205,128));
         confirm.addActionListener(e -> {
         String permissionName = txtfi.getText();
         if (!permissionName.isEmpty()) {
@@ -207,8 +219,10 @@ public class DecentralizedManagementPanel extends JPanel{
         gbc.gridx=1;
         gbc.gridy=2;
         gbc.gridwidth=1;
-        gbc.insets = new Insets(5, 15, 10, 15);
+        gbc.insets = new Insets(15, 20, 15, 20);
         JButton cancel = new JButton("Cancel");
+        cancel.setFont(new Font("Arial", Font.PLAIN, 20));
+        cancel.setBackground(new Color(61,205,128));
         cancel.addActionListener(e -> {
             dialog.dispose();
         });
@@ -227,21 +241,26 @@ public class DecentralizedManagementPanel extends JPanel{
         gbc.gridx=0;
         gbc.gridy=0;
         gbc.gridwidth=2;
-        gbc.insets = new Insets(10, 10, 5, 10);
-        dialog.add(new JLabel("Enter new role name:"),gbc);
+        gbc.insets = new Insets(15, 20, 15, 20);
+        JLabel label = new JLabel("Enter new role name:");
+        label.setFont(new Font("Arial", Font.PLAIN, 20));
+        dialog.add(label,gbc);
         
         gbc.gridx=0;
         gbc.gridy=1;
         gbc.gridwidth=2;
-        gbc.insets = new Insets(5, 10, 5, 10);
+        gbc.insets = new Insets(15, 20, 15, 20);
         JTextField txtfi=new JTextField();
+        txtfi.setFont(new Font("Arial", Font.PLAIN, 20));
         dialog.add(txtfi,gbc);
         
         gbc.gridx=0;
         gbc.gridy=2;
         gbc.gridwidth=1;
-        gbc.insets = new Insets(5, 15, 10, 15);
+        gbc.insets = new Insets(15, 20, 15, 20);
         JButton confirm=new JButton("Confirm");
+        confirm.setFont(new Font("Arial", Font.PLAIN, 20));
+        confirm.setBackground(new Color(61,205,128));
         confirm.addActionListener(e -> {
         String roleName = txtfi.getText();
         if (!roleName.isEmpty()) {
@@ -258,8 +277,10 @@ public class DecentralizedManagementPanel extends JPanel{
         gbc.gridx=1;
         gbc.gridy=2;
         gbc.gridwidth=1;
-        gbc.insets = new Insets(5, 15, 10, 15);
+        gbc.insets = new Insets(15, 20, 15, 20);
         JButton cancel= new JButton("Cancel");
+        cancel.setFont(new Font("Arial", Font.PLAIN, 20));
+        cancel.setBackground(new Color(61,205,128));
         cancel.addActionListener(e -> {
             dialog.dispose();
         });
@@ -278,21 +299,26 @@ public class DecentralizedManagementPanel extends JPanel{
         gbc.gridx=0;
         gbc.gridy=0;
         gbc.gridwidth=2;
-        gbc.insets = new Insets(10, 10, 5, 10);
-        dialog.add(new JLabel("Enter role name to delete:"),gbc);
+        gbc.insets = new Insets(15, 20, 15, 20);
+        JLabel label = new JLabel("Enter role name to delete:");
+        label.setFont(new Font("Arial", Font.PLAIN, 20));
+        dialog.add(label,gbc);
         
         gbc.gridx=0;
         gbc.gridy=1;
         gbc.gridwidth=2;
-        gbc.insets = new Insets(5, 10, 5, 10);
+        gbc.insets = new Insets(15, 20, 15, 20);
         JTextField txtfi=new JTextField();
+        txtfi.setFont(new Font("Arial", Font.PLAIN, 20));
         dialog.add(txtfi,gbc);
         
         gbc.gridx=0;
         gbc.gridy=2;
         gbc.gridwidth=1;
-        gbc.insets = new Insets(5, 15, 10, 15);
+        gbc.insets = new Insets(15, 20, 15, 20);
         JButton confirm=new JButton("Confirm");
+        confirm.setFont(new Font("Arial", Font.PLAIN, 20));
+        confirm.setBackground(new Color(61,205,128));
         confirm.addActionListener(e -> {
         String roleName = txtfi.getText();
         if (!roleName.isEmpty()) {
@@ -314,8 +340,10 @@ public class DecentralizedManagementPanel extends JPanel{
         gbc.gridx=1;
         gbc.gridy=2;
         gbc.gridwidth=1;
-        gbc.insets = new Insets(5, 15, 10, 15);
+        gbc.insets = new Insets(15, 20, 15, 20);
         JButton cancel = new JButton("Cancel");
+        cancel.setFont(new Font("Arial", Font.PLAIN, 20));
+        cancel.setBackground(new Color(61,205,128));
         cancel.addActionListener(e -> {
             dialog.dispose();
         });
@@ -335,21 +363,26 @@ public class DecentralizedManagementPanel extends JPanel{
         gbc.gridx=0;
         gbc.gridy=0;
         gbc.gridwidth=2;
-        gbc.insets = new Insets(10, 10, 5, 10);
-        dialog.add(new JLabel("Enter permission name to delete:"),gbc);
+        gbc.insets = new Insets(15, 20, 15, 20);
+        JLabel label = new JLabel("Enter permission name to delete:");
+        label.setFont(new Font("Arial", Font.PLAIN, 20));
+        dialog.add(label,gbc);
         
         gbc.gridx=0;
         gbc.gridy=1;
         gbc.gridwidth=2;
-        gbc.insets = new Insets(5, 10, 5, 10);
+        gbc.insets = new Insets(15, 20, 15, 20);
         JTextField txtfi=new JTextField();
+        txtfi.setFont(new Font("Arial", Font.PLAIN, 20));
         dialog.add(txtfi,gbc);
         
         gbc.gridx=0;
         gbc.gridy=2;
         gbc.gridwidth=1;
-        gbc.insets = new Insets(5, 15, 10, 15);
+        gbc.insets = new Insets(15, 20, 15, 20);
         JButton confirm=new JButton("Confirm");
+        confirm.setFont(new Font("Arial", Font.PLAIN, 20));
+        confirm.setBackground(new Color(61,205,128));
         confirm.addActionListener(e -> {
         String permissionName = txtfi.getText();
         if (!permissionName.isEmpty()) {
@@ -371,8 +404,10 @@ public class DecentralizedManagementPanel extends JPanel{
         gbc.gridx=1;
         gbc.gridy=2;
         gbc.gridwidth=1;
-        gbc.insets = new Insets(5, 15, 10, 15);
+        gbc.insets = new Insets(15, 20, 15, 20);
         JButton cancel = new JButton("Cancel");
+        cancel.setFont(new Font("Arial", Font.PLAIN, 20));
+        cancel.setBackground(new Color(61,205,128));
         cancel.addActionListener(e -> {
             dialog.dispose();
         });

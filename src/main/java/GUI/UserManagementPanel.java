@@ -28,7 +28,7 @@ public class UserManagementPanel extends JPanel{
     private JTextField txtsearch,txtid,txteid,txtname;
     private JPasswordField txtpass;
     private JButton btnadd,btndel,btnedit,btnsearch;
-    private JLabel title,lblid, lbleid,lblusername,lblpassword,lblrole;
+    private JLabel title, lblsearch, lblid, lbleid,lblusername,lblpassword,lblrole;
     private UsersBUS usersbus=new UsersBUS();
     private RolesBUS rolesbus=new RolesBUS();
     private RolePermissionsBUS rpbus=new RolePermissionsBUS();
@@ -36,12 +36,17 @@ public class UserManagementPanel extends JPanel{
     public UserManagementPanel(int crid){
         this.setLayout(null);
         title = new JLabel("Quản lý người dùng");
-        title.setBounds(550, 0, 200, 40);
-        title.setFont(new Font("Arial", Font.BOLD, 20));
+        title.setBounds(500,30,400,50);
+        title.setFont(new Font("Arial", Font.BOLD, 40));
+        title.setForeground(new Color(61,205,128));
+        title.setHorizontalAlignment(SwingConstants.CENTER);
         
         String[] columns={"ID","EID","Username","Password","Chức vụ"};
         tbmodel=new DefaultTableModel(columns,0);
         tbuser=new JTable(tbmodel);
+        tbuser.getTableHeader().setFont(new Font("Arial", Font.BOLD, 20));
+        tbuser.setFont(new Font("Arial", Font.PLAIN, 18));
+        tbuser.setRowHeight(30);
         tbuser.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -69,37 +74,49 @@ public class UserManagementPanel extends JPanel{
             }
         });
         JScrollPane scrPn=new JScrollPane(tbuser);
-        scrPn.setBounds(50, 200, 1200, 500);
+        scrPn.setBounds(100, 370, 1300, 500);
         loadUsers();
+        
+        lblsearch = new JLabel("Tìm kiếm theo:");
+        lblsearch.setBounds(70, 100, 200, 50);
+        lblsearch.setFont(new Font("Arial", Font.PLAIN, 20));
         
         cbsearch=new JComboBox<>();
         for(int i=0;i<columns.length;i++){
-            cbsearch.addItem(columns[i]);
+            if(!"Password".equals(columns[i])) {
+                cbsearch.addItem(columns[i]);
+            }
         }
-        cbsearch.setBounds(100, 60, 130, 30);
+        cbsearch.setBounds(250, 100, 150, 50);
+        cbsearch.setFont(new Font("Arial", Font.PLAIN, 18));
         
         txtsearch=new JTextField();
-        txtsearch.setBounds(240, 60, 300, 30);
+        txtsearch.setBounds(450, 100, 300, 50);
+        txtsearch.setFont(new Font("Arial", Font.PLAIN, 16));
         
         btnsearch = new JButton("Tìm kiếm");
-        btnsearch.setBounds(540, 60, 100, 30);
+        btnsearch.setBounds(800, 100, 100, 50);
         btnsearch.addActionListener(e -> searchuser());
+        btnsearch.setFont(new Font("Arial", Font.PLAIN, 16));
+        btnsearch.setBackground(new Color(61,205,128));
         
         btnadd= new JButton("Thêm");
-        btnadd.setBounds(1050, 50, 100, 30);
+        btnadd.setBounds(1150, 100, 100, 40);
         btnadd.addActionListener(e -> adduser());
+        btnadd.setFont(new Font("Arial", Font.PLAIN, 16));
+        btnadd.setBackground(new Color(61,205,128));
 
         btndel=new JButton("Xóa");
-        btndel.setBounds(1050, 100, 100, 30);
+        btndel.setBounds(1150, 160, 100, 40);
         btndel.addActionListener(e -> deleteuser());
+        btndel.setFont(new Font("Arial", Font.PLAIN, 16));
+        btndel.setBackground(new Color(61,205,128));
                     
         btnedit=new JButton("Sửa");
-        btnedit.setBounds(1050, 150, 100, 30);
+        btnedit.setBounds(1150, 220, 100, 40);
         btnedit.addActionListener(e -> savechange());
-                    
-        btnedit=new JButton("Sửa");
-        btnedit.setBounds(1050, 150, 100, 30);
-        btnedit.addActionListener(e -> savechange());
+        btnedit.setFont(new Font("Arial", Font.PLAIN, 16));
+        btnedit.setBackground(new Color(61,205,128));
         
         int perid= permissionbus.searchpermissionid("Quản lý tài khoản");
         ArrayList<RolePermissions> rps = rpbus.getbyID(crid);
@@ -119,40 +136,51 @@ public class UserManagementPanel extends JPanel{
         }
         
         lblid=new JLabel("Id");
-        lblid.setBounds(100, 100, 100, 30);
+        lblid.setBounds(100, 200, 100, 40);
+        lblid.setFont(new Font("Arial", Font.PLAIN, 18));
         
         txtid=new JTextField();
-        txtid.setBounds(220, 100, 100, 30);
+        txtid.setBounds(220, 200, 150, 40);
         txtid.setEditable(false);
+        txtid.setFont(new Font("Arial", Font.PLAIN, 18));
         
         lblusername = new JLabel("Username");
-        lblusername.setBounds(100, 150, 100, 30);
+        lblusername.setBounds(100, 280, 100, 40);
+        lblusername.setFont(new Font("Arial", Font.PLAIN, 18));
         
         txtname=new JTextField();
-        txtname.setBounds(220, 150, 100, 30);
+        txtname.setBounds(220, 280, 150, 40);
+        txtname.setFont(new Font("Arial", Font.PLAIN, 18));
         
         lblpassword=new JLabel("Password");
-        lblpassword.setBounds(370, 100, 100, 30);
+        lblpassword.setBounds(450, 200, 100, 40);
+        lblpassword.setFont(new Font("Arial", Font.PLAIN, 18));
         
         txtpass=new JPasswordField();
-        txtpass.setBounds(490, 100, 100, 30);
+        txtpass.setBounds(570, 200, 150, 40);
+        txtpass.setFont(new Font("Arial", Font.PLAIN, 18));
         
         lblrole=new JLabel("Role");
-        lblrole.setBounds(370, 150, 100, 30);
+        lblrole.setBounds(450, 280, 100, 40);
+        lblrole.setFont(new Font("Arial", Font.PLAIN, 18));
         
         cbrole=new JComboBox();
         cbrole.addItem(new Roles(0, "role"));
         loadroles(cbrole);
-        cbrole.setBounds(490, 150, 100, 30);
+        cbrole.setBounds(570, 280, 150, 40);
+        cbrole.setFont(new Font("Arial", Font.PLAIN, 18));
         
         lbleid = new JLabel("EID");
-        lbleid.setBounds(660, 100, 100, 30);
+        lbleid.setBounds(800, 200, 100, 40);
+        lbleid.setFont(new Font("Arial", Font.PLAIN, 18));
         
         txteid= new JTextField();
-        txteid.setBounds(780, 100, 100, 30);
+        txteid.setBounds(920, 200, 150, 40);
+        txteid.setFont(new Font("Arial", Font.PLAIN, 18));
         
         this.add(title);
         this.add(scrPn);
+        this.add(lblsearch);
         this.add(cbsearch);
         this.add(txtsearch);
         this.add(btnsearch);
@@ -166,7 +194,7 @@ public class UserManagementPanel extends JPanel{
         this.add(cbrole);
         this.add(lbleid);
         this.add(txteid);
-        this.setBackground(Color.LIGHT_GRAY);
+        this.setBackground(Color.white);
     }
     private void loadUsers(){
         ArrayList<Users> users= usersbus.getALL();
@@ -174,7 +202,7 @@ public class UserManagementPanel extends JPanel{
         tbmodel.setRowCount(0);
         for(Users user:users){
             String rolename = rolesbus.searchrolename(user.getRole_id());
-            tbmodel.addRow(new Object[]{user.getEmployee_id(),user.getEmployee_id(),user.getUsername(),user.getPassword(),rolename});
+            tbmodel.addRow(new Object[]{user.getUser_id(),user.getEmployee_id(),user.getUsername(),user.getPassword(),rolename});
         }
     }
     private void adduser() {
@@ -188,78 +216,89 @@ public class UserManagementPanel extends JPanel{
         gbc.gridx=0;
         gbc.gridy=0;
         gbc.gridwidth=1;
-        gbc.insets = new Insets(10, 10, 5, 10);
+        gbc.insets = new Insets(15, 20, 15, 20);
         JLabel lb1=new JLabel("Username");
+        lb1.setFont(new Font("Arial", Font.PLAIN, 18));
         dialog.add(lb1,gbc);
         
         gbc.gridx=0;
         gbc.gridy=1;
         gbc.gridwidth=1;
-        gbc.insets=new Insets(10, 10, 5, 10);
+        gbc.insets=new Insets(15, 20, 15, 20);
         JLabel lb2=new JLabel("EID");
+        lb2.setFont(new Font("Arial", Font.PLAIN, 18));
         dialog.add(lb2,gbc);
         
         gbc.gridx=0;
         gbc.gridy=2;
         gbc.gridwidth=1;
-        gbc.insets=new Insets(10, 10, 5, 10);
+        gbc.insets=new Insets(15, 20, 15, 20);
         JLabel lb3=new JLabel("Password");
+        lb3.setFont(new Font("Arial", Font.PLAIN, 18));
         dialog.add(lb3,gbc);
         
         gbc.gridx=0;
         gbc.gridy=3;
         gbc.gridwidth=1;
-        gbc.insets=new Insets(10, 10, 5, 10);
+        gbc.insets=new Insets(15, 20, 15, 20);
         JLabel lb4=new JLabel("Confirm password");
+        lb4.setFont(new Font("Arial", Font.PLAIN, 18));
         dialog.add(lb4,gbc);
         
         gbc.gridx=0;
         gbc.gridy=4;
         gbc.gridwidth=1;
-        gbc.insets=new Insets(10, 10, 5, 10);
+        gbc.insets=new Insets(15, 20, 15, 20);
         JLabel lb5=new JLabel("Role");
+        lb5.setFont(new Font("Arial", Font.PLAIN, 18));
         dialog.add(lb5,gbc);
         
         gbc.gridx=1;
         gbc.gridy=0;
         gbc.gridwidth=1;
-        gbc.insets=new Insets(10, 10, 5, 10);
+        gbc.insets=new Insets(15, 20, 15, 20);
         JTextField txt1=new JTextField();
+        txt1.setFont(new Font("Arial", Font.PLAIN, 18));
         dialog.add(txt1,gbc);
         
         gbc.gridx=1;
         gbc.gridy=1;
         gbc.gridwidth=1;
-        gbc.insets=new Insets(10, 10, 5, 10);
+        gbc.insets=new Insets(15, 20, 15, 20);
         JTextField txt2=new JTextField();
+        txt2.setFont(new Font("Arial", Font.PLAIN, 18));
         dialog.add(txt2,gbc);
         
         gbc.gridx=1;
         gbc.gridy=2;
         gbc.gridwidth=1;
-        gbc.insets=new Insets(10, 10, 5, 10);
+        gbc.insets=new Insets(15, 20, 15, 20);
         JPasswordField txt3= new JPasswordField();
+        txt3.setFont(new Font("Arial", Font.PLAIN, 18));
         dialog.add(txt3,gbc);
         
         gbc.gridx=1;
         gbc.gridy=3;
         gbc.gridwidth=1;
-        gbc.insets=new Insets(10, 10, 5, 10);
+        gbc.insets=new Insets(15, 20, 15, 20);
         JPasswordField txt4=new JPasswordField();
+        txt4.setFont(new Font("Arial", Font.PLAIN, 18));
         dialog.add(txt4,gbc);
         
         gbc.gridx=1;
         gbc.gridy=4;
         gbc.gridwidth=1;
-        gbc.insets=new Insets(10, 10, 5, 10);
         JComboBox comboadd=new JComboBox<>();
+        comboadd.setFont(new Font("Arial", Font.PLAIN, 18));
         loadroles(comboadd);
         dialog.add(comboadd,gbc);
         
         gbc.gridx=0;
         gbc.gridy=5;
-        gbc.insets=new Insets(10, 10, 5, 10);
+        gbc.insets=new Insets(15, 20, 15, 20);
         JButton btn1=new JButton("Confirm");
+        btn1.setBackground(new Color(61,205,128));
+        btn1.setFont(new Font("Arial", Font.PLAIN, 18));
         btn1.addActionListener(e -> {
             String username = txt1.getText().trim();
             String eid = txt2.getText().trim();
@@ -291,8 +330,10 @@ public class UserManagementPanel extends JPanel{
         
         gbc.gridx=1;
         gbc.gridy=5;
-        gbc.insets=new Insets(10, 10, 5, 10);
+        gbc.insets=new Insets(15, 20, 15, 20);
         JButton btn2 = new JButton("Cancel");
+        btn2.setBackground(new Color(61,205,128));
+        btn2.setFont(new Font("Arial", Font.PLAIN, 18));
         btn2.addActionListener(e -> {
             dialog.dispose();
         });
@@ -312,47 +353,53 @@ public class UserManagementPanel extends JPanel{
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
-        gbc.insets=new Insets(10, 10, 5, 10);
+        gbc.insets=new Insets(15, 20, 15, 20);
         JLabel lb1 = new JLabel("Nhập ID người dùng muốn xóa:");
+        lb1.setFont(new Font("Arial", Font.PLAIN, 18));
         dialog.add(lb1,gbc);
         
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 2;
-        gbc.insets=new Insets(10, 10, 5, 10);
+        gbc.insets=new Insets(15, 20, 15, 20);
         JTextField txt1 = new JTextField();
+        txt1.setFont(new Font("Arial", Font.PLAIN, 18));
         dialog.add(txt1,gbc);
         
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth=1;
-        gbc.insets=new Insets(10, 10, 5, 10);
+        gbc.insets=new Insets(15, 20, 15, 20);
         JButton btn1 = new JButton("Confirm");
+        btn1.setBackground(new Color(61,205,128));
+        btn1.setFont(new Font("Arial", Font.PLAIN, 18));
         dialog.add(btn1,gbc);
         btn1.addActionListener(e -> {
-            String eid = txt1.getText().trim();
-            if(eid.isEmpty()){
-                JOptionPane.showMessageDialog(dialog, "Bạn chưa nhập EID", "Thiếu thông tin", JOptionPane.ERROR_MESSAGE);
+            String id = txt1.getText().trim();
+            if(id.isEmpty()){
+                JOptionPane.showMessageDialog(dialog, "Bạn chưa nhập ID", "Thiếu thông tin", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            int eidInt;
+            int idInt;
             try {
-                eidInt = Integer.parseInt(eid);
+                idInt = Integer.parseInt(id);
             } catch(NumberFormatException ex) {
-                JOptionPane.showMessageDialog(dialog, "EID phải là số nguyên.", "Lỗi định dạng", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(dialog, "ID phải là số nguyên.", "Lỗi định dạng", JOptionPane.ERROR_MESSAGE);
                 return;
             }
             JOptionPane.showMessageDialog(dialog, "Tài khoản đã được xóa!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
             dialog.dispose();
-            usersbus.deleteUser(eidInt);
+            usersbus.deleteUser(idInt);
             loadUsers();
         });
         
         gbc.gridx = 1;
         gbc.gridy = 2;
         gbc.gridwidth=1;
-        gbc.insets=new Insets(10, 10, 5, 10);
+        gbc.insets=new Insets(15, 20, 15, 20);
         JButton btn2 = new JButton("Cancel");
+        btn2.setFont(new Font("Arial", Font.PLAIN, 18));
+        btn2.setBackground(new Color(61,205,128));
         dialog.add(btn2,gbc);
         btn2.addActionListener(e -> {
             dialog.dispose();
@@ -416,9 +463,6 @@ public class UserManagementPanel extends JPanel{
                     break;
                 case "Username":
                     matched = user.getUsername().toLowerCase().contains(keyword);
-                    break;
-                case "Password":
-                    matched = user.getPassword().toLowerCase().contains(keyword);
                     break;
                 case "Chức vụ":
                     matched = rolename.toLowerCase().contains(keyword);

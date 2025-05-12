@@ -19,10 +19,12 @@ public class MainFrame extends JFrame {
 
     private JPanel sidebar, mainPanel;
     private int currentrole;
+    private String currname;
 
-    public MainFrame(int currentroleid) {
+    public MainFrame(int currentroleid,String name) {
         // Thiết lập tiêu đề và kích thước cho JFrame
         currentrole = currentroleid;
+        currname = name;
         System.out.println(currentrole);
         setTitle("Admin Interface");
         setSize(1728, 1040); // Kích thước giao diện
@@ -34,12 +36,21 @@ public class MainFrame extends JFrame {
 
         // Sidebar (1/4 chiều ngang giao diện)
         sidebar = new JPanel();
-        sidebar.setBackground(Color.WHITE);
+        sidebar.setBackground(new Color(255,255,255));
         sidebar.setPreferredSize(new Dimension(200, getHeight())); // 1/4 của 800px
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
 
         // Thêm khoảng cách 10px từ cạnh trên
-        sidebar.add(Box.createVerticalStrut(30)); // Khoảng cách từ cạnh trên
+        sidebar.add(Box.createVerticalStrut(10)); // Khoảng cách từ cạnh trên
+        JLabel username = new JLabel("Hello, "+currname);
+        username.setOpaque(true);
+        username.setPreferredSize(new Dimension(200, 50));
+        username.setMaximumSize(new Dimension(200, 50));
+        username.setMinimumSize(new Dimension(200, 50));
+        username.setFont(new Font("Arial", Font.PLAIN, 20));
+        username.setBackground(new Color(61,205,128));
+        sidebar.add(username);
+        sidebar.add(Box.createVerticalStrut(20));
 
         // Lấy dữ liệu từ bảng feature trong cơ sở dữ liệu
         List<Feature> sidebarData = fetchSidebarDataFromDatabase();
@@ -51,6 +62,11 @@ public class MainFrame extends JFrame {
             label.setFont(new Font("Arial", Font.PLAIN, 16)); // Font chữ
             label.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Thay đổi con trỏ chuột
             label.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 0)); // Cách trái 20px
+            label.setOpaque(true);
+            label.setPreferredSize(new Dimension(200, 50));
+            label.setMaximumSize(new Dimension(200, 50));
+            label.setMinimumSize(new Dimension(200, 50));
+            label.setBackground(Color.white);
 
             // Thêm icon nếu có URL
             if (feature.getIcon_url() != null) {
@@ -68,10 +84,18 @@ public class MainFrame extends JFrame {
                 public void mouseClicked(MouseEvent e) {
                     updateMainPanel(feature.getFeature_name()); // Cập nhật mainPanel khi nhấn vào JLabel
                 }
+                @Override
+                public void mouseEntered(MouseEvent e){
+                    label.setBackground(new Color(61,205,128));
+                }
+                @Override
+                public void mouseExited(MouseEvent e){
+                    label.setBackground(Color.white);
+                }
             });
 
             sidebar.add(label);
-            sidebar.add(Box.createVerticalStrut(40)); // Giảm khoảng cách giữa các JLabel (40 pixel)
+            sidebar.add(Box.createVerticalStrut(30)); // Giảm khoảng cách giữa các JLabel (40 pixel)
         }
 
         add(sidebar, BorderLayout.WEST);
@@ -157,6 +181,6 @@ public class MainFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        new MainFrame(1);
+        new MainFrame(1,"admin");
     }
 }

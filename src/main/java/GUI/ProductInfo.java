@@ -360,11 +360,16 @@ public class ProductInfo extends JPanel {
 
     private void loadImage() {
         if (imagePath != null) {
-            ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
-            Image image = icon.getImage();
-            Image scaled = image.getScaledInstance(218, 218, Image.SCALE_SMOOTH);
-            ImageIcon scaledIcon = new ImageIcon(scaled);
-            imageLabel.setIcon(scaledIcon);
+            File imageFile = new File(System.getProperty("user.dir") + imagePath);
+            if (imageFile.exists()) {
+                ImageIcon icon = new ImageIcon(imageFile.getAbsolutePath());
+                Image image = icon.getImage();
+                Image scaled = image.getScaledInstance(218, 218, Image.SCALE_SMOOTH);
+                ImageIcon scaledIcon = new ImageIcon(scaled);
+                imageLabel.setIcon(scaledIcon);
+            } else {
+                JOptionPane.showMessageDialog(this, "Không tìm thấy ảnh: " + imagePath);
+            }
         }
     }
     
