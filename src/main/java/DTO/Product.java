@@ -77,5 +77,8 @@ public class Product {
         this.expectedQuantity = expectedQuantity;
     }
     
-    
+    @Override
+    public String toString(){
+        return productName;
+    }
 }

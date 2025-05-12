@@ -75,4 +75,9 @@ public class Employee {
     }
     
 
+    //====================thêm hàm này ================
+    @Override
+    public String toString(){
+        return employee_name;
+    }
 }

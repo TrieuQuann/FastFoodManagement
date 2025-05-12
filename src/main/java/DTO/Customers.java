@@ -45,6 +45,9 @@ public class Customers {
         this.email = email;
     }
 
-    
+    @Override
+    public String toString(){
+        return customer_name;
+    }
     
 }

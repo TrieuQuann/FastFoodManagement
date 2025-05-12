@@ -43,7 +43,7 @@ public class ProductTable extends JPanel {
     }
 
     private void initProductTable() {
-        setPreferredSize(new Dimension(950, 400));
+        setPreferredSize(new Dimension(950, 550));
 //        setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY));
         setLayout(new BorderLayout());
 
