@@ -35,4 +35,8 @@ public class OrderDetailsBUS {
     public int getMaxOrderId(){
         return dao.getMaxOrderId();
     }
+    
+    public ArrayList<DTO.OrderDetails> getOrderDetailByOrderId(int oId){
+        return dao.getOrderDetailByOrderId(oId);
+    }
 }

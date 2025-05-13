@@ -91,6 +91,33 @@ public class OrderDetailsDAO {
         }
         return maxOrderId;  
     }
+    
+    public ArrayList<OrderDetails> getOrderDetailByOrderId(int oId){
+        ArrayList<DTO.OrderDetails> result = new ArrayList<DTO.OrderDetails>();
+        String sql = "SELECT * FROM orderdetails WHERE status = 1 and order_id = ?";
+
+        try (
+                Connection con = ConnectionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(sql);
+            ) {
+            ps.setInt(1, oId); 
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int oid = rs.getInt("order_id");
+                int pid = rs.getInt("product_id");
+                int quantity = rs.getInt("quantity");                
+                double price = rs.getDouble("price");
+                double total_price = rs.getDouble("total_price");
+
+                DTO.OrderDetails sp = new DTO.OrderDetails(oid, pid, quantity, price, total_price);
+                result.add(sp);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 
 
 }
