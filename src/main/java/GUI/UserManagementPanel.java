@@ -38,8 +38,10 @@ public class UserManagementPanel extends JPanel{
         title = new JLabel("Quản lý người dùng");
         title.setBounds(500,30,400,50);
         title.setFont(new Font("Arial", Font.BOLD, 40));
-        title.setForeground(new Color(61,205,128));
+        title.setBackground(new Color(55,71,79));
+        title.setForeground(Color.white);
         title.setHorizontalAlignment(SwingConstants.CENTER);
+        title.setOpaque(true);
         
         String[] columns={"ID","EID","Username","Password","Chức vụ"};
         tbmodel=new DefaultTableModel(columns,0);
@@ -98,25 +100,29 @@ public class UserManagementPanel extends JPanel{
         btnsearch.setBounds(800, 100, 100, 50);
         btnsearch.addActionListener(e -> searchuser());
         btnsearch.setFont(new Font("Arial", Font.PLAIN, 16));
-        btnsearch.setBackground(new Color(61,205,128));
+        btnsearch.setBackground(new Color(55,71,79));
+        btnsearch.setForeground(Color.white);
         
         btnadd= new JButton("Thêm");
         btnadd.setBounds(1150, 100, 100, 40);
         btnadd.addActionListener(e -> adduser());
         btnadd.setFont(new Font("Arial", Font.PLAIN, 16));
-        btnadd.setBackground(new Color(61,205,128));
+        btnadd.setBackground(new Color(55,71,79));
+        btnadd.setForeground(Color.white);
 
         btndel=new JButton("Xóa");
         btndel.setBounds(1150, 160, 100, 40);
         btndel.addActionListener(e -> deleteuser());
         btndel.setFont(new Font("Arial", Font.PLAIN, 16));
-        btndel.setBackground(new Color(61,205,128));
+        btndel.setBackground(new Color(55,71,79));
+        btndel.setForeground(Color.white);
                     
         btnedit=new JButton("Sửa");
         btnedit.setBounds(1150, 220, 100, 40);
         btnedit.addActionListener(e -> savechange());
         btnedit.setFont(new Font("Arial", Font.PLAIN, 16));
-        btnedit.setBackground(new Color(61,205,128));
+        btnedit.setBackground(new Color(55,71,79));
+        btnedit.setForeground(Color.white);
         
         int perid= permissionbus.searchpermissionid("Quản lý tài khoản");
         ArrayList<RolePermissions> rps = rpbus.getbyID(crid);
@@ -298,6 +304,7 @@ public class UserManagementPanel extends JPanel{
         gbc.insets=new Insets(15, 20, 15, 20);
         JButton btn1=new JButton("Confirm");
         btn1.setBackground(new Color(61,205,128));
+        btn1.setForeground(Color.white);
         btn1.setFont(new Font("Arial", Font.PLAIN, 18));
         btn1.addActionListener(e -> {
             String username = txt1.getText().trim();
@@ -332,8 +339,9 @@ public class UserManagementPanel extends JPanel{
         gbc.gridy=5;
         gbc.insets=new Insets(15, 20, 15, 20);
         JButton btn2 = new JButton("Cancel");
-        btn2.setBackground(new Color(61,205,128));
+        btn2.setBackground(new Color(244,67,54));
         btn2.setFont(new Font("Arial", Font.PLAIN, 18));
+        btn2.setForeground(Color.white);
         btn2.addActionListener(e -> {
             dialog.dispose();
         });
@@ -372,6 +380,7 @@ public class UserManagementPanel extends JPanel{
         gbc.insets=new Insets(15, 20, 15, 20);
         JButton btn1 = new JButton("Confirm");
         btn1.setBackground(new Color(61,205,128));
+        btn1.setForeground(Color.white);
         btn1.setFont(new Font("Arial", Font.PLAIN, 18));
         dialog.add(btn1,gbc);
         btn1.addActionListener(e -> {
@@ -399,7 +408,8 @@ public class UserManagementPanel extends JPanel{
         gbc.insets=new Insets(15, 20, 15, 20);
         JButton btn2 = new JButton("Cancel");
         btn2.setFont(new Font("Arial", Font.PLAIN, 18));
-        btn2.setBackground(new Color(61,205,128));
+        btn2.setBackground(new Color(244,67,54));
+        btn2.setForeground(Color.white);
         dialog.add(btn2,gbc);
         btn2.addActionListener(e -> {
             dialog.dispose();

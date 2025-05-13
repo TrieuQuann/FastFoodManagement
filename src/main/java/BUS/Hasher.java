@@ -14,7 +14,7 @@ import java.security.NoSuchAlgorithmException;
 public class Hasher {
     public static String hashPassword(String password){
         try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256"); // có thể dùng SHA-512 hoặc BCrypt nếu cần mạnh hơn
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] hash = md.digest(password.getBytes());
             StringBuilder hexString = new StringBuilder();
 

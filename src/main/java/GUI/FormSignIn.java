@@ -40,7 +40,7 @@ public class FormSignIn extends JFrame {
         // Title
         lblForm = new JLabel("Sign In");
         lblForm.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        lblForm.setForeground(new Color(61,205,128));
+        lblForm.setForeground(new Color(55,71,79));
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
@@ -82,7 +82,7 @@ public class FormSignIn extends JFrame {
 
         // Login button
         btnLogin = new JButton("Sign In");
-        btnLogin.setBackground(new Color(61,205,128));
+        btnLogin.setBackground(new Color(55,71,79));
         btnLogin.setForeground(Color.WHITE);
         btnLogin.setFocusPainted(false);
         btnLogin.setFont(new Font("Segoe UI", Font.PLAIN, 16));
@@ -95,7 +95,7 @@ public class FormSignIn extends JFrame {
                 }
                 @Override
                 public void mouseExited(MouseEvent e){
-                    btnLogin.setBackground(new Color(61,205,128));
+                    btnLogin.setBackground(new Color(55,71,79));
                 }
         });
 
